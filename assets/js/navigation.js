@@ -1,35 +1,83 @@
 /* =========================================================
    EMIFORMULA — GLOBAL NAVIGATION SYSTEM
-   STEP 1.8 — PERMANENT HOME NAVIGATION
+   STEP 1.11 — URL CONFIGURATION
    ========================================================= */
 
 (function () {
   "use strict";
 
-  function getHomeUrl() {
 
-    var path =
-      window.location.pathname;
+  function getConfig() {
 
-    var marker =
-      "/Emiformula/";
+    return window.EMIFORMULA_CONFIG || {};
 
-    var position =
-      path.indexOf(marker);
+  }
 
-    if (position !== -1) {
 
-      return (
-        window.location.origin +
-        marker
-      );
+  function getSiteRoot() {
+
+    var config =
+      getConfig();
+
+
+    /*
+      If a complete public base URL is configured,
+      use it.
+    */
+
+    if (config.baseUrl) {
+
+      return config.baseUrl
+        .replace(/\/+$/, "");
 
     }
 
+
+    /*
+      Otherwise use the current origin plus
+      the configured GitHub Pages path.
+    */
+
+    var pathPrefix =
+      config.pathPrefix || "";
+
+
+    pathPrefix =
+      "/" +
+      pathPrefix
+        .replace(/^\/+/, "")
+        .replace(/\/+$/, "");
+
+
+    /*
+      If pathPrefix is empty, homepage is
+      simply the current origin.
+    */
+
+    if (
+      pathPrefix === "/"
+    ) {
+
+      return window.location.origin;
+
+    }
+
+
     return (
       window.location.origin +
+      pathPrefix
+    );
+
+  }
+
+
+  function getHomeUrl() {
+
+    return (
+      getSiteRoot() +
       "/"
     );
+
   }
 
 
@@ -37,6 +85,7 @@
 
     var homeUrl =
       getHomeUrl();
+
 
     document
       .querySelectorAll(
@@ -57,6 +106,15 @@
   function start() {
 
     fixHomeLinks();
+
+
+    if (
+      !window.MutationObserver
+    ) {
+
+      return;
+
+    }
 
 
     var observer =
@@ -95,5 +153,6 @@
     start();
 
   }
+
 
 })();
