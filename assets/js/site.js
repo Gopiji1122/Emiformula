@@ -6,14 +6,17 @@
 (function () {
   "use strict";
 
-  function getBasePath() {
-    var script = document.currentScript;
+  /*
+   * Capture the script URL immediately.
+   * document.currentScript is reliable here because this
+   * code runs while the script itself is being executed.
+   */
+  var currentScript = document.currentScript;
 
-    if (!script || !script.src) {
-      return "";
-    }
+  var basePath = "";
 
-    return script.src.replace(
+  if (currentScript && currentScript.src) {
+    basePath = currentScript.src.replace(
       /\/assets\/js\/site\.js(?:\?.*)?$/,
       ""
     );
@@ -34,7 +37,8 @@
   }
 
   function setupHeader() {
-    var header = document.querySelector("[data-site-header]");
+    var header =
+      document.querySelector("[data-site-header]");
 
     if (!header) {
       return;
@@ -116,8 +120,15 @@
       return;
     }
 
-    var basePath = getBasePath();
-
+    /*
+     * Build the correct GitHub Pages project URL.
+     *
+     * Example:
+     * https://gopiji1122.github.io/Emiformula
+     *
+     * becomes:
+     * https://gopiji1122.github.io/Emiformula/components/header.html
+     */
     var headerUrl =
       basePath + "/components/header.html";
 
@@ -154,10 +165,11 @@
   }
 
   /*
-   * Start after the page has loaded
+   * Start after the page has loaded.
    */
   document.addEventListener(
     "DOMContentLoaded",
     loadHeader
   );
+
 })();
