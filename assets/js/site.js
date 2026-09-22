@@ -318,6 +318,26 @@
   /* -------------------------------------------------------
      LOAD HEADER COMPONENT
      ------------------------------------------------------- */
+     function fixComponentLinks(container) {
+
+    if (!container) {
+      return;
+    }
+
+    var homeUrl = basePath + "/";
+
+    container
+      .querySelectorAll('a[href="./"]')
+      .forEach(function (link) {
+
+        link.setAttribute(
+          "href",
+          homeUrl
+        );
+
+      });
+
+     }
 
   function loadHeader() {
 
@@ -373,16 +393,18 @@
 
             }
           )
+.then(
+  function (html) {
 
-          .then(
-            function (html) {
+    placeholder.innerHTML = html;
 
-              placeholder.innerHTML = html;
+    fixComponentLinks(
+      placeholder
+    );
 
-              setupHeader();
-
-            }
-          )
+    setupHeader();
+  }
+))
 
           .catch(
             function (error) {
