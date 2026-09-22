@@ -12,7 +12,10 @@
 }
 
 .header-container {
-  width: min(calc(100% - 2rem), var(--container-max));
+  width: min(
+    calc(100% - 2rem),
+    var(--container-max)
+  );
   min-height: 68px;
   margin-inline: auto;
   display: flex;
@@ -119,6 +122,7 @@
 .header-icon-button {
   font-size: 1.35rem;
   line-height: 1;
+  cursor: pointer;
 }
 
 .menu-toggle {
@@ -126,6 +130,7 @@
   flex-direction: column;
   gap: 4px;
   padding: 8px;
+  cursor: pointer;
 }
 
 .menu-toggle span {
@@ -134,7 +139,8 @@
   height: 2px;
   border-radius: 2px;
   background: currentColor;
-  transition: transform var(--transition-fast);
+  transition:
+    transform var(--transition-fast);
 }
 
 .header-panel {
@@ -148,7 +154,10 @@
 }
 
 .header-panel-inner {
-  width: min(calc(100% - 2rem), var(--container-max));
+  width: min(
+    calc(100% - 2rem),
+    var(--container-max)
+  );
   margin-inline: auto;
   padding: var(--space-6) 0;
 }
@@ -166,13 +175,22 @@
 
 .mobile-navigation {
   display: none;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+
+.mobile-navigation[hidden] {
+  display: none !important;
 }
 
 .mobile-navigation nav {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding: var(--space-3) 0 var(--space-4);
+  padding:
+    var(--space-3)
+    0
+    var(--space-4);
 }
 
 .mobile-nav-link,
@@ -189,6 +207,7 @@
   color: var(--text-primary);
   text-align: left;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .mobile-nav-link:hover,
@@ -207,8 +226,6 @@
 
   .mobile-navigation {
     display: block;
-    border-top: 1px solid var(--border);
-    background: var(--background);
   }
 
   .header-container {
@@ -218,7 +235,10 @@
 
 @media (max-width: 480px) {
   .header-container {
-    width: min(calc(100% - 1rem), var(--container-max));
+    width: min(
+      calc(100% - 1rem),
+      var(--container-max)
+    );
   }
 
   .site-logo-text {
