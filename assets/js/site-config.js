@@ -1,34 +1,44 @@
-/*
- * EMIFORMULA
- * Central Website Configuration
- *
- * STEP 1.1 — Part D
- *
- * Site-wide settings belong here.
- * Individual pages should NOT duplicate these settings.
- */
+/* =========================================================
+   EMIFORMULA — SITE CONFIGURATION
+   STEP 1.11 — URL FOUNDATION
+   ========================================================= */
 
 window.EMIFORMULA_CONFIG = Object.freeze({
 
-    // Basic website identity
-    siteName: "EMIFORMULA",
+  siteName: "EMIFORMULA",
 
-    // Keep blank until the real domain is purchased
-    domain: "",
+  /*
+    Current GitHub Pages repository path.
 
-    // Keep blank until the final website URL is decided
-    baseUrl: "",
+    Current website:
+    https://gopiji1122.github.io/Emiformula/
 
-    // Logo path will be added when the logo system is built
-    logo: "",
+    When a custom domain is connected later,
+    change this to:
+    ""
+  */
+  pathPrefix: "/Emiformula",
 
-    // Default SEO settings
-    seo: {
-        title: "EMIFORMULA",
-        description: ""
-    },
+  /*
+    Keep blank until the custom domain is purchased
+    and configured.
+  */
+  domain: "",
 
-    // Configuration version
-    version: "1.0.0"
+  /*
+    Keep blank for now.
+    This will be used for canonical URLs after
+    the public domain is configured.
+  */
+  baseUrl: "",
+
+  logo: "",
+
+  seo: {
+    title: "EMIFORMULA",
+    description: ""
+  },
+
+  version: "1.0.0"
 
 });
