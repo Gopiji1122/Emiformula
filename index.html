@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <title id="page-title">EMIFORMULA</title>
+  <title id="page-title">EMIFORMULA</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/header.css">
 </head>
 
 <body>
 
-    <main>
+  <!-- Shared header component -->
+  <div data-component="header"></div>
+
+  <main class="container">
+    <section class="section">
+      <div class="card" style="padding: 2rem;">
+
         <h1 id="site-name">EMIFORMULA</h1>
 
         <p>
-            Website core foundation is working.
+          Header and logo system test.
         </p>
 
         <p id="config-status">
-            Loading website configuration...
+          Loading website configuration...
         </p>
-    </main>
 
-    <!-- Central website configuration -->
-    <script src="assets/js/site-config.js"></script>
+      </div>
+    </section>
+  </main>
 
-    <!-- Step 1.1 configuration test -->
-    <script>
-        document.getElementById("site-name").textContent =
-            EMIFORMULA_CONFIG.siteName;
+  <script src="assets/js/site-config.js"></script>
+  <script src="assets/js/site.js"></script>
 
-        document.getElementById("page-title").textContent =
-            EMIFORMULA_CONFIG.seo.title;
+  <script>
+    document.getElementById("site-name").textContent =
+      EMIFORMULA_CONFIG.siteName;
 
-        document.getElementById("config-status").textContent =
-            "Central website configuration connected successfully.";
-    </script>
+    document.getElementById("page-title").textContent =
+      EMIFORMULA_CONFIG.seo.title;
+
+    document.getElementById("config-status").textContent =
+      "Step 1.3 header system is ready for testing.";
+  </script>
 
 </body>
 </html>
