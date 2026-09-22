@@ -1,41 +1,69 @@
 /* =========================================================
-   EMIFORMULA — BASE DESIGN SYSTEM
-   STEP 1.2 — PART A
+   EMIFORMULA
+   GLOBAL WEBSITE DESIGN SYSTEM
+   STEP 1.2 — COMPLETE
    ========================================================= */
 
-/* ---------- Design Tokens ---------- */
+/* =========================================================
+   1. DESIGN TOKENS
+   ========================================================= */
 
 :root {
-    /* Brand */
+
+    /* ---------- Brand ---------- */
+
     --brand-primary: #2563eb;
     --brand-primary-dark: #1d4ed8;
     --brand-primary-light: #eff6ff;
 
-    /* Text */
+
+    /* ---------- Text ---------- */
+
     --text-primary: #111827;
     --text-secondary: #4b5563;
     --text-muted: #6b7280;
+    --text-disabled: #9ca3af;
     --text-on-brand: #ffffff;
 
-    /* Backgrounds */
+
+    /* ---------- Background ---------- */
+
     --background: #ffffff;
     --surface: #f8fafc;
     --surface-alt: #f1f5f9;
+    --surface-hover: #f3f4f6;
 
-    /* Borders */
+
+    /* ---------- Borders ---------- */
+
     --border: #e5e7eb;
     --border-strong: #d1d5db;
 
-    /* Status */
-    --success: #15803d;
-    --warning: #b45309;
-    --danger: #dc2626;
 
-    /* Layout */
+    /* ---------- Status ---------- */
+
+    --success: #15803d;
+    --success-bg: #f0fdf4;
+
+    --warning: #b45309;
+    --warning-bg: #fffbeb;
+
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+
+    --info: #0369a1;
+    --info-bg: #f0f9ff;
+
+
+    /* ---------- Layout ---------- */
+
     --container-max: 1200px;
     --content-max: 900px;
+    --reading-max: 760px;
 
-    /* Spacing */
+
+    /* ---------- Spacing ---------- */
+
     --space-1: 0.25rem;
     --space-2: 0.5rem;
     --space-3: 0.75rem;
@@ -45,25 +73,40 @@
     --space-8: 2rem;
     --space-10: 2.5rem;
     --space-12: 3rem;
+    --space-16: 4rem;
 
-    /* Radius */
+
+    /* ---------- Radius ---------- */
+
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 16px;
     --radius-xl: 22px;
+    --radius-full: 999px;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
 
-    /* Typography */
+    /* ---------- Shadows ---------- */
+
+    --shadow-sm:
+        0 1px 3px rgba(0, 0, 0, 0.08);
+
+    --shadow-md:
+        0 4px 12px rgba(0, 0, 0, 0.10);
+
+    --shadow-lg:
+        0 10px 30px rgba(0, 0, 0, 0.12);
+
+
+    /* ---------- Typography ---------- */
+
     --font-family:
         Inter,
         system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        Roboto,
+        Arial,
         sans-serif;
 
     --font-size-xs: 0.75rem;
@@ -79,13 +122,18 @@
     --line-height-normal: 1.6;
     --line-height-relaxed: 1.75;
 
-    /* Motion */
+
+    /* ---------- Motion ---------- */
+
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
 }
 
 
-/* ---------- Global Reset ---------- */
+/* =========================================================
+   2. GLOBAL RESET
+   ========================================================= */
 
 *,
 *::before,
@@ -94,13 +142,21 @@
 }
 
 html {
+    margin: 0;
+    padding: 0;
+
     font-size: 16px;
+
     scroll-behavior: smooth;
+
     -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
     margin: 0;
+    padding: 0;
+
     min-width: 320px;
 
     background: var(--background);
@@ -111,24 +167,32 @@ body {
     line-height: var(--line-height-normal);
 
     text-rendering: optimizeLegibility;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* =========================================================
+   3. MEDIA ELEMENTS
+   ========================================================= */
+
 img,
-svg {
+svg,
+video,
+canvas {
     display: block;
     max-width: 100%;
 }
 
-button,
-input,
-select,
-textarea {
-    font: inherit;
+img {
+    height: auto;
 }
 
-button {
-    cursor: pointer;
-}
+
+/* =========================================================
+   4. LINKS
+   ========================================================= */
 
 a {
     color: inherit;
@@ -140,7 +204,34 @@ a:hover {
 }
 
 
-/* ---------- Typography ---------- */
+/* =========================================================
+   5. FORM NORMALIZATION
+   ========================================================= */
+
+button,
+input,
+select,
+textarea {
+    margin: 0;
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   6. TYPOGRAPHY
+   ========================================================= */
 
 h1,
 h2,
@@ -149,8 +240,13 @@ h4,
 h5,
 h6 {
     margin-top: 0;
+    margin-bottom: var(--space-4);
+
     color: var(--text-primary);
+
     line-height: var(--line-height-tight);
+
+    font-weight: 700;
 }
 
 h1 {
@@ -165,12 +261,35 @@ h3 {
     font-size: var(--font-size-2xl);
 }
 
+h4 {
+    font-size: var(--font-size-xl);
+}
+
+h5 {
+    font-size: var(--font-size-lg);
+}
+
+h6 {
+    font-size: var(--font-size-base);
+}
+
 p {
     margin-top: 0;
+    margin-bottom: var(--space-4);
+}
+
+small {
+    font-size: var(--font-size-sm);
+}
+
+strong {
+    font-weight: 700;
 }
 
 
-/* ---------- Layout ---------- */
+/* =========================================================
+   7. CONTAINERS
+   ========================================================= */
 
 .container {
     width: min(
@@ -190,35 +309,85 @@ p {
     margin-inline: auto;
 }
 
+.reading-container {
+    width: min(
+        calc(100% - 2rem),
+        var(--reading-max)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* =========================================================
+   8. SECTIONS
+   ========================================================= */
+
 .section {
     padding-block: var(--space-12);
 }
 
+.section-sm {
+    padding-block: var(--space-8);
+}
 
-/* ---------- Common Surface ---------- */
+.section-lg {
+    padding-block: var(--space-16);
+}
+
+
+/* =========================================================
+   9. CARDS / SURFACES
+   ========================================================= */
 
 .card {
     background: var(--background);
+
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+
     box-shadow: var(--shadow-sm);
+}
+
+.card-hover {
+    transition:
+        transform var(--transition-normal),
+        box-shadow var(--transition-normal),
+        border-color var(--transition-normal);
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
 }
 
 .surface {
     background: var(--surface);
 }
 
+.surface-alt {
+    background: var(--surface-alt);
+}
 
-/* ---------- Buttons ---------- */
+
+/* =========================================================
+   10. BUTTONS
+   ========================================================= */
 
 .button {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
+
     gap: var(--space-2);
 
     min-height: 44px;
-    padding: 0.65rem 1rem;
+
+    padding:
+        0.65rem
+        1rem;
 
     border: 1px solid transparent;
     border-radius: var(--radius-md);
@@ -226,12 +395,17 @@ p {
     background: var(--brand-primary);
     color: var(--text-on-brand);
 
+    font-size: var(--font-size-base);
     font-weight: 600;
+
+    line-height: 1.2;
 
     transition:
         background-color var(--transition-fast),
         border-color var(--transition-fast),
-        transform var(--transition-fast);
+        color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
 }
 
 .button:hover {
@@ -252,18 +426,45 @@ p {
     background: var(--surface);
 }
 
+.button-block {
+    width: 100%;
+}
 
-/* ---------- Form Controls ---------- */
+
+/* =========================================================
+   11. FORM CONTROLS
+   ========================================================= */
+
+.form-group {
+    margin-bottom: var(--space-5);
+}
+
+label {
+    display: block;
+
+    margin-bottom: var(--space-2);
+
+    color: var(--text-primary);
+
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+}
 
 input,
 select,
 textarea {
     width: 100%;
+
     min-height: 44px;
 
-    padding: 0.65rem 0.75rem;
+    padding:
+        0.65rem
+        0.75rem;
 
-    border: 1px solid var(--border-strong);
+    border:
+        1px solid
+        var(--border-strong);
+
     border-radius: var(--radius-md);
 
     background: var(--background);
@@ -273,7 +474,18 @@ textarea {
 
     transition:
         border-color var(--transition-fast),
-        box-shadow var(--transition-fast);
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
 }
 
 input:focus,
@@ -286,85 +498,34 @@ textarea:focus {
         rgba(37, 99, 235, 0.12);
 }
 
-label {
-    display: block;
-    margin-bottom: var(--space-2);
 
-    color: var(--text-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-}
-
-
-/* ---------- Accessibility ---------- */
-
-:focus-visible {
-    outline: 3px solid rgba(37, 99, 235, 0.35);
-    outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-    }
-}
-
-
-/* ---------- Responsive Foundation ---------- */
-
-@media (max-width: 768px) {
-
-    :root {
-        --font-size-4xl: 2rem;
-        --font-size-3xl: 1.6rem;
-        --font-size-2xl: 1.3rem;
-    }
-
-    .container,
-    .content-container {
-        width: min(
-            calc(100% - 1.25rem),
-            var(--container-max)
-        );
-    }
-
-    .section {
-        padding-block: var(--space-8);
-    }
-}
-
-@media (max-width: 480px) {
-
-    :root {
-        --space-12: 2rem;
-    }
-
-    .container,
-    .content-container {
-        width: min(
-            calc(100% - 1rem),
-            var(--container-max)
-        );
-    }
-}
 /* =========================================================
-   EMIFORMULA — BASE LAYOUT UTILITIES
-   STEP 1.2 — PART C
+   12. GRID
    ========================================================= */
 
-/* ---------- Visibility ---------- */
+.grid {
+    display: grid;
+}
 
-.hidden {
-    display: none !important;
+.grid-2 {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
 }
 
 
-/* ---------- Flex Utilities ---------- */
+/* =========================================================
+   13. FLEX
+   ========================================================= */
 
 .flex {
     display: flex;
@@ -387,6 +548,10 @@ label {
     align-items: flex-start;
 }
 
+.items-end {
+    align-items: flex-end;
+}
+
 .justify-center {
     justify-content: center;
 }
@@ -395,8 +560,14 @@ label {
     justify-content: space-between;
 }
 
+.justify-end {
+    justify-content: flex-end;
+}
 
-/* ---------- Gap Utilities ---------- */
+
+/* =========================================================
+   14. GAP
+   ========================================================= */
 
 .gap-1 {
     gap: var(--space-1);
@@ -414,6 +585,10 @@ label {
     gap: var(--space-4);
 }
 
+.gap-5 {
+    gap: var(--space-5);
+}
+
 .gap-6 {
     gap: var(--space-6);
 }
@@ -423,37 +598,25 @@ label {
 }
 
 
-/* ---------- Grid ---------- */
-
-.grid {
-    display: grid;
-}
-
-.grid-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.grid-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-
-/* ---------- Width ---------- */
+/* =========================================================
+   15. WIDTH
+   ========================================================= */
 
 .w-full {
     width: 100%;
 }
 
 .max-content {
-    width: min(100%, var(--content-max));
+    width: min(
+        100%,
+        var(--content-max)
+    );
 }
 
 
-/* ---------- Text ---------- */
+/* =========================================================
+   16. TEXT UTILITIES
+   ========================================================= */
 
 .text-center {
     text-align: center;
@@ -461,6 +624,10 @@ label {
 
 .text-left {
     text-align: left;
+}
+
+.text-right {
+    text-align: right;
 }
 
 .text-muted {
@@ -471,8 +638,22 @@ label {
     color: var(--text-secondary);
 }
 
+.text-success {
+    color: var(--success);
+}
 
-/* ---------- Spacing ---------- */
+.text-warning {
+    color: var(--warning);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   17. SPACING UTILITIES
+   ========================================================= */
 
 .mt-0 {
     margin-top: 0;
@@ -507,16 +688,65 @@ label {
 }
 
 
-/* ---------- Responsive Grid ---------- */
+/* =========================================================
+   18. VISIBILITY
+   ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================================
+   19. ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+    outline:
+        3px solid
+        rgba(37, 99, 235, 0.35);
+
+    outline-offset: 2px;
+}
+
+
+/* =========================================================
+   20. RESPONSIVE SYSTEM
+   ========================================================= */
 
 @media (max-width: 900px) {
 
     .grid-4 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
     }
 
     .grid-3 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    :root {
+        --font-size-4xl: 2rem;
+        --font-size-3xl: 1.6rem;
+        --font-size-2xl: 1.3rem;
+    }
+
+    .container,
+    .content-container,
+    .reading-container {
+        width: min(
+            calc(100% - 1.25rem),
+            var(--container-max)
+        );
+    }
+
+    .section {
+        padding-block: var(--space-8);
     }
 }
 
@@ -531,5 +761,54 @@ label {
 
     .flex-mobile-column {
         flex-direction: column;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+    }
+
+    h2 {
+        font-size: 1.55rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .container,
+    .content-container,
+    .reading-container {
+        width: min(
+            calc(100% - 1rem),
+            var(--container-max)
+        );
+    }
+
+    .section {
+        padding-block: var(--space-6);
+    }
+
+    .button {
+        min-height: 46px;
+    }
+}
+
+
+/* =========================================================
+   21. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }
