@@ -2,46 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">EMIFORMULA</title>
 
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/header.css">
   <link rel="stylesheet" href="assets/css/search.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
 </head>
 
 <body>
 
-  <!-- Shared header component -->
   <div data-component="header"></div>
 
   <main class="container">
     <section class="section">
       <div class="card" style="padding: 2rem;">
-
         <h1 id="site-name">EMIFORMULA</h1>
-
-        <p>
-          Search system test.
-        </p>
-
-        <p id="config-status">
-          Loading website configuration...
-        </p>
-
+        <p>Footer system test.</p>
+        <p id="config-status">Loading website configuration...</p>
       </div>
     </section>
   </main>
+
+  <div data-component="footer"></div>
 
   <script src="assets/js/site-config.js"></script>
   <script src="assets/js/site.js"></script>
   <script src="assets/js/search-data.js"></script>
   <script src="assets/js/search.js"></script>
+  <script src="assets/js/footer.js"></script>
 
   <script>
     document.getElementById("site-name").textContent =
@@ -51,7 +41,7 @@
       EMIFORMULA_CONFIG.seo.title;
 
     document.getElementById("config-status").textContent =
-      "Step 1.4 search system is ready for testing.";
+      "Step 1.5 footer system is ready for testing.";
   </script>
 
 </body>
