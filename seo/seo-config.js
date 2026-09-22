@@ -15,6 +15,9 @@ window.EMIFORMULA_SEO = Object.freeze({
     "index, follow",
 
   siteType:
-    "WebSite"
+    "WebSite",
+
+  defaultOgType:
+    "website"
 
 });
