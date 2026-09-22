@@ -1,24 +1,15 @@
 /* =========================================================
    EMIFORMULA — CORE SEO ENGINE
-   STEP 1.10
+   STEP 1.10 — COMPLETE FOUNDATION
    ========================================================= */
 
 (function () {
   "use strict";
 
 
-  function getConfig() {
+  function getSiteSeo() {
 
-    if (
-      window.EMIFORMULA_SEO
-    ) {
-
-      return window.EMIFORMULA_SEO;
-
-    }
-
-
-    return {
+    return window.EMIFORMULA_SEO || {
 
       defaultTitle:
         "EMIFORMULA",
@@ -27,50 +18,79 @@
         "EMI and loan calculation tools.",
 
       defaultRobots:
-        "index, follow"
+        "index, follow",
+
+      siteType:
+        "WebSite",
+
+      defaultOgType:
+        "website"
 
     };
 
   }
 
 
-  function getMeta(
-    name
-  ) {
+  function getPageSeo() {
+
+    return window.EMIFORMULA_PAGE_SEO || {};
+
+  }
+
+
+  function getMetaByName(name) {
 
     return document.querySelector(
-      'meta[name="' +
-      name +
-      '"]'
+      'meta[name="' + name + '"]'
     );
 
   }
 
 
-  function createMeta(
-    name
-  ) {
+  function getMetaByProperty(property) {
+
+    return document.querySelector(
+      'meta[property="' + property + '"]'
+    );
+
+  }
+
+
+  function createMetaByName(name) {
 
     var meta =
-      document.createElement(
-        "meta"
-      );
+      document.createElement("meta");
 
     meta.setAttribute(
       "name",
       name
     );
 
-    document.head.appendChild(
-      meta
-    );
+    document.head.appendChild(meta);
 
     return meta;
 
   }
 
 
-  function setMeta(
+  function createMetaByProperty(property) {
+
+    var meta =
+      document.createElement("meta");
+
+    meta.setAttribute(
+      "property",
+      property
+    );
+
+    document.head.appendChild(meta);
+
+    return meta;
+
+  }
+
+
+  function setMetaByName(
     name,
     content
   ) {
@@ -79,18 +99,15 @@
       return;
     }
 
-
     var meta =
-      getMeta(name);
-
+      getMetaByName(name);
 
     if (!meta) {
 
       meta =
-        createMeta(name);
+        createMetaByName(name);
 
     }
-
 
     meta.setAttribute(
       "content",
@@ -100,51 +117,178 @@
   }
 
 
-  function getCanonical() {
+  function setMetaByProperty(
+    property,
+    content
+  ) {
 
-    return document.querySelector(
-      'link[rel="canonical"]'
+    if (!content) {
+      return;
+    }
+
+    var meta =
+      getMetaByProperty(property);
+
+    if (!meta) {
+
+      meta =
+        createMetaByProperty(property);
+
+    }
+
+    meta.setAttribute(
+      "content",
+      content
     );
 
   }
 
 
-  function createCanonical() {
+  function getTitle() {
 
-    var link =
-      document.createElement(
-        "link"
+    var siteSeo =
+      getSiteSeo();
+
+    var pageSeo =
+      getPageSeo();
+
+    var title =
+      pageSeo.title ||
+      document.title ||
+      siteSeo.defaultTitle;
+
+    return title.trim();
+
+  }
+
+
+  function getDescription() {
+
+    var siteSeo =
+      getSiteSeo();
+
+    var pageSeo =
+      getPageSeo();
+
+    return (
+      pageSeo.description ||
+      siteSeo.defaultDescription
+    ).trim();
+
+  }
+
+
+  function getRobots() {
+
+    var siteSeo =
+      getSiteSeo();
+
+    var pageSeo =
+      getPageSeo();
+
+    return (
+      pageSeo.robots ||
+      siteSeo.defaultRobots
+    ).trim();
+
+  }
+
+
+  function setTitle() {
+
+    var title =
+      getTitle();
+
+    document.title =
+      title;
+
+  }
+
+
+  function setBasicMeta() {
+
+    setMetaByName(
+      "description",
+      getDescription()
+    );
+
+    setMetaByName(
+      "robots",
+      getRobots()
+    );
+
+  }
+
+
+  function setOpenGraph() {
+
+    var siteSeo =
+      getSiteSeo();
+
+    var pageSeo =
+      getPageSeo();
+
+    var title =
+      getTitle();
+
+    var description =
+      getDescription();
+
+    var ogType =
+      pageSeo.ogType ||
+      siteSeo.defaultOgType ||
+      "website";
+
+
+    setMetaByProperty(
+      "og:title",
+      title
+    );
+
+    setMetaByProperty(
+      "og:description",
+      description
+    );
+
+    setMetaByProperty(
+      "og:type",
+      ogType
+    );
+
+    if (pageSeo.ogImage) {
+
+      setMetaByProperty(
+        "og:image",
+        pageSeo.ogImage
       );
 
-    link.setAttribute(
-      "rel",
-      "canonical"
-    );
-
-    document.head.appendChild(
-      link
-    );
-
-    return link;
+    }
 
   }
 
 
   function setCanonical() {
 
-    /*
-      Do not create a canonical URL
-      while the site's public domain
-      is not configured.
-    */
-
     var config =
       window.EMIFORMULA_CONFIG;
+
+    var pageSeo =
+      getPageSeo();
 
 
     if (
       !config ||
       !config.baseUrl
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      pageSeo.canonical ===
+      false
     ) {
 
       return;
@@ -167,13 +311,26 @@
 
 
     var canonical =
-      getCanonical();
+      document.querySelector(
+        'link[rel="canonical"]'
+      );
 
 
     if (!canonical) {
 
       canonical =
-        createCanonical();
+        document.createElement(
+          "link"
+        );
+
+      canonical.setAttribute(
+        "rel",
+        "canonical"
+      );
+
+      document.head.appendChild(
+        canonical
+      );
 
     }
 
@@ -186,50 +343,13 @@
   }
 
 
-  function setTitle() {
-
-    var config =
-      getConfig();
-
-
-    var currentTitle =
-      document.title.trim();
-
-
-    if (
-      !currentTitle ||
-      currentTitle ===
-      "Page Title"
-    ) {
-
-      document.title =
-        config.defaultTitle;
-
-    }
-
-  }
-
-
   function initialize() {
-
-    var config =
-      getConfig();
-
 
     setTitle();
 
+    setBasicMeta();
 
-    setMeta(
-      "description",
-      config.defaultDescription
-    );
-
-
-    setMeta(
-      "robots",
-      config.defaultRobots
-    );
-
+    setOpenGraph();
 
     setCanonical();
 
