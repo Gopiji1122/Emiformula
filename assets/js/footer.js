@@ -67,12 +67,26 @@
 
         .then(function (html) {
 
-          placeholder.innerHTML =
-            html;
+  placeholder.innerHTML =
+    html;
 
-          setupFooter();
+  var homeUrl =
+    basePath + "/";
 
-        })
+  placeholder
+    .querySelectorAll('a[href="./"]')
+    .forEach(function (link) {
+
+      link.setAttribute(
+        "href",
+        homeUrl
+      );
+
+    });
+
+  setupFooter();
+
+})
 
         .catch(function (error) {
 
