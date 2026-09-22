@@ -9,43 +9,26 @@
     >
 
     <title id="page-title">EMIFORMULA</title>
-
-    <!-- Central website design system -->
-    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 
-    <main class="container">
+    <main>
+        <h1 id="site-name">EMIFORMULA</h1>
 
-        <section class="section">
+        <p>
+            Website core foundation is working.
+        </p>
 
-            <div class="card" style="padding: 2rem;">
-
-                <h1 id="site-name">EMIFORMULA</h1>
-
-                <p>
-                    Website core foundation is working.
-                </p>
-
-                <p id="config-status">
-                    Loading website configuration...
-                </p>
-
-                <button class="button" type="button">
-                    Design System Test
-                </button>
-
-            </div>
-
-        </section>
-
+        <p id="config-status">
+            Loading website configuration...
+        </p>
     </main>
 
     <!-- Central website configuration -->
     <script src="assets/js/site-config.js"></script>
 
-    <!-- Step 1.2-B test -->
+    <!-- Step 1.1 configuration test -->
     <script>
         document.getElementById("site-name").textContent =
             EMIFORMULA_CONFIG.siteName;
@@ -54,7 +37,7 @@
             EMIFORMULA_CONFIG.seo.title;
 
         document.getElementById("config-status").textContent =
-            "Central configuration and CSS connected successfully.";
+            "Central website configuration connected successfully.";
     </script>
 
 </body>
