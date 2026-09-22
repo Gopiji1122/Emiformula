@@ -17,37 +17,101 @@
     href="../assets/css/style.css"
   >
 
+  <link
+    rel="stylesheet"
+    href="../assets/css/header.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/search.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/footer.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/responsive.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/layout.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/components.css"
+  >
+
 </head>
+
 
 <body>
 
-  <main class="container">
 
-    <section class="section">
+  <!-- Shared Header -->
 
-      <div class="card">
+  <div data-component="header"></div>
 
-        <h1>SEO System Test</h1>
 
-        <p>
-          This page is used to test the
-          EMIFORMULA core SEO engine.
-        </p>
+  <!-- SEO Test Content -->
 
-      </div>
+  <main class="page-main">
 
-    </section>
+    <div class="page-container">
+
+      <section class="page-section">
+
+        <div class="card">
+
+          <h1>
+            SEO System Test
+          </h1>
+
+          <p>
+            This page is used to test the
+            EMIFORMULA core SEO engine.
+          </p>
+
+        </div>
+
+      </section>
+
+    </div>
 
   </main>
 
 
-  <!-- SEO Configuration -->
+  <!-- Shared Footer -->
+
+  <div data-component="footer"></div>
+
+
+  <!-- Shared Core -->
+
+  <script src="../assets/js/site-config.js"></script>
+
+  <script src="../assets/js/site.js"></script>
+
+  <script src="../assets/js/search-data.js"></script>
+
+  <script src="../assets/js/search.js"></script>
+
+  <script src="../assets/js/footer.js"></script>
+
+  <script src="../assets/js/components.js"></script>
+
+
+  <!-- SEO System -->
 
   <script src="./seo-config.js"></script>
 
-  <!-- Core SEO Engine -->
-
   <script src="./seo.js"></script>
+
 
 </body>
 
