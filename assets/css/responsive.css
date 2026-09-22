@@ -1,0 +1,177 @@
+/* =========================================================
+   EMIFORMULA — RESPONSIVE FRAMEWORK
+   STEP 1.6
+   ========================================================= */
+
+/*
+  This file is the shared responsive safety layer.
+  Component-specific responsive rules remain inside
+  their own CSS files.
+*/
+
+
+/* ---------------------------------------------------------
+   1. GLOBAL RESPONSIVE SAFETY
+   --------------------------------------------------------- */
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+
+/* ---------------------------------------------------------
+   2. MEDIA SAFETY
+   --------------------------------------------------------- */
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* ---------------------------------------------------------
+   3. LONG CONTENT SAFETY
+   --------------------------------------------------------- */
+
+pre,
+code {
+  max-width: 100%;
+}
+
+pre {
+  overflow-x: auto;
+}
+
+table {
+  max-width: 100%;
+}
+
+
+/* ---------------------------------------------------------
+   4. FLEX / GRID SAFETY
+   --------------------------------------------------------- */
+
+.flex,
+.grid,
+.container,
+.section,
+.card {
+  min-width: 0;
+}
+
+
+/* ---------------------------------------------------------
+   5. CONTAINER RESPONSIVENESS
+   --------------------------------------------------------- */
+
+.container {
+  width: min(
+    calc(100% - 2rem),
+    var(--container-max)
+  );
+
+  margin-inline: auto;
+}
+
+
+/* ---------------------------------------------------------
+   6. SMALL MOBILE DEVICES
+   --------------------------------------------------------- */
+
+@media (max-width: 480px) {
+
+  .container {
+    width: min(
+      calc(100% - 1rem),
+      var(--container-max)
+    );
+  }
+
+  .section {
+    padding-block: var(--space-6);
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   7. TABLETS
+   --------------------------------------------------------- */
+
+@media (min-width: 481px) and (max-width: 900px) {
+
+  .container {
+    width: min(
+      calc(100% - 2rem),
+      var(--container-max)
+    );
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   8. LARGE DESKTOP
+   --------------------------------------------------------- */
+
+@media (min-width: 1200px) {
+
+  .container {
+    width: min(
+      calc(100% - 3rem),
+      var(--container-max)
+    );
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   9. TOUCH TARGET SAFETY
+   --------------------------------------------------------- */
+
+@media (pointer: coarse) {
+
+  button,
+  input,
+  select,
+  textarea,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   10. REDUCED MOTION
+   --------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+}
