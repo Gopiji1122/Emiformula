@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gopiji1122.github.io/Emiformula/sitemap.xml
