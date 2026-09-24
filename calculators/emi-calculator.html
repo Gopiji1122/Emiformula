@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>EMI Calculator | EMIFORMULA</title>
+
+  <meta
+    name="description"
+    content="Calculate monthly EMI, total interest and total repayment for a loan with EMIFORMULA."
+  >
+
+
+  <!-- CORE CSS -->
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/header.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/search.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/footer.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/responsive.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/layout.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/components.css"
+  >
+
+
+  <!-- SEO -->
+
+  <script src="../seo/seo-config.js"></script>
+
+  <script>
+
+    window.EMIFORMULA_PAGE_SEO = {
+
+      title: "EMI Calculator | EMIFORMULA",
+
+      description:
+        "Calculate monthly EMI, total interest and total repayment for a loan with EMIFORMULA.",
+
+      robots: "index, follow",
+
+      ogType: "website"
+
+    };
+
+  </script>
+
+  <script src="../seo/seo.js"></script>
+
+
+  <!-- CALCULATOR -->
+
+  <script src="../configs/calculators/emi-calculator.js"></script>
+
+  <script src="../assets/js/calculator-engine.js"></script>
+
+  <script src="../assets/js/calculator-utils.js"></script>
+
+  <script src="../assets/js/calculator-ui.js"></script>
+
+
+</head>
+
+
+<body>
+
+  <div class="page-shell">
+
+
+    <!-- HEADER -->
+
+    <div data-component="header"></div>
+
+
+    <main class="page-main">
+
+      <div class="page-container">
+
+        <section class="page-section">
+
+          <div class="page-full">
+
+
+            <!-- BREADCRUMBS -->
+
+            <div
+              data-component="breadcrumbs"
+            ></div>
+
+
+            <!-- PAGE TITLE -->
+
+            <div
+              data-component="page-title"
+            ></div>
+
+
+            <div class="page-grid">
+
+
+              <!-- MAIN CONTENT -->
+
+              <div class="page-content">
+
+
+                <!-- CALCULATOR -->
+
+                <div class="card">
+
+                  <h2>EMI Calculator</h2>
+
+
+                  <div class="content-stack">
+
+
+                    <!-- LOAN AMOUNT -->
+
+                    <div class="form-group">
+
+                      <label for="loan-amount">
+                        Loan Amount
+                      </label>
+
+                      <input
+                        id="loan-amount"
+                        type="number"
+                        inputmode="decimal"
+                        min="1"
+                        step="1000"
+                        value="500000"
+                        placeholder="Enter loan amount"
+                      >
+
+                    </div>
+
+
+                    <!-- INTEREST RATE -->
+
+                    <div class="form-group">
+
+                      <label for="interest-rate">
+                        Interest Rate (% per year)
+                      </label>
+
+                      <input
+                        id="interest-rate"
+                        type="number"
+                        inputmode="decimal"
+                        min="0"
+                        step="0.01"
+                        value="10"
+                        placeholder="Enter interest rate"
+                      >
+
+                    </div>
+
+
+                    <!-- TENURE -->
+
+                    <div class="form-group">
+
+                      <label for="loan-tenure">
+                        Loan Tenure (months)
+                      </label>
+
+                      <input
+                        id="loan-tenure"
+                        type="number"
+                        inputmode="numeric"
+                        min="1"
+                        step="1"
+                        value="60"
+                        placeholder="Enter tenure"
+                      >
+
+                    </div>
+
+
+                    <!-- CALCULATE -->
+
+                    <button
+                      class="button"
+                      type="button"
+                      id="calculate-emi"
+                    >
+                      Calculate EMI
+                    </button>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                      class="card"
+                      id="emi-result"
+                      aria-live="polite"
+                      hidden
+                    >
+
+                      <h3>EMI Result</h3>
+
+
+                      <p>
+                        Monthly EMI:
+                        <strong id="emi-value">-</strong>
+                      </p>
+
+
+                      <p>
+                        Total Interest:
+                        <strong id="interest-value">-</strong>
+                      </p>
+
+
+                      <p>
+                        Total Payment:
+                        <strong id="payment-value">-</strong>
+                      </p>
+
+                    </div>
+
+
+                    <!-- ERROR -->
+
+                    <div
+                      class="card"
+                      id="emi-error"
+                      aria-live="assertive"
+                      hidden
+                    >
+
+                      <p>
+                        Please enter valid loan details.
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <!-- ABOUT -->
+
+                <div class="card">
+
+                  <h2>About This EMI Calculator</h2>
+
+                  <p>
+                    Use this calculator to estimate
+                    monthly loan EMI, total interest
+                    and total repayment based on the
+                    loan amount, annual interest rate
+                    and loan tenure.
+                  </p>
+
+                </div>
+
+
+              </div>
+
+
+              <!-- SIDEBAR -->
+
+              <aside class="page-sidebar">
+
+                <div class="card">
+
+                  <h2>Related Calculators</h2>
+
+                  <p>
+                    More loan calculators will be
+                    added here.
+                  </p>
+
+                </div>
+
+              </aside>
+
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <div data-component="footer"></div>
+
+  </div>
+
+
+  <!-- CORE JAVASCRIPT -->
+
+  <script src="../assets/js/site-config.js"></script>
+
+  <script src="../assets/js/site.js"></script>
+
+  <script src="../assets/js/search-data.js"></script>
+
+  <script src="../assets/js/search.js"></script>
+
+  <script src="../assets/js/footer.js"></script>
+
+  <script src="../assets/js/components.js"></script>
+
+  <script src="../assets/js/navigation.js"></script>
+
+
+  <!-- EMI CALCULATOR LOGIC -->
+
+  <script>
+
+    (function () {
+
+      "use strict";
+
+
+      var button =
+        document.getElementById("calculate-emi");
+
+      var result =
+        document.getElementById("emi-result");
+
+      var error =
+        document.getElementById("emi-error");
+
+
+      button.addEventListener(
+        "click",
+        function () {
+
+
+          var principal =
+            EMIFORMULA_CALCULATOR_UI.getNumber(
+              "#loan-amount"
+            );
+
+
+          var annualRate =
+            EMIFORMULA_CALCULATOR_UI.getNumber(
+              "#interest-rate"
+            );
+
+
+          var months =
+            EMIFORMULA_CALCULATOR_UI.getNumber(
+              "#loan-tenure"
+            );
+
+
+          var calculation =
+            EMIFORMULA_CALCULATOR.calculateEMI(
+              principal,
+              annualRate,
+              months
+            );
+
+
+          if (!calculation) {
+
+            EMIFORMULA_CALCULATOR_UI.hide(
+              "#emi-result"
+            );
+
+            EMIFORMULA_CALCULATOR_UI.show(
+              "#emi-error"
+            );
+
+            return;
+          }
+
+
+          EMIFORMULA_CALCULATOR_UI.hide(
+            "#emi-error"
+          );
+
+
+          EMIFORMULA_CALCULATOR_UI.setText(
+            "#emi-value",
+            EMIFORMULA_CALCULATOR_UTILS.formatCurrency(
+              calculation.emi
+            )
+          );
+
+
+          EMIFORMULA_CALCULATOR_UI.setText(
+            "#interest-value",
+            EMIFORMULA_CALCULATOR_UTILS.formatCurrency(
+              calculation.totalInterest
+            )
+          );
+
+
+          EMIFORMULA_CALCULATOR_UI.setText(
+            "#payment-value",
+            EMIFORMULA_CALCULATOR_UTILS.formatCurrency(
+              calculation.totalPayment
+            )
+          );
+
+
+          EMIFORMULA_CALCULATOR_UI.show(
+            "#emi-result"
+          );
+
+        }
+      );
+
+    })();
+
+  </script>
+
+
+</body>
+
+</html>
