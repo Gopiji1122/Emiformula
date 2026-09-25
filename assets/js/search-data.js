@@ -1,28 +1,6 @@
-/* =========================================================
-   EMIFORMULA — SEARCH DATA
-   STEP 1.4 — CENTRAL SEARCH INDEX
-   ========================================================= */
-
+/* EMIFORMULA — SEARCH INDEX (current public calculators) */
 window.EMIFORMULA_SEARCH_INDEX = [
-
-  /*
-   * Current search index is intentionally minimal.
-   *
-   * Future calculators and guides will be added here
-   * when their pages are created.
-   */
-
-  {
-    title: "EMIFORMULA",
-
-    description:
-      "EMI and loan calculation website.",
-
-    category:
-      "Website",
-
-    url:
-      "./"
-  }
-
+  { title:"EMIFORMULA", description:"EMI and loan calculation tools for everyday financial planning.", category:"Website", url:"./" },
+  { title:"EMI Calculator", description:"Calculate monthly EMI, total interest, total repayment and loan balance.", category:"EMI Calculators", url:"./calculators/emi-calculator.html" },
+  { title:"Personal Loan Calculator", description:"Calculate personal loan EMI, amount received, total interest, effective cost and repayment comparisons.", category:"Loan Calculators", url:"./calculators/personal-loan-calculator.html" }
 ];
