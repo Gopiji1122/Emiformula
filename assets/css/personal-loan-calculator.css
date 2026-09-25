@@ -7,41 +7,85 @@
 @media(max-width:900px){.loan-grid{grid-template-columns:1fr}.loan-kpis{grid-template-columns:repeat(2,1fr)}.loan-main-result{grid-template-columns:1fr}.loan-donut-box{padding:5px}.loan-analysis,.loan-guide-grid{grid-template-columns:1fr}}@media(max-width:560px){.loan-hero,.loan-input-card,.loan-panel,.loan-timeline,.loan-main-result{padding:18px;border-radius:20px}.loan-kpis{gap:8px}.loan-kpi{padding:13px}.loan-kpi strong{font-size:.95rem}.loan-two{grid-template-columns:1fr}.loan-actions{grid-template-columns:1fr}.loan-bar-row{grid-template-columns:40px 1fr 72px}.loan-donut{width:165px;height:165px}.loan-chart{height:175px}}
 
 /* =========================================================
-   DESKTOP / TABLET LAYOUT FIX
-   Keep the calculator setup and results balanced and full-width.
+   PERSONAL LOAN — ROBUST RESPONSIVE LAYOUT PATCH
+   Keeps the calculator two-column on real desktop and
+   stacks it on tablet/mobile widths.
    ========================================================= */
-.loan-grid {
+.loan-page .loan-wrap,
+.loan-page .loan-grid,
+.loan-page .loan-results,
+.loan-page .loan-input-card {
   width: 100%;
-  grid-template-columns: minmax(320px, .9fr) minmax(0, 1.6fr);
-  align-items: start;
-}
-
-.loan-grid > * {
-  width: 100%;
-  min-width: 0;
+  max-width: 100%;
   box-sizing: border-box;
 }
 
-.loan-results {
-  width: 100%;
+.loan-page .loan-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.loan-page .loan-input-card,
+.loan-page .loan-results {
   min-width: 0;
 }
 
-.loan-kpis,
-.loan-main-result,
-.loan-analysis,
-.loan-chart-wrap,
-.loan-results > .loan-card {
+.loan-page .loan-results {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.loan-page .loan-kpis,
+.loan-page .loan-main-result,
+.loan-page .loan-analysis,
+.loan-page .loan-guide-grid {
   min-width: 0;
 }
 
-@media (max-width: 900px) {
-  .loan-grid {
-    grid-template-columns: 1fr;
+/* Tablets and mobile: one clean full-width column. */
+@media (max-width: 1100px) {
+  .loan-page .loan-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .loan-input-card,
-  .loan-results {
+  .loan-page .loan-input-card,
+  .loan-page .loan-results {
     width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .loan-page .loan-grid {
+    gap: 14px;
+  }
+
+  .loan-page .loan-input-card {
+    padding: 18px;
+  }
+
+  .loan-page .loan-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .loan-page .loan-main-result {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .loan-page .loan-analysis,
+  .loan-page .loan-guide-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .loan-page .loan-kpis {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .loan-page .loan-actions {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
