@@ -16,9 +16,17 @@
       return;
     }
 
-    window.EMIFORMULA_SCHEMA = [
-      calculatorSchema
-    ];
+    var existing =
+      Array.isArray(
+        window.EMIFORMULA_SCHEMA
+      )
+        ? window.EMIFORMULA_SCHEMA
+        : [];
+
+    window.EMIFORMULA_SCHEMA =
+      existing.concat([
+        calculatorSchema
+      ]);
   }
 
   if (document.readyState === "loading") {
