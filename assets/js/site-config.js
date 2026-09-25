@@ -1,26 +1,22 @@
 window.EMIFORMULA_CONFIG = Object.freeze({
-
   siteName: "EMIFORMULA",
 
   pathPrefix: "/Emiformula",
 
-  domain: "",
+  domain:
+    "https://gopiji1122.github.io",
 
-  baseUrl: "",
+  baseUrl:
+    "https://gopiji1122.github.io/Emiformula",
 
   logo: "",
 
-  urls: {
-    calculators: "/Emiformula/calculators/",
-    guides: "/Emiformula/guides/",
-    pages: "/Emiformula/pages/"
-  },
-
   seo: {
     title: "EMIFORMULA",
-    description: ""
+
+    description:
+      "EMI and loan calculation tools for simple and practical financial calculations."
   },
 
   version: "1.0.0"
-
 });
