@@ -266,7 +266,6 @@
 
   }
 
-
   function setCanonical() {
 
     var config =
@@ -280,9 +279,7 @@
       !config ||
       !config.baseUrl
     ) {
-
       return;
-
     }
 
 
@@ -290,9 +287,7 @@
       pageSeo.canonical ===
       false
     ) {
-
       return;
-
     }
 
 
@@ -301,8 +296,45 @@
         .replace(/\/+$/, "");
 
 
+    var pathPrefix =
+      config.pathPrefix || "";
+
+
+    pathPrefix =
+      "/" +
+      pathPrefix
+        .replace(/^\/+/, "")
+        .replace(/\/+$/, "");
+
+
     var path =
       window.location.pathname;
+
+
+    if (
+      pathPrefix !== "/" &&
+      path.indexOf(pathPrefix) === 0
+    ) {
+
+      path =
+        path.substring(
+          pathPrefix.length
+        );
+
+    }
+
+
+    if (!path) {
+      path = "/";
+    }
+
+
+    if (
+      path.charAt(0) !== "/"
+    ) {
+      path =
+        "/" + path;
+    }
 
 
     var canonicalUrl =
