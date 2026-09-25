@@ -15,5 +15,10 @@
 
   window.EMIFORMULA_CALCULATOR_REGISTRY =
     Object.freeze(registry);
+  window.EMIFORMULA_GET_CALCULATOR =
+    function (calculatorId) {
 
+      return registry[calculatorId] || null;
+
+    };
 })();
