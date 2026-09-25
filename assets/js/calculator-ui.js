@@ -1138,10 +1138,9 @@
     );
   }
 
-
   /*
    * ============================================================
-   * DONUT CHART
+   * DONUT CHART — SVG VERSION
    * ============================================================
    */
 
@@ -1149,86 +1148,139 @@
     principal,
     interest
   ) {
+    if (
+      !donutPrincipal ||
+      !donutInterest
+    ) {
+      return;
+    }
+
+    principal =
+      Math.max(
+        0,
+        toNumber(principal)
+      );
+
+    interest =
+      Math.max(
+        0,
+        toNumber(interest)
+      );
+
     var total =
       principal +
       interest;
 
+    if (total <= 0) {
+
+      donutPrincipal.style.strokeDasharray =
+        "0 439.82";
+
+      donutPrincipal.style.strokeDashoffset =
+        "0";
+
+      donutInterest.style.strokeDasharray =
+        "0 439.82";
+
+      donutInterest.style.strokeDashoffset =
+        "0";
+
+      if (principalPercent) {
+        principalPercent.textContent =
+          "0%";
+      }
+
+      if (interestPercent) {
+        interestPercent.textContent =
+          "0%";
+      }
+
+      return;
+    }
+
+    /*
+     * SVG circle:
+     *
+     * radius = 70
+     *
+     * circumference =
+     * 2 × π × 70
+     * ≈ 439.82
+     */
+
+    var circumference =
+      2 *
+      Math.PI *
+      70;
+
     var principalRatio =
-      total > 0
-        ? principal / total
-        : 0;
+      principal /
+      total;
 
     var interestRatio =
-      total > 0
-        ? interest / total
-        : 0;
+      interest /
+      total;
 
-    var principalAngle =
-      principalRatio * 360;
+    var principalLength =
+      circumference *
+      principalRatio;
 
-    var interestAngle =
-      interestRatio * 360;
+    var interestLength =
+      circumference *
+      interestRatio;
 
-    if (
-      donutPrincipal
-    ) {
-      donutPrincipal.style.setProperty(
-        "--donut-angle",
-        principalAngle + "deg"
+    /*
+     * Principal arc
+     */
+
+    donutPrincipal.style.strokeDasharray =
+      principalLength +
+      " " +
+      circumference;
+
+    donutPrincipal.style.strokeDashoffset =
+      "0";
+
+    /*
+     * Interest arc
+     *
+     * Start after the principal arc.
+     */
+
+    donutInterest.style.strokeDasharray =
+      interestLength +
+      " " +
+      circumference;
+
+    donutInterest.style.strokeDashoffset =
+      String(
+        -principalLength
       );
 
-      donutPrincipal.style.setProperty(
-        "--donut-interest-angle",
-        interestAngle + "deg"
-      );
+    /*
+     * Percentage labels
+     */
 
-      donutPrincipal.style.setProperty(
-        "--principal-percent",
-        (
-          principalRatio * 100
-        ).toFixed(2) + "%"
-      );
+    if (principalPercent) {
 
-      donutPrincipal.style.setProperty(
-        "--interest-percent",
-        (
-          interestRatio * 100
-        ).toFixed(2) + "%"
-      );
-    }
-
-    if (
-      donutInterest
-    ) {
-      donutInterest.style.setProperty(
-        "--donut-angle",
-        interestAngle + "deg"
-      );
-
-      donutInterest.style.setProperty(
-        "--donut-principal-angle",
-        principalAngle + "deg"
-      );
-    }
-
-    if (
-      principalPercent
-    ) {
       principalPercent.textContent =
         (
-          principalRatio * 100
+          principalRatio *
+          100
         ).toFixed(1) +
         "%";
+
     }
 
-    if (
-      interestPercent
-    ) {
+    if (interestPercent) {
+
       interestPercent.textContent =
         (
-          interestRatio * 100
+          interestRatio *
+          100
         ).toFixed(1) +
         "%";
+
     }
   }
 
