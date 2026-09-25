@@ -3148,6 +3148,72 @@
   }
     /*
    * ============================================================
+   * QUICK LOAN PRESETS
+   * ============================================================
+   */
+
+  var presetButtons =
+    document.querySelectorAll(
+      "[data-loan-preset]"
+    );
+
+  presetButtons.forEach(
+    function (button) {
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          var presetValue =
+            toNumber(
+              button.getAttribute(
+                "data-loan-preset"
+              )
+            );
+
+          if (
+            !loanAmount ||
+            presetValue <= 0
+          ) {
+            return;
+          }
+
+          loanAmount.value =
+            presetValue;
+
+          syncLoanFromInput();
+
+          /*
+           * Update active preset styling.
+           */
+
+          presetButtons.forEach(
+            function (item) {
+
+              item.classList.remove(
+                "active"
+              );
+
+            }
+          );
+
+          button.classList.add(
+            "active"
+          );
+
+          /*
+           * Recalculate immediately.
+           */
+
+          calculate();
+
+        }
+      );
+
+    }
+  );
+    /*
+   * ============================================================
    * FINAL INITIALIZATION
    * ============================================================
    */
