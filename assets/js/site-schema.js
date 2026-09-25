@@ -2,13 +2,15 @@
   "use strict";
 
   function initializeSiteSchema() {
-    var siteSchema = window.EMIFORMULA_SITE_SCHEMA || [];
+    var siteSchema =
+      window.EMIFORMULA_SITE_SCHEMA || [];
 
     if (!Array.isArray(siteSchema)) {
       return;
     }
 
-    window.EMIFORMULA_SCHEMA = siteSchema;
+    window.EMIFORMULA_SCHEMA =
+      siteSchema.slice();
   }
 
   if (document.readyState === "loading") {
