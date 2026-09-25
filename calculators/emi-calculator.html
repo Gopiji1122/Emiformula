@@ -1,1950 +1,689 @@
-<!DOCTYPE html>
-<html lang="en">
+<main class="page-main calculator-page">
 
-<head>
+  <div class="page-container">
 
-  <meta charset="UTF-8">
+    <section class="page-section">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+      <div class="page-full">
 
-  <title>EMI Calculator | EMIFORMULA</title>
+        <div data-component="breadcrumbs"></div>
 
-  <meta
-    name="description"
-    content="Calculate monthly EMI, total interest, total repayment and loan amortization with EMIFORMULA."
-  >
+        <div data-component="page-title"></div>
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/style.css"
-  >
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/header.css"
-  >
+        <div class="pro-calculator">
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/search.css"
-  >
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/footer.css"
-  >
+          <div class="pro-calculator-header">
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/responsive.css"
-  >
+            <h2>Smart EMI Calculator</h2>
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/layout.css"
-  >
+            <p>
+              Calculate your monthly EMI, total interest,
+              repayment cost and loan balance with live
+              interactive results.
+            </p>
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/components.css"
-  >
+          </div>
 
-  <link
-    rel="stylesheet"
-    href="../assets/css/calculator.css"
-  >
 
+          <!-- QUICK PRESETS -->
 
-  <script src="../seo/seo-config.js"></script>
+          <div class="calc-presets">
 
-  <script>
+            <button
+              class="calc-preset active"
+              type="button"
+              data-loan-preset="500000"
+            >
+              ₹5 Lakh
+            </button>
 
-    window.EMIFORMULA_PAGE_SEO = {
+            <button
+              class="calc-preset"
+              type="button"
+              data-loan-preset="1000000"
+            >
+              ₹10 Lakh
+            </button>
 
-      title:
-        "EMI Calculator | EMIFORMULA",
+            <button
+              class="calc-preset"
+              type="button"
+              data-loan-preset="2500000"
+            >
+              ₹25 Lakh
+            </button>
 
-      description:
-        "Calculate monthly EMI, total interest, total repayment and loan amortization with EMIFORMULA.",
+            <button
+              class="calc-preset"
+              type="button"
+              data-loan-preset="5000000"
+            >
+              ₹50 Lakh
+            </button>
 
-      robots:
-        "index, follow",
+            <button
+              class="calc-preset"
+              type="button"
+              data-loan-preset="10000000"
+            >
+              ₹1 Crore
+            </button>
 
-      ogType:
-        "website"
+          </div>
 
-    };
 
-  </script>
+          <!-- DASHBOARD -->
 
-  <script src="../seo/seo.js"></script>
+          <div class="calc-dashboard">
 
 
-  <script src="../configs/calculators/emi-calculator.js"></script>
+            <!-- INPUT PANEL -->
 
-  <script src="../assets/js/calculator-engine.js"></script>
+            <div class="calc-input-panel">
 
-  <script src="../assets/js/calculator-utils.js"></script>
+              <div class="calc-panel-title">
 
-  <script src="../assets/js/calculator-ui.js"></script>
+                <h3>Loan Details</h3>
 
-</head>
+                <span>Customize</span>
 
+              </div>
 
-<body>
 
-  <div class="page-shell">
+              <!-- LOAN -->
 
+              <div class="calc-field">
 
-    <div data-component="header"></div>
+                <div class="calc-field-label">
 
+                  <span>Loan Amount</span>
 
-    <main class="page-main calculator-page">
+                  <span
+                    id="loan-live"
+                    class="calc-live-value"
+                  >
+                    ₹5,00,000
+                  </span>
 
-      <div class="page-container">
+                </div>
 
-        <section class="page-section">
 
-          <div class="page-full">
+                <div class="calc-input-box">
 
+                  <span class="calc-prefix">₹</span>
 
-            <div
-              data-component="breadcrumbs"
-            ></div>
-
-
-            <div
-              data-component="page-title"
-            ></div>
-
-
-            <div class="page-grid">
-
-              <div class="page-content">
-
-
-                <!-- INPUT CARD -->
-
-                <div class="card calculator-card">
-
-                  <div class="calculator-intro">
-
-                    <h2>EMI Calculator</h2>
-
-                    <p>
-                      Adjust the loan amount,
-                      interest rate and tenure
-                      to calculate your EMI,
-                      interest and repayment.
-                    </p>
-
-                  </div>
-
-
-                  <div class="calculator-input-grid">
-
-
-                    <!-- LOAN AMOUNT -->
-
-                    <div
-                      class="calculator-field calculator-field-full"
-                    >
-
-                      <label for="loan-amount">
-                        Loan Amount
-                      </label>
-
-                      <div class="calculator-input-row">
-
-                        <input
-                          id="loan-amount"
-                          type="number"
-                          inputmode="decimal"
-                          min="1000"
-                          max="100000000"
-                          step="1000"
-                          value="500000"
-                        >
-
-                        <span
-                          class="calculator-input-suffix"
-                        >
-                          ₹
-                        </span>
-
-                      </div>
-
-                      <input
-                        id="loan-amount-slider"
-                        class="calculator-slider"
-                        type="range"
-                        min="1000"
-                        max="100000000"
-                        step="1000"
-                        value="500000"
-                      >
-
-                      <div
-                        class="calculator-range-labels"
-                      >
-                        <span>₹1,000</span>
-                        <span>₹10 Cr</span>
-                      </div>
-
-                    </div>
-
-
-                    <!-- RATE -->
-
-                    <div class="calculator-field">
-
-                      <label for="interest-rate">
-                        Interest Rate
-                      </label>
-
-                      <div class="calculator-input-row">
-
-                        <input
-                          id="interest-rate"
-                          type="number"
-                          inputmode="decimal"
-                          min="0"
-                          max="40"
-                          step="0.01"
-                          value="10"
-                        >
-
-                        <span
-                          class="calculator-input-suffix"
-                        >
-                          %
-                        </span>
-
-                      </div>
-
-                      <input
-                        id="interest-rate-slider"
-                        class="calculator-slider"
-                        type="range"
-                        min="0"
-                        max="40"
-                        step="0.01"
-                        value="10"
-                      >
-
-                      <div
-                        class="calculator-range-labels"
-                      >
-                        <span>0%</span>
-                        <span>40%</span>
-                      </div>
-
-                    </div>
-
-
-                    <!-- TENURE -->
-
-                    <div class="calculator-field">
-
-                      <label>
-                        Loan Tenure
-                      </label>
-
-                      <div
-                        class="calculator-tenure-toggle"
-                      >
-
-                        <button
-                          type="button"
-                          class="active"
-                          id="years-toggle"
-                        >
-                          Years
-                        </button>
-
-                        <button
-                          type="button"
-                          id="months-toggle"
-                        >
-                          Months
-                        </button>
-
-                      </div>
-
-
-                      <input
-                        id="loan-tenure"
-                        type="number"
-                        inputmode="numeric"
-                        min="1"
-                        max="30"
-                        step="1"
-                        value="5"
-                      >
-
-                      <input
-                        id="loan-tenure-slider"
-                        class="calculator-slider"
-                        type="range"
-                        min="1"
-                        max="30"
-                        step="1"
-                        value="5"
-                      >
-
-                      <div
-                        class="calculator-range-labels"
-                      >
-                        <span id="tenure-min">
-                          1 year
-                        </span>
-
-                        <span id="tenure-max">
-                          30 years
-                        </span>
-                      </div>
-
-                    </div>
-
-
-                  </div>
-
-
-                  <!-- ADVANCED -->
-
-                  <details
-                    class="calculator-advanced"
+                  <input
+                    id="loan-amount"
+                    type="number"
+                    inputmode="decimal"
+                    min="1000"
+                    max="100000000"
+                    step="1000"
+                    value="500000"
                   >
 
-                    <summary>
-                      Advanced Options
-                    </summary>
+                </div>
 
 
-                    <div
-                      class="calculator-input-grid"
-                      style="margin-top: 20px;"
+                <input
+                  id="loan-amount-slider"
+                  class="calc-slider"
+                  type="range"
+                  min="1000"
+                  max="100000000"
+                  step="1000"
+                  value="500000"
+                >
+
+                <div class="calc-range">
+
+                  <span>₹1K</span>
+
+                  <span>₹10 Cr</span>
+
+                </div>
+
+              </div>
+
+
+              <!-- RATE -->
+
+              <div class="calc-field">
+
+                <div class="calc-field-label">
+
+                  <span>Interest Rate</span>
+
+                  <span
+                    id="rate-live"
+                    class="calc-live-value"
+                  >
+                    10.00%
+                  </span>
+
+                </div>
+
+
+                <div class="calc-input-box">
+
+                  <input
+                    id="interest-rate"
+                    type="number"
+                    inputmode="decimal"
+                    min="0"
+                    max="40"
+                    step="0.01"
+                    value="10"
+                  >
+
+                  <span class="calc-suffix">%</span>
+
+                </div>
+
+
+                <input
+                  id="interest-rate-slider"
+                  class="calc-slider"
+                  type="range"
+                  min="0"
+                  max="40"
+                  step="0.01"
+                  value="10"
+                >
+
+                <div class="calc-range">
+
+                  <span>0%</span>
+
+                  <span>40%</span>
+
+                </div>
+
+              </div>
+
+
+              <!-- TENURE -->
+
+              <div class="calc-field">
+
+                <div class="calc-field-label">
+
+                  <span>Loan Tenure</span>
+
+                  <span
+                    id="tenure-live"
+                    class="calc-live-value"
+                  >
+                    5 Years
+                  </span>
+
+                </div>
+
+
+                <div class="calc-toggle">
+
+                  <button
+                    id="years-toggle"
+                    class="active"
+                    type="button"
+                  >
+                    Years
+                  </button>
+
+                  <button
+                    id="months-toggle"
+                    type="button"
+                  >
+                    Months
+                  </button>
+
+                </div>
+
+
+                <div class="calc-input-box">
+
+                  <input
+                    id="loan-tenure"
+                    type="number"
+                    inputmode="numeric"
+                    min="1"
+                    max="30"
+                    step="1"
+                    value="5"
+                  >
+
+                  <span
+                    id="tenure-unit"
+                    class="calc-suffix"
+                  >
+                    Years
+                  </span>
+
+                </div>
+
+
+                <input
+                  id="loan-tenure-slider"
+                  class="calc-slider"
+                  type="range"
+                  min="1"
+                  max="30"
+                  step="1"
+                  value="5"
+                >
+
+                <div class="calc-range">
+
+                  <span id="tenure-min">
+                    1 Year
+                  </span>
+
+                  <span id="tenure-max">
+                    30 Years
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- ADVANCED -->
+
+              <details class="calc-advanced">
+
+                <summary>
+                  Advanced Options
+                </summary>
+
+
+                <div class="calc-advanced-grid">
+
+
+                  <div class="calc-small-field">
+
+                    <label for="processing-fee">
+                      Processing Fee
+                    </label>
+
+                    <input
+                      id="processing-fee"
+                      type="number"
+                      min="0"
+                      step="100"
+                      value="0"
                     >
-
-
-                      <div
-                        class="calculator-field"
-                      >
-
-                        <label
-                          for="processing-fee"
-                        >
-                          Processing Fee
-                        </label>
-
-                        <input
-                          id="processing-fee"
-                          type="number"
-                          inputmode="decimal"
-                          min="0"
-                          max="10000000"
-                          step="100"
-                          value="0"
-                        >
-
-                      </div>
-
-
-                      <div
-                        class="calculator-field"
-                      >
-
-                        <label
-                          for="extra-monthly"
-                        >
-                          Extra Monthly Payment
-                        </label>
-
-                        <input
-                          id="extra-monthly"
-                          type="number"
-                          inputmode="decimal"
-                          min="0"
-                          max="1000000"
-                          step="100"
-                          value="0"
-                        >
-
-                      </div>
-
-
-                      <div
-                        class="calculator-field"
-                      >
-
-                        <label
-                          for="prepayment"
-                        >
-                          One-Time Prepayment
-                        </label>
-
-                        <input
-                          id="prepayment"
-                          type="number"
-                          inputmode="decimal"
-                          min="0"
-                          max="10000000"
-                          step="1000"
-                          value="0"
-                        >
-
-                      </div>
-
-
-                      <div
-                        class="calculator-field"
-                      >
-
-                        <label
-                          for="prepayment-month"
-                        >
-                          Prepayment Month
-                        </label>
-
-                        <input
-                          id="prepayment-month"
-                          type="number"
-                          inputmode="numeric"
-                          min="1"
-                          max="360"
-                          step="1"
-                          value="12"
-                        >
-
-                      </div>
-
-
-                    </div>
-
-                  </details>
-
-
-                  <div class="calculator-actions">
-
-                    <button
-                      id="calculate-emi"
-                      class="calculator-primary-button"
-                      type="button"
-                    >
-                      Calculate EMI
-                    </button>
-
-                    <button
-                      id="reset-emi"
-                      class="calculator-secondary-button"
-                      type="button"
-                    >
-                      Reset
-                    </button>
 
                   </div>
 
+
+                  <div class="calc-small-field">
+
+                    <label for="extra-monthly">
+                      Extra Monthly Payment
+                    </label>
+
+                    <input
+                      id="extra-monthly"
+                      type="number"
+                      min="0"
+                      step="100"
+                      value="0"
+                    >
+
+                  </div>
+
+
+                  <div class="calc-small-field">
+
+                    <label for="prepayment">
+                      One-Time Prepayment
+                    </label>
+
+                    <input
+                      id="prepayment"
+                      type="number"
+                      min="0"
+                      step="1000"
+                      value="0"
+                    >
+
+                  </div>
+
+
+                  <div class="calc-small-field">
+
+                    <label for="prepayment-month">
+                      Prepayment Month
+                    </label>
+
+                    <input
+                      id="prepayment-month"
+                      type="number"
+                      min="1"
+                      max="360"
+                      step="1"
+                      value="12"
+                    >
+
+                  </div>
+
+                </div>
+
+              </details>
+
+
+              <button
+                id="calculate-emi"
+                class="calc-main-button"
+                type="button"
+              >
+                Calculate EMI
+              </button>
+
+
+              <button
+                id="reset-emi"
+                class="calc-reset"
+                type="button"
+              >
+                Reset Calculator
+              </button>
+
+
+              <div
+                id="emi-error"
+                class="calculator-error"
+                hidden
+                aria-live="assertive"
+              >
+                Please enter valid loan details.
+              </div>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div class="calc-result-panel">
+
+
+              <div
+                id="calculator-results"
+                hidden
+              >
+
+
+                <!-- HERO -->
+
+                <div class="calc-hero calc-reveal">
+
+                  <div class="calc-hero-label">
+                    Your Monthly EMI
+                  </div>
 
                   <div
-                    id="emi-error"
-                    class="calculator-error"
-                    hidden
-                    aria-live="assertive"
+                    id="emi-value"
+                    class="calc-hero-value"
                   >
-                    Please enter valid loan details.
+                    ₹0
+                  </div>
+
+                  <div class="calc-hero-caption">
+                    Estimated regular monthly payment
+                  </div>
+
+
+                  <div class="calc-hero-bar">
+
+                    <div
+                      id="emi-bar"
+                      class="calc-hero-bar-fill"
+                    ></div>
+
                   </div>
 
                 </div>
 
 
-                <!-- RESULTS -->
+                <!-- SUMMARY -->
 
-                <section
-                  id="calculator-results"
-                  class="calculator-result"
-                  hidden
-                  aria-live="polite"
-                >
+                <div class="calc-summary calc-reveal">
 
 
-                  <div
-                    class="calculator-hero-result"
-                  >
+                  <div class="calc-summary-card">
 
-                    <div
-                      class="calculator-hero-label"
-                    >
-                      Monthly EMI
-                    </div>
+                    <span>
+                      Total Interest
+                    </span>
 
-                    <div
-                      id="emi-value"
-                      class="calculator-hero-value"
-                    >
+                    <strong id="interest-value">
                       ₹0
-                    </div>
-
-                    <div
-                      class="calculator-hero-subtitle"
-                    >
-                      Your estimated regular monthly payment
-                    </div>
+                    </strong>
 
                   </div>
 
 
-                  <div
-                    class="calculator-summary-grid"
-                  >
+                  <div class="calc-summary-card">
 
-                    <div
-                      class="calculator-summary-item"
-                    >
+                    <span>
+                      Total Payment
+                    </span>
 
-                      <div
-                        class="calculator-summary-label"
-                      >
-                        Total Interest
-                      </div>
-
-                      <div
-                        id="interest-value"
-                        class="calculator-summary-value"
-                      >
-                        ₹0
-                      </div>
-
-                    </div>
-
-
-                    <div
-                      class="calculator-summary-item"
-                    >
-
-                      <div
-                        class="calculator-summary-label"
-                      >
-                        Total Payment
-                      </div>
-
-                      <div
-                        id="payment-value"
-                        class="calculator-summary-value"
-                      >
-                        ₹0
-                      </div>
-
-                    </div>
-
-
-                    <div
-                      class="calculator-summary-item"
-                    >
-
-                      <div
-                        class="calculator-summary-label"
-                      >
-                        Payoff Time
-                      </div>
-
-                      <div
-                        id="duration-value"
-                        class="calculator-summary-value"
-                      >
-                        -
-                      </div>
-
-                    </div>
+                    <strong id="payment-value">
+                      ₹0
+                    </strong>
 
                   </div>
 
 
-                  <div
-                    id="savings-box"
-                    class="calculator-savings"
-                    hidden
-                  ></div>
+                  <div class="calc-summary-card">
 
+                    <span>
+                      Payoff Time
+                    </span>
 
-                  <!-- VISUALS -->
-
-                  <div
-                    class="calculator-visual-grid"
-                  >
-
-
-                    <!-- BREAKUP -->
-
-                    <div class="calculator-panel">
-
-                      <h3>
-                        Payment Breakdown
-                      </h3>
-
-                      <div
-                        class="calculator-donut-wrap"
-                      >
-
-                        <svg
-                          class="calculator-donut"
-                          viewBox="0 0 200 200"
-                          aria-label="Principal and interest breakdown"
-                        >
-
-                          <circle
-                            class="calculator-donut-track"
-                            cx="100"
-                            cy="100"
-                            r="70"
-                          ></circle>
-
-                          <circle
-                            id="donut-principal"
-                            class="calculator-donut-principal"
-                            cx="100"
-                            cy="100"
-                            r="70"
-                          ></circle>
-
-                          <circle
-                            id="donut-interest"
-                            class="calculator-donut-interest"
-                            cx="100"
-                            cy="100"
-                            r="70"
-                          ></circle>
-
-                        </svg>
-
-                      </div>
-
-
-                      <div
-                        class="calculator-legend"
-                      >
-
-                        <div
-                          class="calculator-legend-item"
-                        >
-
-                          <span
-                            class="calculator-dot calculator-dot-principal"
-                          ></span>
-
-                          Principal
-
-                          <strong
-                            id="principal-percent"
-                          >
-                            0%
-                          </strong>
-
-                        </div>
-
-
-                        <div
-                          class="calculator-legend-item"
-                        >
-
-                          <span
-                            class="calculator-dot calculator-dot-interest"
-                          ></span>
-
-                          Interest
-
-                          <strong
-                            id="interest-percent"
-                          >
-                            0%
-                          </strong>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-                    <!-- BALANCE CHART -->
-
-                    <div class="calculator-panel">
-
-                      <h3>
-                        Outstanding Balance
-                      </h3>
-
-                      <div
-                        id="balance-chart"
-                        class="calculator-chart"
-                      ></div>
-
-                      <div
-                        class="calculator-note"
-                      >
-                        Estimated loan balance over time.
-                      </div>
-
-                    </div>
-
+                    <strong id="duration-value">
+                      -
+                    </strong>
 
                   </div>
 
 
-                  <!-- YEARLY SUMMARY -->
+                </div>
+
+
+                <!-- SAVINGS -->
+
+                <div
+                  id="savings-box"
+                  class="calc-savings"
+                  hidden
+                ></div>
+
+
+                <!-- VISUALS -->
+
+                <div class="calc-visual-grid">
+
+
+                  <!-- DONUT -->
 
                   <div
-                    class="calculator-panel"
-                    style="margin-top: 18px;"
+                    class="calc-visual-card calc-reveal"
                   >
 
                     <h3>
-                      Year-wise Summary
+                      Payment Breakdown
                     </h3>
 
+                    <p>
+                      Principal vs total interest
+                    </p>
+
+
+                    <div class="calc-donut-area">
+
+                      <svg
+                        class="calc-donut"
+                        viewBox="0 0 200 200"
+                      >
+
+                        <circle
+                          class="calc-donut-track"
+                          cx="100"
+                          cy="100"
+                          r="70"
+                        ></circle>
+
+                        <circle
+                          id="donut-principal"
+                          class="calc-donut-principal"
+                          cx="100"
+                          cy="100"
+                          r="70"
+                        ></circle>
+
+                        <circle
+                          id="donut-interest"
+                          class="calc-donut-interest"
+                          cx="100"
+                          cy="100"
+                          r="70"
+                        ></circle>
+
+                      </svg>
+
+                    </div>
+
+
+                    <div class="calc-legend">
+
+                      <div class="calc-legend-item">
+
+                        <span
+                          class="calc-dot calc-dot-principal"
+                        ></span>
+
+                        Principal
+
+                        <strong
+                          id="principal-percent"
+                        >
+                          0%
+                        </strong>
+
+                      </div>
+
+
+                      <div class="calc-legend-item">
+
+                        <span
+                          class="calc-dot calc-dot-interest"
+                        ></span>
+
+                        Interest
+
+                        <strong
+                          id="interest-percent"
+                        >
+                          0%
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- GRAPH -->
+
+                  <div
+                    class="calc-visual-card calc-reveal"
+                  >
+
+                    <h3>
+                      Loan Balance
+                    </h3>
+
+                    <p>
+                      Estimated balance over time
+                    </p>
+
+
                     <div
-                      id="yearly-summary"
-                      class="calculator-table-wrap"
+                      id="balance-chart"
+                      class="calc-chart"
                     ></div>
 
                   </div>
 
 
-                  <!-- AMORTIZATION -->
+                </div>
+
+
+                <!-- YEARLY -->
+
+                <div
+                  class="calc-full-card calc-reveal"
+                >
+
+                  <h3>
+                    Year-wise Loan Summary
+                  </h3>
 
                   <div
-                    class="calculator-panel"
-                    style="margin-top: 18px;"
-                  >
+                    id="yearly-summary"
+                    class="calc-table-wrap"
+                  ></div>
 
-                    <div
-                      class="calculator-schedule-controls"
+                </div>
+
+
+                <!-- AMORTIZATION -->
+
+                <div
+                  class="calc-full-card calc-reveal"
+                >
+
+                  <details>
+
+                    <summary
+                      style="
+                        cursor:pointer;
+                        font-weight:800;
+                      "
                     >
-
-                      <div>
-
-                        <h3>
-                          Amortization Schedule
-                        </h3>
-
-                        <p
-                          class="calculator-note"
-                        >
-                          Monthly principal, interest,
-                          payment and remaining balance.
-                        </p>
-
-                      </div>
-
-                      <button
-                        id="schedule-toggle"
-                        class="calculator-secondary-button"
-                        type="button"
-                      >
-                        Show Schedule
-                      </button>
-
-                    </div>
+                      View Full Amortization Schedule
+                    </summary>
 
 
                     <div
                       id="amortization-table"
-                      class="calculator-table-wrap"
-                      hidden
+                      class="calc-table-wrap"
+                      style="margin-top:16px;"
                     ></div>
 
-                  </div>
-
-
-                </section>
-
-
-                <!-- ABOUT -->
-
-                <div
-                  class="card"
-                  style="margin-top: 18px;"
-                >
-
-                  <h2>
-                    About This EMI Calculator
-                  </h2>
-
-                  <p>
-                    EMIFORMULA's EMI Calculator
-                    estimates monthly loan payments,
-                    total interest, total repayment
-                    and the effect of additional
-                    payments or prepayments.
-                  </p>
+                  </details>
 
                 </div>
 
 
               </div>
 
-
-              <aside class="page-sidebar">
-
-                <div class="card">
-
-                  <h2>
-                    Related Calculators
-                  </h2>
-
-                  <p>
-                    Personal loan, home loan,
-                    car loan and other calculators
-                    will be available here.
-                  </p>
-
-                </div>
-
-              </aside>
-
-
             </div>
+
 
           </div>
 
-        </section>
+        </div>
 
       </div>
 
-    </main>
-
-
-    <div data-component="footer"></div>
+    </section>
 
   </div>
 
-
-  <!-- CORE JS -->
-
-    <!-- CORE JS -->
-
-  <script src="../assets/js/site-config.js"></script>
-
-  <script src="../assets/js/site.js"></script>
-
-  <script src="../assets/js/search-data.js"></script>
-
-  <script src="../assets/js/search.js"></script>
-
-  <script src="../assets/js/footer.js"></script>
-
-  <script src="../assets/js/components.js"></script>
-
-  <script src="../assets/js/navigation.js"></script>
-
-
-  <!-- CALCULATOR LOGIC -->
-
-  <script>
-
-    (function () {
-
-      "use strict";
-
-
-      var config =
-        window.EMIFORMULA_EMI_CONFIG;
-
-      var utils =
-        window.EMIFORMULA_CALCULATOR_UTILS;
-
-      var calculator =
-        window.EMIFORMULA_CALCULATOR;
-
-      var ui =
-        window.EMIFORMULA_CALCULATOR_UI;
-
-
-      var tenureMode = "years";
-
-
-      var loanAmount =
-        document.getElementById(
-          "loan-amount"
-        );
-
-      var loanAmountSlider =
-        document.getElementById(
-          "loan-amount-slider"
-        );
-
-      var interestRate =
-        document.getElementById(
-          "interest-rate"
-        );
-
-      var interestRateSlider =
-        document.getElementById(
-          "interest-rate-slider"
-        );
-
-      var tenure =
-        document.getElementById(
-          "loan-tenure"
-        );
-
-      var tenureSlider =
-        document.getElementById(
-          "loan-tenure-slider"
-        );
-
-      var yearsToggle =
-        document.getElementById(
-          "years-toggle"
-        );
-
-      var monthsToggle =
-        document.getElementById(
-          "months-toggle"
-        );
-
-      var results =
-        document.getElementById(
-          "calculator-results"
-        );
-
-      var error =
-        document.getElementById(
-          "emi-error"
-        );
-
-
-      function syncLoanAmount(value) {
-
-        value =
-          Math.max(
-            config.limits.principal.min,
-            Math.min(
-              config.limits.principal.max,
-              Number(value) || 0
-            )
-          );
-
-        loanAmount.value = value;
-
-        loanAmountSlider.value = value;
-      }
-
-
-      function syncRate(value) {
-
-        value =
-          Math.max(
-            config.limits.annualRate.min,
-            Math.min(
-              config.limits.annualRate.max,
-              Number(value) || 0
-            )
-          );
-
-        interestRate.value = value;
-
-        interestRateSlider.value = value;
-      }
-
-
-      function updateTenureLimits() {
-
-        if (tenureMode === "years") {
-
-          tenure.min =
-            config.limits.years.min;
-
-          tenure.max =
-            config.limits.years.max;
-
-          tenure.step = 1;
-
-          tenureSlider.min =
-            config.limits.years.min;
-
-          tenureSlider.max =
-            config.limits.years.max;
-
-          tenureSlider.step = 1;
-
-          document.getElementById(
-            "tenure-min"
-          ).textContent =
-            "1 year";
-
-          document.getElementById(
-            "tenure-max"
-          ).textContent =
-            "30 years";
-
-        } else {
-
-          tenure.min =
-            config.limits.months.min;
-
-          tenure.max =
-            config.limits.months.max;
-
-          tenure.step = 1;
-
-          tenureSlider.min =
-            config.limits.months.min;
-
-          tenureSlider.max =
-            config.limits.months.max;
-
-          tenureSlider.step = 1;
-
-          document.getElementById(
-            "tenure-min"
-          ).textContent =
-            "1 month";
-
-          document.getElementById(
-            "tenure-max"
-          ).textContent =
-            "360 months";
-        }
-      }
-
-
-      function syncTenure(value) {
-
-        value =
-          Math.max(
-            Number(tenure.min),
-            Math.min(
-              Number(tenure.max),
-              Number(value) || 1
-            )
-          );
-
-        tenure.value = value;
-
-        tenureSlider.value = value;
-      }
-
-
-      function getMonths() {
-
-        var value =
-          Number(tenure.value);
-
-        if (tenureMode === "years") {
-
-          return value * 12;
-
-        }
-
-        return value;
-      }
-
-
-      function setTenureMode(mode) {
-
-        var currentMonths =
-          getMonths();
-
-        tenureMode = mode;
-
-        updateTenureLimits();
-
-        if (mode === "years") {
-
-          var years =
-            Math.max(
-              1,
-              Math.round(
-                currentMonths / 12
-              )
-            );
-
-          syncTenure(years);
-
-          yearsToggle.classList.add(
-            "active"
-          );
-
-          monthsToggle.classList.remove(
-            "active"
-          );
-
-        } else {
-
-          syncTenure(currentMonths);
-
-          monthsToggle.classList.add(
-            "active"
-          );
-
-          yearsToggle.classList.remove(
-            "active"
-          );
-        }
-      }
-
-
-      function getOptions() {
-
-        return {
-
-          principal:
-            ui.getNumber(
-              "#loan-amount"
-            ),
-
-          annualRate:
-            ui.getNumber(
-              "#interest-rate"
-            ),
-
-          months:
-            getMonths(),
-
-          processingFee:
-            ui.getNumber(
-              "#processing-fee"
-            ) || 0,
-
-          extraMonthly:
-            ui.getNumber(
-              "#extra-monthly"
-            ) || 0,
-
-          prepayment:
-            ui.getNumber(
-              "#prepayment"
-            ) || 0,
-
-          prepaymentMonth:
-            ui.getNumber(
-              "#prepayment-month"
-            ) || 1
-
-        };
-      }
-
-
-      function drawDonut(data) {
-
-        var radius = 70;
-
-        var circumference =
-          2 * Math.PI * radius;
-
-        var principalLength =
-          circumference *
-          (
-            data.principalPercentage /
-            100
-          );
-
-        var interestLength =
-          circumference *
-          (
-            data.interestPercentage /
-            100
-          );
-
-        var principalCircle =
-          document.getElementById(
-            "donut-principal"
-          );
-
-        var interestCircle =
-          document.getElementById(
-            "donut-interest"
-          );
-
-        principalCircle.style.strokeDasharray =
-          principalLength +
-          " " +
-          circumference;
-
-        principalCircle.style.strokeDashoffset =
-          0;
-
-        interestCircle.style.strokeDasharray =
-          interestLength +
-          " " +
-          circumference;
-
-        interestCircle.style.strokeDashoffset =
-          -principalLength;
-      }
-
-
-      function drawBalanceChart(schedule) {
-
-        var container =
-          document.getElementById(
-            "balance-chart"
-          );
-
-        if (!schedule.length) {
-
-          container.innerHTML = "";
-
-          return;
-        }
-
-
-        var width = 600;
-
-        var height = 260;
-
-        var padLeft = 48;
-
-        var padRight = 16;
-
-        var padTop = 20;
-
-        var padBottom = 34;
-
-
-        var maxBalance =
-          Math.max.apply(
-            null,
-            schedule.map(
-              function (row) {
-
-                return row.openingBalance;
-
-              }
-            )
-          );
-
-
-        if (maxBalance <= 0) {
-
-          maxBalance = 1;
-
-        }
-
-
-        var points =
-          schedule.map(
-            function (row, index) {
-
-              var x =
-                padLeft +
-                (
-                  index /
-                  Math.max(
-                    1,
-                    schedule.length - 1
-                  )
-                ) *
-                (
-                  width -
-                  padLeft -
-                  padRight
-                );
-
-
-              var y =
-                padTop +
-                (
-                  1 -
-                  (
-                    row.closingBalance /
-                    maxBalance
-                  )
-                ) *
-                (
-                  height -
-                  padTop -
-                  padBottom
-                );
-
-
-              return {
-
-                x: x,
-
-                y: y
-
-              };
-
-            }
-          );
-
-
-        var path =
-          points.map(
-            function (point, index) {
-
-              return (
-                index === 0
-                  ? "M "
-                  : "L "
-              ) +
-              point.x +
-              " " +
-              point.y;
-
-            }
-          ).join(" ");
-
-
-        var areaPath =
-          path +
-          " L " +
-          points[
-            points.length - 1
-          ].x +
-          " " +
-          (
-            height -
-            padBottom
-          ) +
-          " L " +
-          points[0].x +
-          " " +
-          (
-            height -
-            padBottom
-          ) +
-          " Z";
-
-
-        container.innerHTML =
-
-          '<svg viewBox="0 0 ' +
-          width +
-          ' ' +
-          height +
-          '" role="img" aria-label="Loan balance chart">' +
-
-          '<line class="calculator-chart-grid" x1="' +
-          padLeft +
-          '" y1="' +
-          padTop +
-          '" x2="' +
-          padLeft +
-          '" y2="' +
-          (height - padBottom) +
-          '"></line>' +
-
-          '<line class="calculator-chart-grid" x1="' +
-          padLeft +
-          '" y1="' +
-          (height - padBottom) +
-          '" x2="' +
-          (width - padRight) +
-          '" y2="' +
-          (height - padBottom) +
-          '"></line>' +
-
-          '<path class="calculator-chart-area" d="' +
-          areaPath +
-          '"></path>' +
-
-          '<path class="calculator-chart-line" d="' +
-          path +
-          '"></path>' +
-
-          '<text class="calculator-chart-label" x="' +
-          padLeft +
-          '" y="' +
-          (height - 8) +
-          '">Start</text>' +
-
-          '<text class="calculator-chart-label" x="' +
-          (width - 58) +
-          '" y="' +
-          (height - 8) +
-          '">End</text>' +
-
-          '</svg>';
-      }
-
-
-      function drawYearlySummary(rows) {
-
-        var container =
-          document.getElementById(
-            "yearly-summary"
-          );
-
-
-        var html =
-          '<table class="calculator-table">' +
-
-          '<thead>' +
-
-          '<tr>' +
-
-          '<th>Year</th>' +
-
-          '<th>Payment</th>' +
-
-          '<th>Principal</th>' +
-
-          '<th>Interest</th>' +
-
-          '<th>Balance</th>' +
-
-          '</tr>' +
-
-          '</thead>' +
-
-          '<tbody>';
-
-
-        rows.forEach(
-          function (row) {
-
-            html +=
-              '<tr>' +
-
-              '<td>Year ' +
-              row.year +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.payment
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.principal
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.interest
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.closingBalance
-              ) +
-              '</td>' +
-
-              '</tr>';
-
-          }
-        );
-
-
-        html +=
-          '</tbody></table>';
-
-
-        container.innerHTML =
-          html;
-      }
-
-
-      function drawSchedule(rows) {
-
-        var container =
-          document.getElementById(
-            "amortization-table"
-          );
-
-
-        var html =
-          '<table class="calculator-table">' +
-
-          '<thead>' +
-
-          '<tr>' +
-
-          '<th>Month</th>' +
-
-          '<th>Payment</th>' +
-
-          '<th>Principal</th>' +
-
-          '<th>Interest</th>' +
-
-          '<th>Extra / Prepayment</th>' +
-
-          '<th>Balance</th>' +
-
-          '</tr>' +
-
-          '</thead>' +
-
-          '<tbody>';
-
-
-        rows.forEach(
-          function (row) {
-
-            var extra =
-              row.extraPayment;
-
-
-            html +=
-              '<tr>' +
-
-              '<td>' +
-              row.month +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.payment
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.principal
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.interest
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                extra
-              ) +
-              '</td>' +
-
-              '<td>' +
-              utils.formatCurrency(
-                row.closingBalance
-              ) +
-              '</td>' +
-
-              '</tr>';
-
-          }
-        );
-
-
-        html +=
-          '</tbody></table>';
-
-
-        container.innerHTML =
-          html;
-      }
-
-
-      function displayResults(data) {
-
-        ui.show(
-          "#calculator-results"
-        );
-
-        ui.hide(
-          "#emi-error"
-        );
-
-
-        ui.animateNumber(
-
-          document.getElementById(
-            "emi-value"
-          ),
-
-          data.monthlyPayment,
-
-          utils.formatCurrency,
-
-          650
-
-        );
-
-
-        ui.animateNumber(
-
-          document.getElementById(
-            "interest-value"
-          ),
-
-          data.totalInterest,
-
-          utils.formatCurrency,
-
-          800
-
-        );
-
-
-        ui.animateNumber(
-
-          document.getElementById(
-            "payment-value"
-          ),
-
-          data.totalPayment,
-
-          utils.formatCurrency,
-
-          850
-
-        );
-
-
-        ui.setText(
-
-          "#duration-value",
-
-          utils.formatDuration(
-            data.actualMonths
-          )
-
-        );
-
-
-        var savingsBox =
-          document.getElementById(
-            "savings-box"
-          );
-
-
-        if (
-          data.interestSaved > 0 ||
-          data.monthsSaved > 0
-        ) {
-
-          savingsBox.hidden = false;
-
-          savingsBox.textContent =
-            "Your additional payments could save approximately " +
-            utils.formatCurrency(
-              data.interestSaved
-            ) +
-            " in interest and " +
-            utils.formatDuration(
-              data.monthsSaved
-            ) +
-            " of repayment time.";
-
-        } else {
-
-          savingsBox.hidden = true;
-
-        }
-
-
-        ui.setText(
-
-          "#principal-percent",
-
-          utils.formatNumber(
-            data.principalPercentage,
-            1
-          ) +
-          "%"
-
-        );
-
-
-        ui.setText(
-
-          "#interest-percent",
-
-          utils.formatNumber(
-            data.interestPercentage,
-            1
-          ) +
-          "%"
-
-        );
-
-
-        drawDonut(data);
-
-        drawBalanceChart(
-          data.schedule
-        );
-
-        drawYearlySummary(
-          data.yearlySummary
-        );
-
-        drawSchedule(
-          data.schedule
-        );
-
-      }
-
-
-      function calculate() {
-
-        var options =
-          getOptions();
-
-
-        var data =
-          calculator.calculate(
-            options
-          );
-
-
-        if (!data) {
-
-          ui.hide(
-            "#calculator-results"
-          );
-
-          ui.show(
-            "#emi-error"
-          );
-
-          return;
-
-        }
-
-
-        displayResults(
-          data
-        );
-
-      }
-
-
-      function reset() {
-
-        loanAmount.value =
-          config.defaults.principal;
-
-        loanAmountSlider.value =
-          config.defaults.principal;
-
-
-        interestRate.value =
-          config.defaults.annualRate;
-
-        interestRateSlider.value =
-          config.defaults.annualRate;
-
-
-        setTenureMode(
-          "years"
-        );
-
-
-        tenure.value =
-          config.defaults.years;
-
-        tenureSlider.value =
-          config.defaults.years;
-
-
-        document.getElementById(
-          "processing-fee"
-        ).value =
-          config.defaults.processingFee;
-
-
-        document.getElementById(
-          "extra-monthly"
-        ).value =
-          config.defaults.extraMonthly;
-
-
-        document.getElementById(
-          "prepayment"
-        ).value =
-          config.defaults.prepayment;
-
-
-        document.getElementById(
-          "prepayment-month"
-        ).value =
-          config.defaults.prepaymentMonth;
-
-
-        ui.hide(
-          "#calculator-results"
-        );
-
-        ui.hide(
-          "#emi-error"
-        );
-
-
-        document.getElementById(
-          "amortization-table"
-        ).hidden = true;
-
-
-        document.getElementById(
-          "schedule-toggle"
-        ).textContent =
-          "Show Schedule";
-
-      }
-
-
-      loanAmount.addEventListener(
-        "input",
-        function () {
-
-          syncLoanAmount(
-            this.value
-          );
-
-        }
-      );
-
-
-      loanAmountSlider.addEventListener(
-        "input",
-        function () {
-
-          syncLoanAmount(
-            this.value
-          );
-
-        }
-      );
-
-
-      interestRate.addEventListener(
-        "input",
-        function () {
-
-          syncRate(
-            this.value
-          );
-
-        }
-      );
-
-
-      interestRateSlider.addEventListener(
-        "input",
-        function () {
-
-          syncRate(
-            this.value
-          );
-
-        }
-      );
-
-
-      tenure.addEventListener(
-        "input",
-        function () {
-
-          syncTenure(
-            this.value
-          );
-
-        }
-      );
-
-
-      tenureSlider.addEventListener(
-        "input",
-        function () {
-
-          syncTenure(
-            this.value
-          );
-
-        }
-      );
-
-
-      yearsToggle.addEventListener(
-        "click",
-        function () {
-
-          setTenureMode(
-            "years"
-          );
-
-        }
-      );
-
-
-      monthsToggle.addEventListener(
-        "click",
-        function () {
-
-          setTenureMode(
-            "months"
-          );
-
-        }
-      );
-
-
-      document.getElementById(
-        "calculate-emi"
-      ).addEventListener(
-        "click",
-        calculate
-      );
-
-
-      document.getElementById(
-        "reset-emi"
-      ).addEventListener(
-        "click",
-        reset
-      );
-
-
-      document.getElementById(
-        "schedule-toggle"
-      ).addEventListener(
-        "click",
-        function () {
-
-          var table =
-            document.getElementById(
-              "amortization-table"
-            );
-
-
-          table.hidden =
-            !table.hidden;
-
-
-          this.textContent =
-            table.hidden
-              ? "Show Schedule"
-              : "Hide Schedule";
-
-        }
-      );
-
-
-      updateTenureLimits();
-
-
-      syncLoanAmount(
-        config.defaults.principal
-      );
-
-
-      syncRate(
-        config.defaults.annualRate
-      );
-
-
-      syncTenure(
-        config.defaults.years
-      );
-
-
-    })();
-
-  </script>
-
-</body>
-
-</html>
+</main>
