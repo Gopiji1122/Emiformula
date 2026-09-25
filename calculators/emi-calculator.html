@@ -291,8 +291,9 @@
 
                     <div class="calc-field-label">
 
-                      <span>
+                      <span class="calc-label-with-help">
                         Loan Amount
+                        <button type="button" class="calc-help-button" data-help="loan-amount" aria-label="Help for Loan Amount">?</button>
                       </span>
 
                       <span
@@ -360,8 +361,9 @@
 
                     <div class="calc-field-label">
 
-                      <span>
+                      <span class="calc-label-with-help">
                         Interest Rate
+                        <button type="button" class="calc-help-button" data-help="interest-rate" aria-label="Help for Interest Rate">?</button>
                       </span>
 
                       <span
@@ -378,11 +380,9 @@
 
                       <input
                         id="interest-rate"
-                        type="number"
+                        type="text"
                         inputmode="decimal"
-                        min="0"
-                        max="40"
-                        step="0.01"
+                        autocomplete="off"
                         value="10"
                         aria-label="Annual interest rate"
                       >
@@ -429,8 +429,9 @@
 
                     <div class="calc-field-label">
 
-                      <span>
+                      <span class="calc-label-with-help">
                         Loan Tenure
+                        <button type="button" class="calc-help-button" data-help="loan-tenure" aria-label="Help for Loan Tenure">?</button>
                       </span>
 
                       <span
@@ -523,16 +524,26 @@
                       Advanced Options
                     </summary>
 
+                    <div class="calc-live-update">
+                      <div>
+                        <strong>Live Update</strong>
+                        <span>Turn this on to update results as you change the advanced fields.</span>
+                      </div>
+                      <label class="calc-switch">
+                        <input id="live-update" type="checkbox" checked aria-label="Live update calculator results">
+                        <span class="calc-switch-track" aria-hidden="true"></span>
+                      </label>
+                    </div>
+
 
                     <div class="calc-advanced-grid">
 
 
                       <div class="calc-small-field">
 
-                        <label
-                          for="processing-fee"
-                        >
+                        <label class="calc-label-with-help" for="processing-fee">
                           Processing Fee
+                          <button type="button" class="calc-help-button" data-help="processing-fee" aria-label="Help for Processing Fee">?</button>
                         </label>
 
                         <input
@@ -548,10 +559,9 @@
 
                       <div class="calc-small-field">
 
-                        <label
-                          for="extra-monthly"
-                        >
+                        <label class="calc-label-with-help" for="extra-monthly">
                           Extra Monthly Payment
+                          <button type="button" class="calc-help-button" data-help="extra-monthly" aria-label="Help for Extra Monthly Payment">?</button>
                         </label>
 
                         <input
@@ -567,10 +577,9 @@
 
                       <div class="calc-small-field">
 
-                        <label
-                          for="prepayment"
-                        >
+                        <label class="calc-label-with-help" for="prepayment">
                           One-Time Prepayment
+                          <button type="button" class="calc-help-button" data-help="prepayment" aria-label="Help for One-Time Prepayment">?</button>
                         </label>
 
                         <input
@@ -586,10 +595,9 @@
 
                       <div class="calc-small-field">
 
-                        <label
-                          for="prepayment-month"
-                        >
+                        <label class="calc-label-with-help" for="prepayment-month">
                           Prepayment Month
+                          <button type="button" class="calc-help-button" data-help="prepayment-month" aria-label="Help for Prepayment Month">?</button>
                         </label>
 
                         <input
@@ -606,6 +614,19 @@
                     </div>
 
                   </details>
+
+
+                  <!-- =====================================
+                       HELP PANEL
+                  ====================================== -->
+
+                  <div id="calc-help-panel" class="calc-help-panel" hidden aria-live="polite">
+                    <div class="calc-help-panel-head">
+                      <strong id="calc-help-title">Help</strong>
+                      <button type="button" id="calc-help-close" class="calc-help-close" aria-label="Close help">×</button>
+                    </div>
+                    <p id="calc-help-text"></p>
+                  </div>
 
 
                   <!-- =====================================
@@ -670,8 +691,9 @@
                       class="calc-hero calc-reveal"
                     >
 
-                      <div class="calc-hero-label">
+                      <div class="calc-hero-label calc-label-with-help">
                         Your Monthly EMI
+                        <button type="button" class="calc-help-button calc-help-button-light" data-help="emi" aria-label="Help for Monthly EMI">?</button>
                       </div>
 
 
@@ -711,8 +733,9 @@
 
                       <div class="calc-summary-card">
 
-                        <span>
+                        <span class="calc-label-with-help">
                           Total Interest
+                          <button type="button" class="calc-help-button" data-help="total-interest" aria-label="Help for Total Interest">?</button>
                         </span>
 
                         <strong
@@ -726,8 +749,9 @@
 
                       <div class="calc-summary-card">
 
-                        <span>
+                        <span class="calc-label-with-help">
                           Total Payment
+                          <button type="button" class="calc-help-button" data-help="total-payment" aria-label="Help for Total Payment">?</button>
                         </span>
 
                         <strong
@@ -741,8 +765,9 @@
 
                       <div class="calc-summary-card">
 
-                        <span>
+                        <span class="calc-label-with-help">
                           Payoff Time
+                          <button type="button" class="calc-help-button" data-help="payoff-time" aria-label="Help for Payoff Time">?</button>
                         </span>
 
                         <strong
@@ -780,8 +805,9 @@
                         class="calc-visual-card calc-reveal"
                       >
 
-                        <h3>
+                        <h3 class="calc-heading-with-help">
                           Payment Breakdown
+                          <button type="button" class="calc-help-button" data-help="payment-breakdown" aria-label="Help for Payment Breakdown">?</button>
                         </h3>
 
                         <p>
@@ -879,8 +905,9 @@
                         class="calc-visual-card calc-reveal"
                       >
 
-                        <h3>
+                        <h3 class="calc-heading-with-help">
                           Loan Balance
+                          <button type="button" class="calc-help-button" data-help="loan-balance" aria-label="Help for Loan Balance">?</button>
                         </h3>
 
                         <p>
@@ -968,9 +995,82 @@
     </main>
 
 
+
+    <!-- ===================================================
+         LEARNING CONTENT
+    ==================================================== -->
+
+    <section class="calc-learning page-container" aria-label="Learn about EMI calculations">
+
+      <details class="calc-learning-card" open>
+        <summary>How This EMI Calculator Works</summary>
+
+        <div class="calc-learning-content">
+          <p>An EMI is the regular monthly payment you make towards a loan under a standard reducing-balance repayment method. Each payment normally contains two parts: interest for that month and an amount that reduces the loan balance.</p>
+
+          <h3>EMI formula</h3>
+          <div class="calc-formula">EMI = P × R × (1 + R)<sup>N</sup> ÷ ((1 + R)<sup>N</sup> − 1)</div>
+
+          <p>Here is what each letter means:</p>
+          <ul>
+            <li><strong>P</strong> is the amount you borrow.</li>
+            <li><strong>R</strong> is the monthly interest rate, written as a decimal.</li>
+            <li><strong>N</strong> is the total number of monthly payments.</li>
+          </ul>
+
+          <h3>How the monthly rate is found</h3>
+          <p>Lenders usually quote interest as a yearly percentage. The calculator converts that yearly rate into a monthly rate before using the EMI formula. For example, a 10% yearly rate becomes 10 ÷ 12 ÷ 100, which is about 0.008333 per month.</p>
+
+          <h3>A simple example</h3>
+          <p>Suppose you borrow ₹10,00,000 at 10% per year for 5 years. The loan has 60 monthly payments. The calculator uses the ₹10,00,000 principal, converts 10% into a monthly rate, and applies the formula across those 60 payments. The resulting EMI is about ₹21,247 per month.</p>
+
+          <p>Your EMI is not simply the loan amount divided by the number of months because interest is charged on the remaining balance. Early payments usually contain a larger interest portion because the outstanding balance is still high. As the balance falls, the interest part normally falls too.</p>
+
+          <h3>Why tenure matters</h3>
+          <p>A longer tenure spreads repayment over more months, which can reduce the monthly EMI. However, interest has more time to build up, so total interest can be higher. A shorter tenure normally means a higher monthly payment but a shorter repayment period.</p>
+
+          <h3>What extra payments do</h3>
+          <p>An extra monthly payment is an amount you choose to pay above the regular payment. In this calculator, that extra amount is applied towards reducing the outstanding balance. A one-time prepayment works in a similar way, but it is applied in the month you select. Reducing the balance earlier can reduce future interest because future interest is calculated on a smaller outstanding amount.</p>
+
+          <h3>Processing fee</h3>
+          <p>A processing fee is a separate cost charged by a lender or financial institution. It does not change the standard EMI formula itself. This calculator adds the amount you enter to the calculated loan cost so you can see the cost more completely. Actual lender fees, taxes and other charges can differ.</p>
+
+          <h3>What the charts show</h3>
+          <p>The payment breakdown compares the calculated principal with the interest paid over the repayment period. The loan balance chart shows how the outstanding balance is expected to fall as payments are made. The year-wise table groups the monthly schedule into easier yearly figures, while the full amortization table lets you inspect each month.</p>
+
+          <p>The calculator is here to help you understand the numbers before you make a borrowing decision. Your lender's actual EMI, fees, rate, repayment rules and prepayment conditions can be different, so use the lender's final offer for the actual loan commitment.</p>
+        </div>
+      </details>
+
+      <details class="calc-learning-card">
+        <summary>Frequently Asked Questions</summary>
+
+        <div class="calc-faq-list">
+          <details class="calc-faq-item"><summary>What does EMI mean?</summary><p>EMI stands for Equated Monthly Instalment. It is the regular amount paid towards a loan each month under a standard EMI repayment plan. The payment generally contains both interest and principal.</p></details>
+          <details class="calc-faq-item"><summary>Can I enter an interest rate such as 7.45%?</summary><p>Yes. Enter 7.45 in the interest-rate field. The calculator accepts decimal rates, so you can use a rate such as 7.45%, 8.25% or 10.75% instead of being limited to whole numbers.</p></details>
+          <details class="calc-faq-item"><summary>Does a longer loan tenure reduce EMI?</summary><p>Usually, yes. When the same loan is spread over more months, the monthly payment is generally lower. The trade-off is that you may pay interest for a longer period, which can increase total interest.</p></details>
+          <details class="calc-faq-item"><summary>Why can two loans with the same amount have different EMIs?</summary><p>The interest rate and tenure both affect EMI. Two people can borrow the same amount but have different rates or repayment periods, producing different monthly payments.</p></details>
+          <details class="calc-faq-item"><summary>What is total interest?</summary><p>Total interest is the interest added across the repayment schedule. It is separate from the original amount borrowed. The calculator shows it so you can see how much the loan costs beyond the principal.</p></details>
+          <details class="calc-faq-item"><summary>What is total payment?</summary><p>Total payment is the amount paid through the calculated repayment schedule, including principal and interest. If you enter a processing fee, the calculator also shows the resulting total cost separately.</p></details>
+          <details class="calc-faq-item"><summary>What is an extra monthly payment?</summary><p>It is an additional amount you plan to pay every month on top of the regular payment. Paying extra can reduce the balance faster and may reduce total interest and repayment time.</p></details>
+          <details class="calc-faq-item"><summary>What is a one-time prepayment?</summary><p>A one-time prepayment is an additional amount paid against the loan balance once. You can enter the amount and the month in which you want the calculator to apply it. Real lenders may have their own prepayment rules or charges.</p></details>
+          <details class="calc-faq-item"><summary>Does prepayment always reduce EMI?</summary><p>Not necessarily. A prepayment reduces the outstanding principal, but what happens to the EMI or tenure depends on the lender's repayment rules. This calculator uses the prepayment to model a shorter repayment path rather than changing the original scheduled EMI.</p></details>
+          <details class="calc-faq-item"><summary>What is an amortization schedule?</summary><p>An amortization schedule is a month-by-month view of the loan. It shows the payment, interest portion, principal portion and remaining balance for each payment period.</p></details>
+          <details class="calc-faq-item"><summary>Is the EMI shown here the exact amount my bank will charge?</summary><p>No. The result is an estimate based on the values you enter and the repayment method used by this calculator. Your lender may use different rounding, fees, rate rules or repayment conditions.</p></details>
+          <details class="calc-faq-item"><summary>Can I use this calculator for home, car or personal loans?</summary><p>Yes, the standard EMI formula can be used for many loans that follow a reducing-balance EMI structure. The actual rate, fees, repayment rules and prepayment conditions can differ by loan type and lender.</p></details>
+          <details class="calc-faq-item"><summary>Why is the interest portion usually higher at the beginning?</summary><p>Monthly interest is calculated from the outstanding balance. At the beginning, the balance is at its highest point, so the interest amount is also relatively high. As the principal falls, the interest charged on the remaining balance generally falls.</p></details>
+          <details class="calc-faq-item"><summary>Should I choose a shorter or longer tenure?</summary><p>That depends on your own budget and repayment plan. A shorter tenure generally means higher monthly payments and less time paying interest. A longer tenure generally reduces the monthly payment but can increase total interest. Compare both figures rather than looking only at EMI.</p></details>
+          <details class="calc-faq-item"><summary>Why does the result change when I add an extra payment?</summary><p>An extra payment reduces the outstanding balance faster. Because future interest is based on the remaining balance, reducing that balance earlier can reduce future interest and shorten the calculated repayment period.</p></details>
+        </div>
+      </details>
+
+    </section>
+
+
     <!-- ===================================================
          SHARED FOOTER
     ==================================================== -->
+
 
     <div data-component="footer"></div>
 
@@ -1013,1640 +1113,7 @@
        PROFESSIONAL CALCULATOR LOGIC
   ====================================================== -->
 
-  <script>
-
-  (function () {
-
-    "use strict";
-
-
-    /* ====================================================
-       CORE REFERENCES
-    ===================================================== */
-
-    var config =
-      window.EMIFORMULA_EMI_CONFIG;
-
-    var calculator =
-      window.EMIFORMULA_CALCULATOR;
-
-    var utils =
-      window.EMIFORMULA_CALCULATOR_UTILS;
-
-    var ui =
-      window.EMIFORMULA_CALCULATOR_UI;
-
-
-    /* ====================================================
-       SAFETY CHECK
-    ===================================================== */
-
-    if (
-      !config ||
-      !calculator ||
-      !utils ||
-      !ui
-    ) {
-
-      console.error(
-        "EMIFORMULA calculator dependencies are missing."
-      );
-
-      return;
-
-    }
-
-
-    /* ====================================================
-       STATE
-    ===================================================== */
-
-    var tenureMode = "years";
-
-
-    /* ====================================================
-       ELEMENTS
-    ===================================================== */
-
-    var loanAmount =
-      document.getElementById(
-        "loan-amount"
-      );
-
-    var loanSlider =
-      document.getElementById(
-        "loan-amount-slider"
-      );
-
-    var interestRate =
-      document.getElementById(
-        "interest-rate"
-      );
-
-    var rateSlider =
-      document.getElementById(
-        "interest-rate-slider"
-      );
-
-    var tenure =
-      document.getElementById(
-        "loan-tenure"
-      );
-
-    var tenureSlider =
-      document.getElementById(
-        "loan-tenure-slider"
-      );
-
-
-    /* ====================================================
-       LIVE VALUES
-    ===================================================== */
-
-    function updateLiveValues() {
-
-      var loanValue =
-        Number(
-          loanAmount.value
-        ) || 0;
-
-
-      var rateValue =
-        Number(
-          interestRate.value
-        ) || 0;
-
-
-      var tenureValue =
-        Number(
-          tenure.value
-        ) || 0;
-
-
-      document.getElementById(
-        "loan-live"
-      ).textContent =
-        utils.formatCurrency(
-          loanValue
-        );
-
-
-      document.getElementById(
-        "rate-live"
-      ).textContent =
-        rateValue.toFixed(2) +
-        "%";
-
-
-      var tenureText =
-        tenureValue +
-        " ";
-
-
-      if (
-        tenureMode === "years"
-      ) {
-
-        tenureText +=
-          tenureValue === 1
-            ? "Year"
-            : "Years";
-
-      } else {
-
-        tenureText +=
-          tenureValue === 1
-            ? "Month"
-            : "Months";
-
-      }
-
-
-      document.getElementById(
-        "tenure-live"
-      ).textContent =
-        tenureText;
-
-    }
-
-
-    /* ====================================================
-       LOAN SYNC
-    ===================================================== */
-
-    function syncLoan(
-      value
-    ) {
-
-      value =
-        Number(
-          value
-        );
-
-
-      if (
-        !Number.isFinite(value)
-      ) {
-
-        value = 1000;
-
-      }
-
-
-      value =
-        Math.max(
-          1000,
-          Math.min(
-            100000000,
-            value
-          )
-        );
-
-
-      loanAmount.value =
-        value;
-
-
-      loanSlider.value =
-        value;
-
-
-      updateLiveValues();
-
-    }
-
-
-    /* ====================================================
-       RATE SYNC
-    ===================================================== */
-
-    function syncRate(
-      value
-    ) {
-
-      value =
-        Number(
-          value
-        );
-
-
-      if (
-        !Number.isFinite(value)
-      ) {
-
-        value = 0;
-
-      }
-
-
-      value =
-        Math.max(
-          0,
-          Math.min(
-            40,
-            value
-          )
-        );
-
-
-      interestRate.value =
-        value;
-
-
-      rateSlider.value =
-        value;
-
-
-      updateLiveValues();
-
-    }
-
-
-    /* ====================================================
-       TENURE LIMITS
-    ===================================================== */
-
-    function updateTenureLimits() {
-
-      if (
-        tenureMode === "years"
-      ) {
-
-        tenure.min = 1;
-
-        tenure.max = 30;
-
-        tenure.step = 1;
-
-
-        tenureSlider.min = 1;
-
-        tenureSlider.max = 30;
-
-        tenureSlider.step = 1;
-
-
-        document.getElementById(
-          "tenure-unit"
-        ).textContent =
-          "Years";
-
-
-        document.getElementById(
-          "tenure-min"
-        ).textContent =
-          "1 Year";
-
-
-        document.getElementById(
-          "tenure-max"
-        ).textContent =
-          "30 Years";
-
-      } else {
-
-        tenure.min = 1;
-
-        tenure.max = 360;
-
-        tenure.step = 1;
-
-
-        tenureSlider.min = 1;
-
-        tenureSlider.max = 360;
-
-        tenureSlider.step = 1;
-
-
-        document.getElementById(
-          "tenure-unit"
-        ).textContent =
-          "Months";
-
-
-        document.getElementById(
-          "tenure-min"
-        ).textContent =
-          "1 Month";
-
-
-        document.getElementById(
-          "tenure-max"
-        ).textContent =
-          "360 Months";
-
-      }
-
-    }
-
-
-    /* ====================================================
-       TENURE SYNC
-    ===================================================== */
-
-    function syncTenure(
-      value
-    ) {
-
-      value =
-        Number(
-          value
-        );
-
-
-      if (
-        !Number.isFinite(value)
-      ) {
-
-        value = 1;
-
-      }
-
-
-      value =
-        Math.max(
-          Number(
-            tenure.min
-          ),
-          Math.min(
-            Number(
-              tenure.max
-            ),
-            value
-          )
-        );
-
-
-      tenure.value =
-        value;
-
-
-      tenureSlider.value =
-        value;
-
-
-      updateLiveValues();
-
-    }
-
-
-    /* ====================================================
-       MONTH CONVERSION
-    ===================================================== */
-
-    function getMonths() {
-
-      var value =
-        Number(
-          tenure.value
-        );
-
-
-      if (
-        tenureMode === "years"
-      ) {
-
-        return value * 12;
-
-      }
-
-
-      return value;
-
-    }
-
-
-    /* ====================================================
-       TENURE MODE
-    ===================================================== */
-
-    function setTenureMode(
-      mode
-    ) {
-
-      var currentMonths =
-        getMonths();
-
-
-      tenureMode =
-        mode;
-
-
-      updateTenureLimits();
-
-
-      if (
-        mode === "years"
-      ) {
-
-        var years =
-          Math.max(
-            1,
-            Math.round(
-              currentMonths / 12
-            )
-          );
-
-
-        syncTenure(
-          years
-        );
-
-
-        document.getElementById(
-          "years-toggle"
-        ).classList.add(
-          "active"
-        );
-
-
-        document.getElementById(
-          "months-toggle"
-        ).classList.remove(
-          "active"
-        );
-
-      } else {
-
-        syncTenure(
-          currentMonths
-        );
-
-
-        document.getElementById(
-          "months-toggle"
-        ).classList.add(
-          "active"
-        );
-
-
-        document.getElementById(
-          "years-toggle"
-        ).classList.remove(
-          "active"
-        );
-
-      }
-
-    }
-
-
-    /* ====================================================
-       OPTIONS
-    ===================================================== */
-
-    function getOptions() {
-
-      return {
-
-        principal:
-          Number(
-            loanAmount.value
-          ) || 0,
-
-
-        annualRate:
-          Number(
-            interestRate.value
-          ) || 0,
-
-
-        months:
-          getMonths(),
-
-
-        processingFee:
-          Number(
-            document.getElementById(
-              "processing-fee"
-            ).value
-          ) || 0,
-
-
-        extraMonthly:
-          Number(
-            document.getElementById(
-              "extra-monthly"
-            ).value
-          ) || 0,
-
-
-        prepayment:
-          Number(
-            document.getElementById(
-              "prepayment"
-            ).value
-          ) || 0,
-
-
-        prepaymentMonth:
-          Number(
-            document.getElementById(
-              "prepayment-month"
-            ).value
-          ) || 1
-
-      };
-
-    }
-
-
-    /* ====================================================
-       DONUT
-    ===================================================== */
-
-    function drawDonut(
-      data
-    ) {
-
-      var radius = 70;
-
-
-      var circumference =
-        2 *
-        Math.PI *
-        radius;
-
-
-      var principalLength =
-        circumference *
-        (
-          data.principalPercentage /
-          100
-        );
-
-
-      var interestLength =
-        circumference *
-        (
-          data.interestPercentage /
-          100
-        );
-
-
-      var principal =
-        document.getElementById(
-          "donut-principal"
-        );
-
-
-      var interest =
-        document.getElementById(
-          "donut-interest"
-        );
-
-
-      principal.style.strokeDasharray =
-        principalLength +
-        " " +
-        circumference;
-
-
-      principal.style.strokeDashoffset =
-        0;
-
-
-      interest.style.strokeDasharray =
-        interestLength +
-        " " +
-        circumference;
-
-
-      interest.style.strokeDashoffset =
-        -principalLength;
-
-    }
-
-
-    /* ====================================================
-       BALANCE GRAPH
-    ===================================================== */
-
-    function drawBalanceChart(
-      schedule
-    ) {
-
-      var container =
-        document.getElementById(
-          "balance-chart"
-        );
-
-
-      if (
-        !schedule ||
-        !schedule.length
-      ) {
-
-        container.innerHTML =
-          "";
-
-        return;
-
-      }
-
-
-      var width = 640;
-
-      var height = 230;
-
-      var left = 20;
-
-      var right = 12;
-
-      var top = 15;
-
-      var bottom = 30;
-
-
-      var maxBalance =
-        Math.max.apply(
-          null,
-          schedule.map(
-            function (
-              row
-            ) {
-
-              return row.openingBalance;
-
-            }
-          )
-        );
-
-
-      if (
-        maxBalance <= 0
-      ) {
-
-        maxBalance = 1;
-
-      }
-
-
-      var points =
-        schedule.map(
-          function (
-            row,
-            index
-          ) {
-
-            var x =
-              left +
-              (
-                index /
-                Math.max(
-                  1,
-                  schedule.length - 1
-                )
-              ) *
-              (
-                width -
-                left -
-                right
-              );
-
-
-            var y =
-              top +
-              (
-                1 -
-                (
-                  row.closingBalance /
-                  maxBalance
-                )
-              ) *
-              (
-                height -
-                top -
-                bottom
-              );
-
-
-            return {
-
-              x: x,
-
-              y: y
-
-            };
-
-          }
-        );
-
-
-      var path =
-        points.map(
-          function (
-            point,
-            index
-          ) {
-
-            return (
-              index === 0
-                ? "M"
-                : "L"
-            ) +
-            " " +
-            point.x +
-            " " +
-            point.y;
-
-          }
-        ).join(
-          " "
-        );
-
-
-      var first =
-        points[0];
-
-
-      var last =
-        points[
-          points.length - 1
-        ];
-
-
-      var areaPath =
-        path +
-        " L " +
-        last.x +
-        " " +
-        (
-          height -
-          bottom
-        ) +
-        " L " +
-        first.x +
-        " " +
-        (
-          height -
-          bottom
-        ) +
-        " Z";
-
-
-      container.innerHTML =
-
-        '<svg ' +
-
-        'viewBox="0 0 ' +
-        width +
-        ' ' +
-        height +
-        '" ' +
-
-        'role="img" ' +
-
-        'aria-label="Loan balance over time">' +
-
-
-        '<line ' +
-
-        'class="calc-chart-grid" ' +
-
-        'x1="' +
-        left +
-        '" ' +
-
-        'y1="' +
-        top +
-        '" ' +
-
-        'x2="' +
-        left +
-        '" ' +
-
-        'y2="' +
-        (
-          height -
-          bottom
-        ) +
-        '">' +
-
-        '</line>' +
-
-
-        '<line ' +
-
-        'class="calc-chart-grid" ' +
-
-        'x1="' +
-        left +
-        '" ' +
-
-        'y1="' +
-        (
-          height -
-          bottom
-        ) +
-        '" ' +
-
-        'x2="' +
-        (
-          width -
-          right
-        ) +
-        '" ' +
-
-        'y2="' +
-        (
-          height -
-          bottom
-        ) +
-        '">' +
-
-        '</line>' +
-
-
-        '<path ' +
-
-        'class="calc-chart-area" ' +
-
-        'd="' +
-        areaPath +
-        '">' +
-
-        '</path>' +
-
-
-        '<path ' +
-
-        'class="calc-chart-line" ' +
-
-        'd="' +
-        path +
-        '">' +
-
-        '</path>' +
-
-
-        '<text ' +
-
-        'class="calc-chart-label" ' +
-
-        'x="' +
-        left +
-        '" ' +
-
-        'y="' +
-        (
-          height -
-          8
-        ) +
-        '">' +
-
-        'Start' +
-
-        '</text>' +
-
-
-        '<text ' +
-
-        'class="calc-chart-label" ' +
-
-        'x="' +
-        (
-          width -
-          45
-        ) +
-        '" ' +
-
-        'y="' +
-        (
-          height -
-          8
-        ) +
-        '">' +
-
-        'End' +
-
-        '</text>' +
-
-
-        '</svg>';
-
-    }
-
-
-    /* ====================================================
-       YEARLY SUMMARY
-    ===================================================== */
-
-    function drawYearlySummary(
-      rows
-    ) {
-
-      var container =
-        document.getElementById(
-          "yearly-summary"
-        );
-
-
-      if (
-        !rows ||
-        !rows.length
-      ) {
-
-        container.innerHTML =
-          "";
-
-        return;
-
-      }
-
-
-      var html =
-
-        '<table class="calc-table">' +
-
-        '<thead>' +
-
-        '<tr>' +
-
-        '<th>Year</th>' +
-
-        '<th>Payment</th>' +
-
-        '<th>Principal</th>' +
-
-        '<th>Interest</th>' +
-
-        '<th>Balance</th>' +
-
-        '</tr>' +
-
-        '</thead>' +
-
-        '<tbody>';
-
-
-      rows.forEach(
-        function (
-          row
-        ) {
-
-          html +=
-
-            '<tr>' +
-
-            '<td>' +
-            row.year +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.payment
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.principal
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.interest
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.closingBalance
-            ) +
-            '</td>' +
-
-            '</tr>';
-
-        }
-      );
-
-
-      html +=
-
-        '</tbody>' +
-
-        '</table>';
-
-
-      container.innerHTML =
-        html;
-
-    }
-
-
-    /* ====================================================
-       AMORTIZATION
-    ===================================================== */
-
-    function drawSchedule(
-      rows
-    ) {
-
-      var container =
-        document.getElementById(
-          "amortization-table"
-        );
-
-
-      if (
-        !rows ||
-        !rows.length
-      ) {
-
-        container.innerHTML =
-          "";
-
-        return;
-
-      }
-
-
-      var html =
-
-        '<table class="calc-table">' +
-
-        '<thead>' +
-
-        '<tr>' +
-
-        '<th>Month</th>' +
-
-        '<th>Payment</th>' +
-
-        '<th>Principal</th>' +
-
-        '<th>Interest</th>' +
-
-        '<th>Extra</th>' +
-
-        '<th>Balance</th>' +
-
-        '</tr>' +
-
-        '</thead>' +
-
-        '<tbody>';
-
-
-      rows.forEach(
-        function (
-          row
-        ) {
-
-          html +=
-
-            '<tr>' +
-
-            '<td>' +
-            row.month +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.payment
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.principal
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.interest
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.extraPayment
-            ) +
-            '</td>' +
-
-            '<td>' +
-            utils.formatCurrency(
-              row.closingBalance
-            ) +
-            '</td>' +
-
-            '</tr>';
-
-        }
-      );
-
-
-      html +=
-
-        '</tbody>' +
-
-        '</table>';
-
-
-      container.innerHTML =
-        html;
-
-    }
-
-
-    /* ====================================================
-       DISPLAY RESULTS
-    ===================================================== */
-
-    function displayResults(
-      data
-    ) {
-
-      var resultPanel =
-        document.getElementById(
-          "calculator-results"
-        );
-
-
-      resultPanel.hidden =
-        false;
-
-
-      document.getElementById(
-        "emi-error"
-      ).hidden =
-        true;
-
-
-      ui.animateNumber(
-
-        document.getElementById(
-          "emi-value"
-        ),
-
-        data.monthlyPayment,
-
-        utils.formatCurrency,
-
-        750
-
-      );
-
-
-      ui.animateNumber(
-
-        document.getElementById(
-          "interest-value"
-        ),
-
-        data.totalInterest,
-
-        utils.formatCurrency,
-
-        900
-
-      );
-
-
-      ui.animateNumber(
-
-        document.getElementById(
-          "payment-value"
-        ),
-
-        data.totalPayment,
-
-        utils.formatCurrency,
-
-        1000
-
-      );
-
-
-      document.getElementById(
-        "duration-value"
-      ).textContent =
-        utils.formatDuration(
-          data.actualMonths
-        );
-
-
-      document.getElementById(
-        "principal-percent"
-      ).textContent =
-        utils.formatNumber(
-          data.principalPercentage,
-          1
-        ) +
-        "%";
-
-
-      document.getElementById(
-        "interest-percent"
-      ).textContent =
-        utils.formatNumber(
-          data.interestPercentage,
-          1
-        ) +
-        "%";
-
-
-      document.getElementById(
-        "emi-bar"
-      ).style.width =
-        Math.max(
-          8,
-          Math.min(
-            100,
-            data.principalPercentage
-          )
-        ) +
-        "%";
-
-
-      drawDonut(
-        data
-      );
-
-
-      drawBalanceChart(
-        data.schedule
-      );
-
-
-      drawYearlySummary(
-        data.yearlySummary
-      );
-
-
-      drawSchedule(
-        data.schedule
-      );
-
-
-      var savingsBox =
-        document.getElementById(
-          "savings-box"
-        );
-
-
-      if (
-        data.interestSaved > 0 ||
-        data.monthsSaved > 0
-      ) {
-
-        savingsBox.hidden =
-          false;
-
-
-        savingsBox.textContent =
-
-          "Extra payments could save approximately " +
-
-          utils.formatCurrency(
-            data.interestSaved
-          ) +
-
-          " in interest and " +
-
-          utils.formatDuration(
-            data.monthsSaved
-          ) +
-
-          " of repayment time.";
-
-      } else {
-
-        savingsBox.hidden =
-          true;
-
-      }
-
-    }
-
-
-    /* ====================================================
-       CALCULATE
-    ===================================================== */
-
-    function calculate() {
-
-      var options =
-        getOptions();
-
-
-      var data =
-        calculator.calculate(
-          options
-        );
-
-
-      if (
-        !data
-      ) {
-
-        document.getElementById(
-          "calculator-results"
-        ).hidden =
-          true;
-
-
-        document.getElementById(
-          "emi-error"
-        ).hidden =
-          false;
-
-
-        return;
-
-      }
-
-
-      displayResults(
-        data
-      );
-
-    }
-
-
-    /* ====================================================
-       PRESETS
-    ===================================================== */
-
-    document.querySelectorAll(
-      "[data-loan-preset]"
-    ).forEach(
-      function (
-        button
-      ) {
-
-        button.addEventListener(
-          "click",
-          function () {
-
-
-            document.querySelectorAll(
-              "[data-loan-preset]"
-            ).forEach(
-              function (
-                item
-              ) {
-
-                item.classList.remove(
-                  "active"
-                );
-
-              }
-            );
-
-
-            button.classList.add(
-              "active"
-            );
-
-
-            syncLoan(
-              button.dataset.loanPreset
-            );
-
-
-            calculate();
-
-          }
-        );
-
-      }
-    );
-
-
-    /* ====================================================
-       INPUT EVENTS
-    ===================================================== */
-
-    loanAmount.addEventListener(
-      "input",
-      function () {
-
-        syncLoan(
-          this.value
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    loanSlider.addEventListener(
-      "input",
-      function () {
-
-        syncLoan(
-          this.value
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    interestRate.addEventListener(
-      "input",
-      function () {
-
-        syncRate(
-          this.value
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    rateSlider.addEventListener(
-      "input",
-      function () {
-
-        syncRate(
-          this.value
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    tenure.addEventListener(
-      "input",
-      function () {
-
-        syncTenure(
-          this.value
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    tenureSlider.addEventListener(
-      "input",
-      function () {
-
-        syncTenure(
-          this.value
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    /* ====================================================
-       TENURE TOGGLE
-    ===================================================== */
-
-    document.getElementById(
-      "years-toggle"
-    ).addEventListener(
-      "click",
-      function () {
-
-        setTenureMode(
-          "years"
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    document.getElementById(
-      "months-toggle"
-    ).addEventListener(
-      "click",
-      function () {
-
-        setTenureMode(
-          "months"
-        );
-
-        calculate();
-
-      }
-    );
-
-
-    /* ====================================================
-       CALCULATE BUTTON
-    ===================================================== */
-
-    document.getElementById(
-      "calculate-emi"
-    ).addEventListener(
-      "click",
-      function () {
-
-        calculate();
-
-      }
-    );
-
-
-    /* ====================================================
-       RESET
-    ===================================================== */
-
-    document.getElementById(
-      "reset-emi"
-    ).addEventListener(
-      "click",
-      function () {
-
-
-        syncLoan(
-          config.defaults.principal
-        );
-
-
-        syncRate(
-          config.defaults.annualRate
-        );
-
-
-        setTenureMode(
-          "years"
-        );
-
-
-        syncTenure(
-          config.defaults.years
-        );
-
-
-        document.getElementById(
-          "processing-fee"
-        ).value =
-          0;
-
-
-        document.getElementById(
-          "extra-monthly"
-        ).value =
-          0;
-
-
-        document.getElementById(
-          "prepayment"
-        ).value =
-          0;
-
-
-        document.getElementById(
-          "prepayment-month"
-        ).value =
-          12;
-
-
-        calculate();
-
-      }
-    );
-
-
-    /* ====================================================
-       INITIALIZE
-    ===================================================== */
-
-    updateTenureLimits();
-
-
-    syncLoan(
-      config.defaults.principal
-    );
-
-
-    syncRate(
-      config.defaults.annualRate
-    );
-
-
-    syncTenure(
-      config.defaults.years
-    );
-
-
-    calculate();
-
-
-  })();
-
-  </script>
+  <script src="../assets/js/calculator-ui.js"></script>
 
 
 </body>
