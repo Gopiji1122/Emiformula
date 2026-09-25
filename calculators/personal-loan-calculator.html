@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Personal Loan Calculator | EMI, Interest & Repayment | EMIFORMULA
+  </title>
+
+  <meta
+    name="description"
+    content="Calculate personal loan EMI, total interest, total repayment and loan balance with the EMIFORMULA Personal Loan Calculator."
+  >
+
+  <!-- =====================================================
+       CORE CSS
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/header.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/search.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/footer.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/responsive.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/layout.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/components.css"
+  >
+
+  <!-- =====================================================
+       CALCULATOR CSS
+  ====================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/calculator.css"
+  >
+
+
+  <!-- =====================================================
+       SEO CONFIGURATION
+  ====================================================== -->
+
+  <script src="../seo/seo-config.js"></script>
+
+  <script>
+
+    window.EMIFORMULA_PAGE_SEO = {
+
+      title:
+        "Personal Loan Calculator | EMI, Interest & Repayment | EMIFORMULA",
+
+      description:
+        "Calculate personal loan EMI, total interest, total repayment and loan balance with the EMIFORMULA Personal Loan Calculator.",
+
+      robots:
+        "index, follow",
+
+      ogType:
+        "website"
+
+    };
+
+  </script>
+
+  <script src="../seo/seo.js"></script>
+
+
+  <!-- =====================================================
+       CALCULATOR SCHEMA
+  ====================================================== -->
+<script>
+
+  window.EMIFORMULA_CALCULATOR_SCHEMA = {
+
+    "@context": "https://schema.org",
+
+    "@type": "WebApplication",
+
+    "name": "Personal Loan Calculator",
+
+    "description":
+      "Calculate personal loan EMI, total interest, total repayment and loan payoff details with the EMIFORMULA Personal Loan Calculator.",
+
+    "url":
+      "https://gopiji1122.github.io/Emiformula/calculators/personal-loan-calculator.html",
+
+    "applicationCategory":
+      "FinanceApplication",
+
+    "applicationSubCategory":
+      "Personal Loan Calculator",
+
+    "operatingSystem":
+      "Web",
+
+    "browserRequirements":
+      "Requires JavaScript enabled",
+
+    "inLanguage":
+      "en-IN",
+
+    "isAccessibleForFree":
+      true,
+
+    "featureList": [
+      "Personal loan EMI calculation",
+      "Total interest calculation",
+      "Total payment calculation",
+      "Loan payoff time",
+      "Processing fee calculation",
+      "Extra monthly payment calculation",
+      "One-time prepayment calculation",
+      "Loan balance chart",
+      "Amortization schedule"
+    ]
+
+  };
+
+</script>
+
+<script src="../assets/js/calculator-schema.js"></script>
+
+<script src="../assets/js/schema.js"></script>
+
+
+</head>
+
+
+<body>
+
+  <div class="page-shell">
+
+
+    <!-- ===================================================
+         SHARED HEADER
+    ==================================================== -->
+
+    <div data-component="header"></div>
+
+
+    <!-- ===================================================
+         MAIN
+    ==================================================== -->
+
+    <main class="page-main calculator-page">
+
+      <div class="page-container">
+
+        <section class="page-section">
+
+          <div class="page-full">
+
+
+            <!-- ===========================================
+                 BREADCRUMBS
+            ============================================ -->
+
+            <div
+              data-component="breadcrumbs"
+            ></div>
+
+
+            <!-- ===========================================
+                 PAGE TITLE
+            ============================================ -->
+
+            <div
+              data-component="page-title"
+            ></div>
+
+
+            <!-- ===========================================
+                 PROFESSIONAL CALCULATOR
+            ============================================ -->
+
+            <div class="pro-calculator">
+
+
+              <!-- =========================================
+                   INTRO
+              ========================================== -->
+
+              <div class="pro-calculator-header">
+
+                <h2>
+                  Smart Personal Loan Calculator
+                </h2>
+
+                <p>
+                  Calculate your personal loan EMI, total interest,
+                  repayment cost and loan balance with live
+                  interactive results.
+                </p>
+
+              </div>
+
+
+              <!-- =========================================
+                   QUICK PRESETS
+              ========================================== -->
+
+              <div class="calc-presets">
+
+                <button
+                  class="calc-preset active"
+                  type="button"
+                  data-loan-preset="100000"
+                >
+                  ₹1 Lakh
+                </button>
+
+                <button
+                  class="calc-preset"
+                  type="button"
+                  data-loan-preset="300000"
+                >
+                  ₹3 Lakh
+                </button>
+
+                <button
+                  class="calc-preset"
+                  type="button"
+                  data-loan-preset="500000"
+                >
+                  ₹5 Lakh
+                </button>
+
+                <button
+                  class="calc-preset"
+                  type="button"
+                  data-loan-preset="1000000"
+                >
+                  ₹10 Lakh
+                </button>
+
+                <button
+                  class="calc-preset"
+                  type="button"
+                  data-loan-preset="2000000"
+                >
+                  ₹20 Lakh
+                </button>
+
+              </div>
+
+
+              <!-- =========================================
+                   DASHBOARD
+              ========================================== -->
+
+              <div class="calc-dashboard">
+
+
+                <!-- =======================================
+                     INPUT PANEL
+                ======================================== -->
+
+                <div class="calc-input-panel">
+
+
+                  <div class="calc-panel-title">
+
+                    <h3>
+                      Loan Details
+                    </h3>
+
+                    <span>
+                      Customize
+                    </span>
+
+                  </div>
+
+
+                  <!-- =====================================
+                       LOAN AMOUNT
+                  ====================================== -->
+
+                  <div class="calc-field">
+
+                    <div class="calc-field-label">
+
+                      <span class="calc-label-with-help">
+                        Loan Amount
+                        <button type="button" class="calc-help-button" data-help="loan-amount" aria-label="Help for Loan Amount">?</button>
+                      </span>
+
+                      <span
+                        id="loan-live"
+                        class="calc-live-value"
+                      >
+                        ₹5,00,000
+                      </span>
+
+                    </div>
+
+
+                    <div class="calc-input-box">
+
+                      <span class="calc-prefix">
+                        ₹
+                      </span>
+
+                      <input
+                        id="loan-amount"
+                        type="number"
+                        inputmode="decimal"
+                        min="1000"
+                        max="100000000"
+                        step="1000"
+                        value="500000"
+                        aria-label="Loan amount"
+                      >
+
+                    </div>
+
+
+                    <input
+                      id="loan-amount-slider"
+                      class="calc-slider"
+                      type="range"
+                      min="1000"
+                      max="100000000"
+                      step="1000"
+                      value="500000"
+                      aria-label="Loan amount slider"
+                    >
+
+
+                    <div class="calc-range">
+
+                      <span>
+                        ₹1K
+                      </span>
+
+                      <span>
+                        ₹10 Cr
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- =====================================
+                       INTEREST RATE
+                  ====================================== -->
+
+                  <div class="calc-field">
+
+                    <div class="calc-field-label">
+
+                      <span class="calc-label-with-help">
+                        Interest Rate
+                        <button type="button" class="calc-help-button" data-help="interest-rate" aria-label="Help for Interest Rate">?</button>
+                      </span>
+
+                      <span
+                        id="rate-live"
+                        class="calc-live-value"
+                      >
+                        10.00%
+                      </span>
+
+                    </div>
+
+
+                    <div class="calc-input-box">
+
+                      <input
+                        id="interest-rate"
+                        type="text"
+                        inputmode="decimal"
+                        autocomplete="off"
+                        value="10"
+                        aria-label="Annual interest rate"
+                      >
+
+                      <span class="calc-suffix">
+                        %
+                      </span>
+
+                    </div>
+
+
+                    <input
+                      id="interest-rate-slider"
+                      class="calc-slider"
+                      type="range"
+                      min="0"
+                      max="40"
+                      step="0.01"
+                      value="10"
+                      aria-label="Interest rate slider"
+                    >
+
+
+                    <div class="calc-range">
+
+                      <span>
+                        0%
+                      </span>
+
+                      <span>
+                        40%
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- =====================================
+                       LOAN TENURE
+                  ====================================== -->
+
+                  <div class="calc-field">
+
+                    <div class="calc-field-label">
+
+                      <span class="calc-label-with-help">
+                        Loan Tenure
+                        <button type="button" class="calc-help-button" data-help="loan-tenure" aria-label="Help for Loan Tenure">?</button>
+                      </span>
+
+                      <span
+                        id="tenure-live"
+                        class="calc-live-value"
+                      >
+                        5 Years
+                      </span>
+
+                    </div>
+
+
+                    <div class="calc-toggle">
+
+                      <button
+                        id="years-toggle"
+                        class="active"
+                        type="button"
+                      >
+                        Years
+                      </button>
+
+                      <button
+                        id="months-toggle"
+                        type="button"
+                      >
+                        Months
+                      </button>
+
+                    </div>
+
+
+                    <div class="calc-input-box">
+
+                      <input
+                        id="loan-tenure"
+                        type="number"
+                        inputmode="numeric"
+                        min="1"
+                        max="30"
+                        step="1"
+                        value="5"
+                        aria-label="Loan tenure"
+                      >
+
+                      <span
+                        id="tenure-unit"
+                        class="calc-suffix"
+                      >
+                        Years
+                      </span>
+
+                    </div>
+
+
+                    <input
+                      id="loan-tenure-slider"
+                      class="calc-slider"
+                      type="range"
+                      min="1"
+                      max="30"
+                      step="1"
+                      value="5"
+                      aria-label="Loan tenure slider"
+                    >
+
+
+                    <div class="calc-range">
+
+                      <span id="tenure-min">
+                        1 Year
+                      </span>
+
+                      <span id="tenure-max">
+                        30 Years
+                      </span>
+
+                    </div>
+
+                  </div>
+
+
+                  <!-- =====================================
+                       ADVANCED OPTIONS
+                  ====================================== -->
+
+                  <details class="calc-advanced">
+
+                    <summary>
+                      Advanced Options
+                    </summary>
+
+                    <div class="calc-live-update">
+                      <div>
+                        <strong>Live Update</strong>
+                        <span>Turn this on to update results as you change the advanced fields.</span>
+                      </div>
+                      <label class="calc-switch">
+                        <input id="live-update" type="checkbox" checked aria-label="Live update calculator results">
+                        <span class="calc-switch-track" aria-hidden="true"></span>
+                      </label>
+                    </div>
+
+
+                    <div class="calc-advanced-grid">
+
+
+                      <div class="calc-small-field">
+
+                        <label class="calc-label-with-help" for="processing-fee">
+                          Processing Fee
+                          <button type="button" class="calc-help-button" data-help="processing-fee" aria-label="Help for Processing Fee">?</button>
+                        </label>
+
+                        <input
+                          id="processing-fee"
+                          type="number"
+                          min="0"
+                          step="100"
+                          value="0"
+                        >
+
+                      </div>
+
+
+                      <div class="calc-small-field">
+
+                        <label class="calc-label-with-help" for="extra-monthly">
+                          Extra Monthly Payment
+                          <button type="button" class="calc-help-button" data-help="extra-monthly" aria-label="Help for Extra Monthly Payment">?</button>
+                        </label>
+
+                        <input
+                          id="extra-monthly"
+                          type="number"
+                          min="0"
+                          step="100"
+                          value="0"
+                        >
+
+                      </div>
+
+
+                      <div class="calc-small-field">
+
+                        <label class="calc-label-with-help" for="prepayment">
+                          One-Time Prepayment
+                          <button type="button" class="calc-help-button" data-help="prepayment" aria-label="Help for One-Time Prepayment">?</button>
+                        </label>
+
+                        <input
+                          id="prepayment"
+                          type="number"
+                          min="0"
+                          step="1000"
+                          value="0"
+                        >
+
+                      </div>
+
+
+                      <div class="calc-small-field">
+
+                        <label class="calc-label-with-help" for="prepayment-month">
+                          Prepayment Month
+                          <button type="button" class="calc-help-button" data-help="prepayment-month" aria-label="Help for Prepayment Month">?</button>
+                        </label>
+
+                        <input
+                          id="prepayment-month"
+                          type="number"
+                          min="1"
+                          max="360"
+                          step="1"
+                          value="12"
+                        >
+
+                      </div>
+
+                    </div>
+
+                  </details>
+
+
+                  <!-- =====================================
+                       HELP PANEL
+                  ====================================== -->
+
+                  <div id="calc-help-panel" class="calc-help-panel" hidden aria-live="polite">
+                    <div class="calc-help-panel-head">
+                      <strong id="calc-help-title">Help</strong>
+                      <button type="button" id="calc-help-close" class="calc-help-close" aria-label="Close help">×</button>
+                    </div>
+                    <p id="calc-help-text"></p>
+                  </div>
+
+
+                  <!-- =====================================
+                       CALCULATE
+                  ====================================== -->
+
+                  <button
+                    id="calculate-emi"
+                    class="calc-main-button"
+                    type="button"
+                  >
+                    Calculate EMI
+                  </button>
+
+
+                  <!-- =====================================
+                       RESET
+                  ====================================== -->
+
+                  <button
+                    id="reset-emi"
+                    class="calc-reset"
+                    type="button"
+                  >
+                    Reset Calculator
+                  </button>
+
+
+                  <!-- =====================================
+                       ERROR
+                  ====================================== -->
+
+                  <div
+                    id="emi-error"
+                    class="calculator-error"
+                    hidden
+                    aria-live="assertive"
+                  >
+                    Please enter valid loan details.
+                  </div>
+
+                </div>
+
+
+                <!-- =======================================
+                     RESULT PANEL
+                ======================================== -->
+
+                <div class="calc-result-panel">
+
+
+                  <div
+                    id="calculator-results"
+                  >
+
+
+                    <!-- =================================
+                         HERO RESULT
+                    ================================== -->
+
+                    <div
+                      class="calc-hero calc-reveal"
+                    >
+
+                      <div class="calc-hero-label calc-label-with-help">
+                        Your Monthly EMI
+                        <button type="button" class="calc-help-button calc-help-button-light" data-help="emi" aria-label="Help for Monthly EMI">?</button>
+                      </div>
+
+
+                      <div
+                        id="emi-value"
+                        class="calc-hero-value"
+                      >
+                        ₹0
+                      </div>
+
+
+                      <div class="calc-hero-caption">
+                        Estimated regular monthly payment
+                      </div>
+
+
+                      <div class="calc-hero-bar">
+
+                         <div
+                          id="emi-bar"
+                          class="calc-hero-bar-fill"
+                        ></div>
+
+                      </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         SUMMARY
+                    ================================== -->
+
+                    <div
+                      class="calc-summary calc-reveal"
+                    >
+
+
+                      <div class="calc-summary-card">
+
+                        <span class="calc-label-with-help">
+                          Total Interest
+                          <button type="button" class="calc-help-button" data-help="total-interest" aria-label="Help for Total Interest">?</button>
+                        </span>
+
+                        <strong
+                          id="interest-value"
+                        >
+                          ₹0
+                        </strong>
+
+                      </div>
+
+
+                      <div class="calc-summary-card">
+
+                        <span class="calc-label-with-help">
+                          Total Payment
+                          <button type="button" class="calc-help-button" data-help="total-payment" aria-label="Help for Total Payment">?</button>
+                        </span>
+
+                        <strong
+                          id="payment-value"
+                        >
+                          ₹0
+                        </strong>
+
+                      </div>
+
+
+                      <div class="calc-summary-card">
+
+                        <span class="calc-label-with-help">
+                          Payoff Time
+                          <button type="button" class="calc-help-button" data-help="payoff-time" aria-label="Help for Payoff Time">?</button>
+                        </span>
+
+                        <strong
+                          id="duration-value"
+                        >
+                          -
+                        </strong>
+
+                      </div>
+
+                    </div>
+<!-- =================================
+     COST SUMMARY
+================================== -->
+
+<div
+  class="calc-summary calc-reveal"
+>
+
+  <div class="calc-summary-card">
+
+    <span class="calc-label-with-help">
+      Processing Fee
+
+      <button
+        type="button"
+        class="calc-help-button"
+        data-help="processing-fee"
+        aria-label="Help for Processing Fee"
+      >
+        ?
+      </button>
+
+    </span>
+
+    <strong
+      id="processing-fee-value"
+    >
+      ₹0
+    </strong>
+
+  </div>
+
+
+  <div class="calc-summary-card">
+
+    <span class="calc-label-with-help">
+      Total Cost
+
+      <button
+        type="button"
+        class="calc-help-button"
+        data-help="total-cost"
+        aria-label="Help for Total Cost"
+      >
+        ?
+      </button>
+
+    </span>
+
+    <strong
+      id="total-cost-value"
+    >
+      ₹0
+    </strong>
+
+  </div>
+
+</div>
+
+                    <!-- =================================
+                         SAVINGS
+                    ================================== -->
+
+                    <div
+                      id="savings-box"
+                      class="calc-savings"
+                      hidden
+                    ></div>
+
+
+                    <!-- =================================
+                         VISUAL CARDS
+                    ================================== -->
+
+                    <div class="calc-visual-grid">
+
+
+                      <!-- DONUT -->
+
+                      <div
+                        class="calc-visual-card calc-reveal"
+                      >
+
+                        <h3 class="calc-heading-with-help">
+                          Payment Breakdown
+                          <button type="button" class="calc-help-button" data-help="payment-breakdown" aria-label="Help for Payment Breakdown">?</button>
+                        </h3>
+
+                        <p>
+                          Principal vs total interest
+                        </p>
+
+
+                        <div class="calc-donut-area">
+
+                          <svg
+                            class="calc-donut"
+                            viewBox="0 0 200 200"
+                            aria-hidden="true"
+                          >
+
+                            <circle
+                              class="calc-donut-track"
+                              cx="100"
+                              cy="100"
+                              r="70"
+                            ></circle>
+
+
+                            <circle
+                              id="donut-principal"
+                              class="calc-donut-principal"
+                              cx="100"
+                              cy="100"
+                              r="70"
+                            ></circle>
+
+
+                            <circle
+                              id="donut-interest"
+                              class="calc-donut-interest"
+                              cx="100"
+                              cy="100"
+                              r="70"
+                            ></circle>
+
+                          </svg>
+
+                        </div>
+
+
+                        <div class="calc-legend">
+
+
+                          <div
+                            class="calc-legend-item"
+                          >
+
+                            <span
+                              class="calc-dot calc-dot-principal"
+                            ></span>
+
+                            Principal
+
+                            <strong
+                              id="principal-percent"
+                            >
+                              0%
+                            </strong>
+
+                          </div>
+
+
+                          <div
+                            class="calc-legend-item"
+                          >
+
+                            <span
+                              class="calc-dot calc-dot-interest"
+                            ></span>
+
+                            Interest
+
+                            <strong
+                              id="interest-percent"
+                            >
+                              0%
+                            </strong>
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+
+
+                      <!-- BALANCE GRAPH -->
+
+                      <div
+                        class="calc-visual-card calc-reveal"
+                      >
+
+                        <h3 class="calc-heading-with-help">
+                          Loan Balance
+                          <button type="button" class="calc-help-button" data-help="loan-balance" aria-label="Help for Loan Balance">?</button>
+                        </h3>
+
+                        <p>
+                          Estimated balance over time
+                        </p>
+
+
+                        <div
+                          id="balance-chart"
+                          class="calc-chart"
+                        ></div>
+
+                      </div>
+
+
+                    </div>
+
+
+                    <!-- =================================
+                         YEARLY SUMMARY
+                    ================================== -->
+
+                    <div
+                      class="calc-full-card calc-reveal"
+                    >
+
+                      <h3>
+                        Year-wise Loan Summary
+                      </h3>
+
+
+                      <div
+                        id="yearly-summary"
+                        class="calc-table-wrap"
+                      ></div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         AMORTIZATION
+                    ================================== -->
+
+                    <div
+                      class="calc-full-card calc-reveal"
+                    >
+
+                      <details>
+
+                        <summary
+                          style="
+                            cursor:pointer;
+                            font-weight:800;
+                          "
+                        >
+                          View Full Amortization Schedule
+                        </summary>
+
+
+                        <div
+                          id="amortization-table"
+                          class="calc-table-wrap"
+                          style="margin-top:16px;"
+                        ></div>
+
+                      </details>
+
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+
+
+    <!-- ===================================================
+         LEARNING CONTENT
+    ==================================================== -->
+
+    <section class="calc-learning page-container" aria-label="Learn about personal loan calculations">
+
+      <details class="calc-learning-card" open>
+        <summary>How This Personal Loan Calculator Works</summary>
+
+        <div class="calc-learning-content">
+          <p>For a personal loan, an EMI is the regular monthly payment you make towards the loan under a standard reducing-balance repayment method. Each payment normally contains two parts: interest for that month and an amount that reduces the loan balance.</p>
+
+          <h3>EMI formula</h3>
+          <div class="calc-formula">EMI = P × R × (1 + R)<sup>N</sup> ÷ ((1 + R)<sup>N</sup> − 1)</div>
+
+          <p>Here is what each letter means:</p>
+          <ul>
+            <li><strong>P</strong> is the amount you borrow.</li>
+            <li><strong>R</strong> is the monthly interest rate, written as a decimal.</li>
+            <li><strong>N</strong> is the total number of monthly payments.</li>
+          </ul>
+
+          <h3>How the monthly rate is found</h3>
+          <p>Lenders usually quote interest as a yearly percentage. The calculator converts that yearly rate into a monthly rate before using the EMI formula. For example, a 10% yearly rate becomes 10 ÷ 12 ÷ 100, which is about 0.008333 per month.</p>
+
+          <h3>A simple example</h3>
+          <p>Suppose you borrow ₹5,00,000 as a personal loan at 12% per year for 3 years. The loan has 36 monthly payments. The calculator uses the ₹5,00,000 principal, converts 12% into a monthly rate, and applies the formula across those 36 payments. The resulting EMI is about ₹21,247 per month.</p>
+
+          <p>Your EMI is not simply the loan amount divided by the number of months because interest is charged on the remaining balance. Early payments usually contain a larger interest portion because the outstanding balance is still high. As the balance falls, the interest part normally falls too.</p>
+
+          <h3>Why tenure matters</h3>
+          <p>A longer tenure spreads repayment over more months, which can reduce the monthly EMI. However, interest has more time to build up, so total interest can be higher. A shorter tenure normally means a higher monthly payment but a shorter repayment period.</p>
+
+          <h3>What extra payments do</h3>
+          <p>An extra monthly payment is an amount you choose to pay above the regular payment. In this calculator, that extra amount is applied towards reducing the outstanding balance. A one-time prepayment works in a similar way, but it is applied in the month you select. Reducing the balance earlier can reduce future interest because future interest is calculated on a smaller outstanding amount.</p>
+
+          <h3>Processing fee</h3>
+          <p>A processing fee is a separate cost charged by a lender or financial institution. It does not change the standard EMI formula itself. This calculator adds the amount you enter to the calculated loan cost so you can see the cost more completely. Actual lender fees, taxes and other charges can differ.</p>
+
+          <h3>What the charts show</h3>
+          <p>The payment breakdown compares the calculated principal with the interest paid over the repayment period. The loan balance chart shows how the outstanding balance is expected to fall as payments are made. The year-wise table groups the monthly schedule into easier yearly figures, while the full amortization table lets you inspect each month.</p>
+
+          <p>The calculator is here to help you understand the numbers before you make a borrowing decision. Your lender's actual EMI, fees, rate, repayment rules and prepayment conditions can be different, so use the lender's final offer for the actual loan commitment.</p>
+        </div>
+      </details>
+
+      <details class="calc-learning-card">
+        <summary>Frequently Asked Questions</summary>
+
+        <div class="calc-faq-list">
+          <details class="calc-faq-item"><summary>What does EMI mean?</summary><p>EMI stands for Equated Monthly Instalment. It is the regular amount paid towards a loan each month under a standard EMI repayment plan. The payment generally contains both interest and principal.</p></details>
+          <details class="calc-faq-item"><summary>Can I enter an interest rate such as 7.45%?</summary><p>Yes. Enter 7.45 in the interest-rate field. The calculator accepts decimal rates, so you can use a rate such as 7.45%, 8.25% or 10.75% instead of being limited to whole numbers.</p></details>
+          <details class="calc-faq-item"><summary>Does a longer loan tenure reduce EMI?</summary><p>Usually, yes. When the same loan is spread over more months, the monthly payment is generally lower. The trade-off is that you may pay interest for a longer period, which can increase total interest.</p></details>
+          <details class="calc-faq-item"><summary>Why can two loans with the same amount have different EMIs?</summary><p>The interest rate and tenure both affect EMI. Two people can borrow the same amount but have different rates or repayment periods, producing different monthly payments.</p></details>
+          <details class="calc-faq-item"><summary>What is total interest?</summary><p>Total interest is the interest added across the repayment schedule. It is separate from the original amount borrowed. The calculator shows it so you can see how much the loan costs beyond the principal.</p></details>
+          <details class="calc-faq-item"><summary>What is total payment?</summary><p>Total payment is the amount paid through the calculated repayment schedule, including principal and interest. If you enter a processing fee, the calculator also shows the resulting total cost separately.</p></details>
+          <details class="calc-faq-item"><summary>What is an extra monthly payment?</summary><p>It is an additional amount you plan to pay every month on top of the regular payment. Paying extra can reduce the balance faster and may reduce total interest and repayment time.</p></details>
+          <details class="calc-faq-item"><summary>What is a one-time prepayment?</summary><p>A one-time prepayment is an additional amount paid against the loan balance once. You can enter the amount and the month in which you want the calculator to apply it. Real lenders may have their own prepayment rules or charges.</p></details>
+          <details class="calc-faq-item"><summary>Does prepayment always reduce EMI?</summary><p>Not necessarily. A prepayment reduces the outstanding principal, but what happens to the EMI or tenure depends on the lender's repayment rules. This calculator uses the prepayment to model a shorter repayment path rather than changing the original scheduled EMI.</p></details>
+          <details class="calc-faq-item"><summary>What is an amortization schedule?</summary><p>An amortization schedule is a month-by-month view of the loan. It shows the payment, interest portion, principal portion and remaining balance for each payment period.</p></details>
+          <details class="calc-faq-item"><summary>Is the EMI shown here the exact amount my bank will charge?</summary><p>No. The result is an estimate based on the values you enter and the repayment method used by this calculator. Your lender may use different rounding, fees, rate rules or repayment conditions.</p></details>
+          <details class="calc-faq-item"><summary>Can I use this calculator for a personal loan?</summary><p>Yes. This calculator is designed for personal loans that use a standard reducing-balance EMI repayment structure. Your lender may apply different rates, fees, rounding rules or prepayment conditions.</p></details>
+          <details class="calc-faq-item"><summary>Why is the interest portion usually higher at the beginning?</summary><p>Monthly interest is calculated from the outstanding balance. At the beginning, the balance is at its highest point, so the interest amount is also relatively high. As the principal falls, the interest charged on the remaining balance generally falls.</p></details>
+          <details class="calc-faq-item"><summary>Should I choose a shorter or longer tenure?</summary><p>That depends on your own budget and repayment plan. A shorter tenure generally means higher monthly payments and less time paying interest. A longer tenure generally reduces the monthly payment but can increase total interest. Compare both figures rather than looking only at EMI.</p></details>
+          <details class="calc-faq-item"><summary>Why does the result change when I add an extra payment?</summary><p>An extra payment reduces the outstanding balance faster. Because future interest is based on the remaining balance, reducing that balance earlier can reduce future interest and shorten the calculated repayment period.</p></details>
+        </div>
+      </details>
+
+    </section>
+
+
+    <!-- ===================================================
+         SHARED FOOTER
+    ==================================================== -->
+
+
+    <div data-component="footer"></div>
+
+  </div>
+
+
+  <!-- =====================================================
+       CORE JAVASCRIPT
+  ====================================================== -->
+
+  <script src="../assets/js/site-config.js"></script>
+
+  <script src="../assets/js/site.js"></script>
+
+  <script src="../assets/js/search-data.js"></script>
+
+  <script src="../assets/js/search.js"></script>
+
+  <script src="../assets/js/footer.js"></script>
+
+  <script src="../assets/js/components.js"></script>
+
+  <script src="../assets/js/navigation.js"></script>
+
+
+  <!-- =====================================================
+       CALCULATOR CONFIGURATION
+  ====================================================== -->
+
+  <script src="../configs/calculators/calculator-registry.js"></script>
+<script src="../configs/calculators/personal-loan-calculator.js"></script>
+<script src="../assets/js/calculator-engine.js"></script>
+<script src="../assets/js/calculator-utils.js"></script>
+<script src="../assets/js/calculator-ui.js"></script>
+
+</body>
+
+</html>
