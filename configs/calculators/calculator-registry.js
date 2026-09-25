@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  window.EMIFORMULA_CALCULATOR_REGISTRY = Object.freeze({
+  var registry = {
 
     "emi-calculator": {
       id: "emi-calculator",
@@ -11,6 +11,9 @@
       status: "active"
     }
 
-  });
+  };
+
+  window.EMIFORMULA_CALCULATOR_REGISTRY =
+    Object.freeze(registry);
 
 })();
