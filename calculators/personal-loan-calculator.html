@@ -47,25 +47,25 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 
 <div class="loan-grid">
 <aside class="loan-card loan-input-card">
-<div class="loan-card-head"><div><h3>Loan setup</h3><span>Change any value — results update live</span></div></div>
-<div class="loan-field"><div class="loan-label"><span>Loan amount</span><span class="loan-value" id="loan-amount-value">₹5,00,000</span></div><div class="loan-input"><span>₹</span><input id="loan-amount" type="number" min="10000" max="100000000" step="1000" value="500000" inputmode="numeric"></div><input id="loan-amount-range" class="loan-range" type="range" min="10000" max="5000000" step="5000" value="500000"><div class="loan-minmax"><span>₹10K</span><span>₹50L</span></div></div>
+<div class="loan-card-head"><div><h3>Loan setup</h3><span>Change any value — results update live</span></div></div><div class="loan-presets"><button type="button" class="loan-preset" data-loan-preset="200000">₹2L</button><button type="button" class="loan-preset active" data-loan-preset="500000">₹5L</button><button type="button" class="loan-preset" data-loan-preset="1000000">₹10L</button></div>
+<div class="loan-field"><div class="loan-label"><span>Loan amount</span><span class="loan-value" id="loan-amount-value">₹5,00,000</span></div><div class="loan-input"><span>₹</span><input id="loan-amount" type="number" min="10000" max="100000000" step="1000" value="500000" inputmode="numeric"></div><input id="loan-amount-range" class="loan-range" type="range" min="10000" max="100000000" step="5000" value="500000"><div class="loan-minmax"><span>₹10K</span><span>₹10Cr</span></div></div>
 <div class="loan-field"><div class="loan-label"><span>Interest rate</span><span class="loan-value" id="loan-rate-value">12.00%</span></div><div class="loan-input"><input id="loan-rate" type="number" min="0" max="40" step="0.01" value="12" inputmode="decimal"><span>% p.a.</span></div><input id="loan-rate-range" class="loan-range" type="range" min="0" max="40" step="0.01" value="12"><div class="loan-minmax"><span>0%</span><span>40%</span></div></div>
 <div class="loan-field"><div class="loan-label"><span>Tenure</span><span class="loan-value" id="loan-years-value">5 years</span></div><div class="loan-input"><input id="loan-years" type="number" min="1" max="20" step="1" value="5" inputmode="numeric"><span>years</span></div><input id="loan-years-range" class="loan-range" type="range" min="1" max="20" step="1" value="5"><div class="loan-minmax"><span>1 year</span><span>20 years</span></div></div>
 <div class="loan-field"><div class="loan-label"><span>Processing fee</span><span class="loan-value" id="loan-fee-value">2.00%</span></div><div class="loan-input"><input id="loan-fee" type="number" min="0" max="20" step="0.1" value="2" inputmode="decimal"><span>%</span></div><input id="loan-fee-range" class="loan-range" type="range" min="0" max="20" step="0.1" value="2"><div class="loan-minmax"><span>0%</span><span>20%</span></div></div>
 <details class="loan-advanced"><summary>Advanced repayment options</summary><div class="loan-advanced-body">
 <div class="loan-field"><div class="loan-label"><span>Insurance / other upfront cost</span></div><div class="loan-input"><span>₹</span><input id="loan-insurance" type="number" min="0" max="1000000" step="100" value="0" inputmode="numeric"></div></div>
 <div class="loan-field"><div class="loan-label"><span>Extra monthly payment</span></div><div class="loan-input"><span>₹</span><input id="loan-extra" type="number" min="0" max="1000000" step="500" value="0" inputmode="numeric"></div><input id="loan-extra-range" class="loan-range" type="range" min="0" max="100000" step="500" value="0"></div>
-<div class="loan-two"><div><div class="loan-label"><span>One-time prepayment</span></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div></div><div><div class="loan-label"><span>Prepayment month</span></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
+<div class="loan-two"><div><div class="loan-label"><span>One-time prepayment</span></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div><input id="loan-prepayment-range" class="loan-range" type="range" min="0" max="10000000" step="1000" value="0"></div></div><div><div class="loan-label"><span>Prepayment month</span></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
 </div></details>
 <div class="loan-actions"><button class="loan-btn loan-btn-primary" id="loan-calculate" type="button">Calculate Loan Cost</button><button class="loan-btn loan-btn-secondary" id="loan-reset" type="button">Reset</button></div>
-<p class="loan-note">Processing fee is treated as an upfront deduction from the sanctioned amount. Actual lender terms may differ.</p>
+<p id="loan-error" class="loan-error" aria-live="polite"></p><p class="loan-note">Processing fee and insurance/other upfront costs are treated as deductions from the sanctioned amount. Actual lender terms may differ.</p>
 </aside>
 
 <section class="loan-results">
 <div class="loan-kpis">
 <div class="loan-kpi"><small>Monthly EMI</small><strong id="loan-emi">₹11,122</strong></div>
 <div class="loan-kpi"><small>Amount you receive</small><strong id="loan-net">₹4,90,000</strong></div>
-<div class="loan-kpi"><small>Total interest</small><strong id="loan-interest">₹1,67,320</strong></div>
+<div class="loan-kpi"><small>Total interest</small><strong id="loan-interest-kpi">₹1,67,320</strong></div>
 <div class="loan-kpi"><small>Effective cost</small><strong id="loan-effective">35.00%</strong></div>
 </div>
 
@@ -74,9 +74,11 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-breakdown">
 <h3>Where your money goes</h3>
 <div class="loan-break-row"><i class="loan-dot"></i><span>Principal repayment</span><strong id="loan-repayment">₹6,67,320</strong></div><div class="loan-bar"><i id="loan-principal-bar"></i></div>
-<div class="loan-break-row"><i class="loan-dot gold"></i><span>Interest</span><strong id="loan-interest">₹1,67,320</strong></div><div class="loan-bar gold"><i id="loan-interest-bar"></i></div>
+<div class="loan-break-row"><i class="loan-dot gold"></i><span>Interest</span><strong id="loan-interest-result">₹1,67,320</strong></div><div class="loan-bar gold"><i id="loan-interest-bar"></i></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Processing fee</span><strong id="loan-fee-result">₹10,000</strong></div>
+<div class="loan-break-row"><i class="loan-dot gold"></i><span>Other upfront cost</span><strong id="loan-insurance-result">₹0</strong></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Total borrowing cost</span><strong id="loan-cost">₹1,77,320</strong></div>
+<div class="loan-break-row"><i class="loan-dot"></i><span>Total cash outflow</span><strong id="loan-outflow">₹6,77,320</strong></div>
 </div></div>
 
 <div class="loan-card loan-timeline"><h3>Repayment timeline</h3><div class="loan-timeline-line"><div class="loan-timeline-fill" id="loan-timeline-fill"></div></div><div class="loan-timeline-meta"><span id="loan-timeline-start">Month 1</span><span id="loan-timeline-end">Payoff: 5y</span></div></div>
@@ -88,6 +90,7 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-card loan-panel"><h3>Prepayment impact</h3><p>With your selected extra payments, the loan finishes in <strong id="loan-months">5y</strong>.</p><p>You could save approximately <strong id="loan-saved">0 months / ₹0</strong> compared with the base schedule.</p></div>
 </div>
 
+<div class="loan-card loan-panel loan-chart-wrap"><h3>Balance reduction graph</h3><svg id="balance-chart" class="loan-chart" viewBox="0 0 760 210" role="img" aria-label="Loan balance reduction over time"></svg></div>
 <div class="loan-card loan-panel"><h3>Year-by-year repayment</h3><div style="overflow:auto"><table class="loan-table"><thead><tr><th>Year</th><th>Paid</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody id="yearly-body"></tbody></table></div></div>
 </section>
 </div>
