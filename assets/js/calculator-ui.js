@@ -1,45 +1,269 @@
 (function () {
   "use strict";
 
-  var config = window.EMIFORMULA_EMI_CONFIG;
-  var calculator = window.EMIFORMULA_CALCULATOR;
-  var utils = window.EMIFORMULA_CALCULATOR_UTILS;
+  /*
+   * ============================================================
+   * EMIFORMULA EMI CALCULATOR UI CONTROLLER
+   * ============================================================
+   *
+   * This file controls:
+   *
+   * 1. Loan amount input
+   * 2. Loan amount slider
+   * 3. Interest rate input
+   * 4. Interest rate slider
+   * 5. Loan tenure input
+   * 6. Loan tenure slider
+   * 7. Years / Months toggle
+   * 8. Processing fee
+   * 9. Extra monthly payment
+   * 10. One-time prepayment
+   * 11. Prepayment month
+   * 12. Live Update
+   * 13. Calculate EMI button
+   * 14. Reset button
+   * 15. Question mark help panels
+   * 16. EMI result
+   * 17. Total interest
+   * 18. Total payment
+   * 19. Payoff time
+   * 20. Payment breakdown
+   * 21. Donut chart
+   * 22. Loan balance chart
+   * 23. Yearly summary
+   * 24. Amortization schedule
+   * 25. Savings information
+   *
+   * The calculation engine itself remains in:
+   * assets/js/calculator-engine.js
+   *
+   * The formatting utilities remain in:
+   * assets/js/calculator-utils.js
+   *
+   * ============================================================
+   */
 
-  if (!config || !calculator || !utils) {
-    console.error("EMIFORMULA calculator dependencies are missing.");
+  var config =
+    window.EMIFORMULA_EMI_CONFIG;
+
+  var calculator =
+    window.EMIFORMULA_CALCULATOR;
+
+  var utils =
+    window.EMIFORMULA_CALCULATOR_UTILS;
+
+
+  /*
+   * ============================================================
+   * DEPENDENCY CHECK
+   * ============================================================
+   */
+
+  if (
+    !config ||
+    !calculator ||
+    !utils
+  ) {
+
+    console.error(
+      "EMIFORMULA calculator dependencies are missing."
+    );
+
     return;
+
   }
+
+
+  /*
+   * ============================================================
+   * CALCULATOR STATE
+   * ============================================================
+   */
 
   var tenureMode = "years";
+
   var liveUpdate = true;
-  var lastFocusedHelp = null;
 
-  var loanAmount = document.getElementById("loan-amount");
-  var loanSlider = document.getElementById("loan-amount-slider");
-  var interestRate = document.getElementById("interest-rate");
-  var rateSlider = document.getElementById("interest-rate-slider");
-  var tenure = document.getElementById("loan-tenure");
-  var tenureSlider = document.getElementById("loan-tenure-slider");
+  var calculationTimer = null;
+
+  var helpOpen = false;
 
 
-  /* =====================================================
-     BASIC HELPERS
-  ===================================================== */
+  /*
+   * ============================================================
+   * ELEMENT REFERENCES
+   * ============================================================
+   */
 
-  function clamp(value, min, max) {
-    value = Number(value);
+  var loanAmount =
+    document.getElementById(
+      "loan-amount"
+    );
 
-    if (!Number.isFinite(value)) {
-      return min;
-    }
+  var loanSlider =
+    document.getElementById(
+      "loan-amount-slider"
+    );
 
-    return Math.max(min, Math.min(max, value));
+  var interestRate =
+    document.getElementById(
+      "interest-rate"
+    );
+
+  var rateSlider =
+    document.getElementById(
+      "interest-rate-slider"
+    );
+
+  var tenure =
+    document.getElementById(
+      "loan-tenure"
+    );
+
+  var tenureSlider =
+    document.getElementById(
+      "loan-tenure-slider"
+    );
+
+
+  /*
+   * Advanced fields
+   */
+
+  var processingFee =
+    document.getElementById(
+      "processing-fee"
+    );
+
+  var extraMonthly =
+    document.getElementById(
+      "extra-monthly"
+    );
+
+  var prepayment =
+    document.getElementById(
+      "prepayment"
+    );
+
+  var prepaymentMonth =
+    document.getElementById(
+      "prepayment-month"
+    );
+
+
+  /*
+   * Main buttons
+   */
+
+  var calculateButton =
+    document.getElementById(
+      "calculate-emi"
+    );
+
+  var resetButton =
+    document.getElementById(
+      "reset-emi"
+    );
+
+
+  /*
+   * Live update checkbox
+   */
+
+  var liveUpdateInput =
+    document.getElementById(
+      "live-update"
+    );
+
+
+  /*
+   * Results
+   */
+
+  var results =
+    document.getElementById(
+      "calculator-results"
+    );
+
+  var errorBox =
+    document.getElementById(
+      "emi-error"
+    );
+
+
+  /*
+   * ============================================================
+   * BASIC HELPER FUNCTIONS
+   * ============================================================
+   */
+
+  function byId(id) {
+
+    return document.getElementById(
+      id
+    );
+
   }
 
 
-  function readDecimalInput(element, fallback) {
+  function clamp(
+    value,
+    min,
+    max
+  ) {
+
+    value =
+      Number(value);
+
+    if (
+      !Number.isFinite(value)
+    ) {
+
+      return min;
+
+    }
+
+    return Math.max(
+      min,
+      Math.min(
+        max,
+        value
+      )
+    );
+
+  }
+
+
+  function numberValue(
+    value,
+    fallback
+  ) {
+
+    var number =
+      Number(value);
+
+    if (
+      Number.isFinite(number)
+    ) {
+
+      return number;
+
+    }
+
+    return fallback;
+
+  }
+
+
+  function readInput(
+    element,
+    fallback
+  ) {
+
     if (!element) {
+
       return fallback;
+
     }
 
     var raw =
@@ -49,67 +273,198 @@
           : element.value
       ).trim();
 
+
     if (
       raw === "" ||
       raw === "." ||
-      raw === "-" ||
-      raw === "-."
+      raw === "-"
     ) {
+
       return fallback;
+
     }
 
-    var value = Number(raw);
 
-    return Number.isFinite(value)
-      ? value
-      : fallback;
+    var value =
+      Number(raw);
+
+
+    if (
+      !Number.isFinite(value)
+    ) {
+
+      return fallback;
+
+    }
+
+
+    return value;
+
   }
 
 
-  function formatRate(value) {
-    return Number(value).toFixed(2) + "%";
+  function setText(
+    id,
+    value
+  ) {
+
+    var element =
+      byId(id);
+
+    if (element) {
+
+      element.textContent =
+        value;
+
+    }
+
   }
 
 
-  /* =====================================================
-     LIVE DISPLAY VALUES
-  ===================================================== */
+  function setHidden(
+    id,
+    hidden
+  ) {
+
+    var element =
+      byId(id);
+
+    if (element) {
+
+      element.hidden =
+        hidden;
+
+    }
+
+  }
+
+
+  function formatCurrency(
+    value
+  ) {
+
+    return utils.formatCurrency(
+      numberValue(
+        value,
+        0
+      )
+    );
+
+  }
+
+
+  function formatNumber(
+    value,
+    decimals
+  ) {
+
+    return utils.formatNumber(
+      numberValue(
+        value,
+        0
+      ),
+      decimals
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * ERROR HANDLING
+   * ============================================================
+   */
+
+  function clearError() {
+
+    if (errorBox) {
+
+      errorBox.textContent =
+        "";
+
+      errorBox.hidden =
+        true;
+
+    }
+
+  }
+
+
+  function showError(
+    message
+  ) {
+
+    if (results) {
+
+      results.hidden =
+        true;
+
+    }
+
+
+    if (errorBox) {
+
+      errorBox.textContent =
+        message;
+
+      errorBox.hidden =
+        false;
+
+      errorBox.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+
+    }
+
+  }
+
+
+  /*
+   * ============================================================
+   * LIVE DISPLAY
+   * ============================================================
+   */
 
   function updateLiveValues() {
 
     var loanValue =
-      readDecimalInput(
+      readInput(
         loanAmount,
         0
       );
 
+
     var rateValue =
-      readDecimalInput(
+      readInput(
         interestRate,
         0
       );
 
+
     var tenureValue =
-      readDecimalInput(
+      readInput(
         tenure,
         0
       );
 
 
-    document.getElementById(
-      "loan-live"
-    ).textContent =
-      utils.formatCurrency(
+    setText(
+      "loan-live",
+      formatCurrency(
         loanValue
-      );
+      )
+    );
 
 
-    document.getElementById(
-      "rate-live"
-    ).textContent =
-      formatRate(
-        rateValue
-      );
+    setText(
+      "rate-live",
+      formatNumber(
+        rateValue,
+        2
+      ) +
+      "%"
+    );
 
 
     var unit =
@@ -126,23 +481,28 @@
           );
 
 
-    document.getElementById(
-      "tenure-live"
-    ).textContent =
-      tenureValue +
+    setText(
+      "tenure-live",
+      formatNumber(
+        tenureValue,
+        0
+      ) +
       " " +
-      unit;
+      unit
+    );
 
   }
 
 
-  /* =====================================================
-     LOAN SYNC
-  ===================================================== */
+  /*
+   * ============================================================
+   * LOAN AMOUNT
+   * ============================================================
+   */
 
   function syncLoan(
     value,
-    updateInput
+    writeInput
   ) {
 
     value =
@@ -153,22 +513,27 @@
       );
 
 
+    value =
+      Math.round(value);
+
+
     if (
-      updateInput !== false
+      writeInput !== false &&
+      loanAmount
     ) {
 
       loanAmount.value =
-        String(
-          Math.round(value)
-        );
+        String(value);
 
     }
 
 
-    loanSlider.value =
-      String(
-        Math.round(value)
-      );
+    if (loanSlider) {
+
+      loanSlider.value =
+        String(value);
+
+    }
 
 
     updateLiveValues();
@@ -176,13 +541,15 @@
   }
 
 
-  /* =====================================================
-     RATE SYNC
-  ===================================================== */
+  /*
+   * ============================================================
+   * INTEREST RATE
+   * ============================================================
+   */
 
   function syncRate(
     value,
-    updateInput
+    writeInput
   ) {
 
     value =
@@ -194,7 +561,8 @@
 
 
     if (
-      updateInput !== false
+      writeInput !== false &&
+      interestRate
     ) {
 
       interestRate.value =
@@ -203,8 +571,12 @@
     }
 
 
-    rateSlider.value =
-      String(value);
+    if (rateSlider) {
+
+      rateSlider.value =
+        String(value);
+
+    }
 
 
     updateLiveValues();
@@ -212,90 +584,305 @@
   }
 
 
-  /* =====================================================
-     TENURE LIMITS
-  ===================================================== */
+  /*
+   * ============================================================
+   * INTEREST RATE TYPING
+   * ============================================================
+   *
+   * Important:
+   *
+   * The field is intentionally NOT rewritten with Number()
+   * during every keystroke.
+   *
+   * This prevents the cursor from jumping when entering:
+   *
+   * 7.45
+   * 8.25
+   * 9.75
+   *
+   * ============================================================
+   */
+
+  function sanitizeInterestInput() {
+
+    if (!interestRate) {
+
+      return;
+
+    }
+
+
+    var value =
+      String(
+        interestRate.value
+      );
+
+
+    value =
+      value.replace(
+        /[^0-9.]/g,
+        ""
+      );
+
+
+    var firstDot =
+      value.indexOf(".");
+
+
+    if (
+      firstDot !== -1
+    ) {
+
+      var before =
+        value.slice(
+          0,
+          firstDot
+        );
+
+
+      var after =
+        value.slice(
+          firstDot + 1
+        );
+
+
+      after =
+        after.replace(
+          /\./g,
+          ""
+        );
+
+
+      before =
+        before.slice(
+          0,
+          2
+        );
+
+
+      after =
+        after.slice(
+          0,
+          2
+        );
+
+
+      value =
+        before +
+        "." +
+        after;
+
+    } else {
+
+      value =
+        value.slice(
+          0,
+          2
+        );
+
+    }
+
+
+    if (
+      Number(value) > 40
+    ) {
+
+      value =
+        "40";
+
+    }
+
+
+    interestRate.value =
+      value;
+
+  }
+
+
+  function normalizeInterest() {
+
+    if (!interestRate) {
+
+      return;
+
+    }
+
+
+    var value =
+      readInput(
+        interestRate,
+        0
+      );
+
+
+    value =
+      clamp(
+        value,
+        0,
+        40
+      );
+
+
+    value =
+      Math.round(
+        value * 100
+      ) / 100;
+
+
+    interestRate.value =
+      String(value);
+
+
+    if (rateSlider) {
+
+      rateSlider.value =
+        String(value);
+
+    }
+
+
+    updateLiveValues();
+
+  }
+
+
+  /*
+   * ============================================================
+   * TENURE LIMITS
+   * ============================================================
+   */
 
   function updateTenureLimits() {
+
+    if (
+      !tenure ||
+      !tenureSlider
+    ) {
+
+      return;
+
+    }
+
 
     if (
       tenureMode === "years"
     ) {
 
-      tenure.min = "1";
-      tenure.max = "30";
-      tenure.step = "1";
+      tenure.min =
+        "1";
+
+      tenure.max =
+        "30";
+
+      tenure.step =
+        "1";
 
 
-      tenureSlider.min = "1";
-      tenureSlider.max = "30";
-      tenureSlider.step = "1";
+      tenureSlider.min =
+        "1";
+
+      tenureSlider.max =
+        "30";
+
+      tenureSlider.step =
+        "1";
 
 
-      document.getElementById(
-        "tenure-unit"
-      ).textContent =
-        "Years";
+      setText(
+        "tenure-unit",
+        "Years"
+      );
 
+      setText(
+        "tenure-min",
+        "1 Year"
+      );
 
-      document.getElementById(
-        "tenure-min"
-      ).textContent =
-        "1 Year";
-
-
-      document.getElementById(
-        "tenure-max"
-      ).textContent =
-        "30 Years";
+      setText(
+        "tenure-max",
+        "30 Years"
+      );
 
     } else {
 
-      tenure.min = "1";
-      tenure.max = "360";
-      tenure.step = "1";
+      tenure.min =
+        "1";
+
+      tenure.max =
+        "360";
+
+      tenure.step =
+        "1";
 
 
-      tenureSlider.min = "1";
-      tenureSlider.max = "360";
-      tenureSlider.step = "1";
+      tenureSlider.min =
+        "1";
+
+      tenureSlider.max =
+        "360";
+
+      tenureSlider.step =
+        "1";
 
 
-      document.getElementById(
-        "tenure-unit"
-      ).textContent =
-        "Months";
+      setText(
+        "tenure-unit",
+        "Months"
+      );
 
+      setText(
+        "tenure-min",
+        "1 Month"
+      );
 
-      document.getElementById(
-        "tenure-min"
-      ).textContent =
-        "1 Month";
-
-
-      document.getElementById(
-        "tenure-max"
-      ).textContent =
-        "360 Months";
+      setText(
+        "tenure-max",
+        "360 Months"
+      );
 
     }
 
   }
 
 
-  /* =====================================================
-     TENURE
-  ===================================================== */
+  /*
+   * ============================================================
+   * TENURE VALUE
+   * ============================================================
+   */
 
   function getTenureValue() {
 
-    return clamp(
-      readDecimalInput(
+    if (!tenure) {
+
+      return 1;
+
+    }
+
+
+    var minimum =
+      Number(
+        tenure.min
+      ) || 1;
+
+
+    var maximum =
+      Number(
+        tenure.max
+      ) || 30;
+
+
+    var value =
+      readInput(
         tenure,
-        1
-      ),
-      Number(tenure.min),
-      Number(tenure.max)
+        minimum
+      );
+
+
+    return clamp(
+      value,
+      minimum,
+      maximum
     );
 
   }
@@ -303,14 +890,33 @@
 
   function syncTenure(
     value,
-    updateInput
+    writeInput
   ) {
+
+    if (!tenure) {
+
+      return;
+
+    }
+
+
+    var minimum =
+      Number(
+        tenure.min
+      ) || 1;
+
+
+    var maximum =
+      Number(
+        tenure.max
+      ) || 30;
+
 
     value =
       clamp(
         value,
-        Number(tenure.min),
-        Number(tenure.max)
+        minimum,
+        maximum
       );
 
 
@@ -319,7 +925,7 @@
 
 
     if (
-      updateInput !== false
+      writeInput !== false
     ) {
 
       tenure.value =
@@ -328,8 +934,12 @@
     }
 
 
-    tenureSlider.value =
-      String(value);
+    if (tenureSlider) {
+
+      tenureSlider.value =
+        String(value);
+
+    }
 
 
     updateLiveValues();
@@ -347,19 +957,25 @@
       tenureMode === "years"
     ) {
 
-      return value * 12;
+      return Math.round(
+        value * 12
+      );
 
     }
 
 
-    return value;
+    return Math.round(
+      value
+    );
 
   }
 
 
-  /* =====================================================
-     TENURE MODE
-  ===================================================== */
+  /*
+   * ============================================================
+   * TENURE MODE
+   * ============================================================
+   */
 
   function setTenureMode(
     mode,
@@ -368,6 +984,17 @@
 
     var currentMonths =
       getMonths();
+
+
+    if (
+      mode !== "years" &&
+      mode !== "months"
+    ) {
+
+      mode =
+        "years";
+
+    }
 
 
     tenureMode =
@@ -391,45 +1018,78 @@
       );
 
 
-      document.getElementById(
-        "years-toggle"
-      ).classList.add(
-        "active"
-      );
+      var yearsButton =
+        byId(
+          "years-toggle"
+        );
 
 
-      document.getElementById(
-        "months-toggle"
-      ).classList.remove(
-        "active"
-      );
+      var monthsButton =
+        byId(
+          "months-toggle"
+        );
+
+
+      if (yearsButton) {
+
+        yearsButton.classList.add(
+          "active"
+        );
+
+      }
+
+
+      if (monthsButton) {
+
+        monthsButton.classList.remove(
+          "active"
+        );
+
+      }
 
     } else {
 
       syncTenure(
         Math.max(
           1,
-          Math.round(
-            currentMonths
-          )
+          currentMonths
         )
       );
 
 
-      document.getElementById(
-        "months-toggle"
-      ).classList.add(
-        "active"
-      );
+      var yearsButton2 =
+        byId(
+          "years-toggle"
+        );
 
 
-      document.getElementById(
-        "years-toggle"
-      ).classList.remove(
-        "active"
-      );
+      var monthsButton2 =
+        byId(
+          "months-toggle"
+        );
+
+
+      if (monthsButton2) {
+
+        monthsButton2.classList.add(
+          "active"
+        );
+
+      }
+
+
+      if (yearsButton2) {
+
+        yearsButton2.classList.remove(
+          "active"
+        );
+
+      }
 
     }
+
+
+    updateLiveValues();
 
 
     if (
@@ -444,24 +1104,58 @@
   }
 
 
-  /* =====================================================
-     GET CALCULATOR OPTIONS
-  ===================================================== */
+  /*
+   * ============================================================
+   * OPTIONS
+   * ============================================================
+   */
 
   function getOptions() {
 
     var principal =
-      readDecimalInput(
+      readInput(
         loanAmount,
         0
       );
 
 
     var annualRate =
-      readDecimalInput(
+      readInput(
         interestRate,
         0
       );
+
+
+    var processing =
+      readInput(
+        processingFee,
+        0
+      );
+
+
+    var extra =
+      readInput(
+        extraMonthly,
+        0
+      );
+
+
+    var lumpSum =
+      readInput(
+        prepayment,
+        0
+      );
+
+
+    var prepaymentAt =
+      readInput(
+        prepaymentMonth,
+        1
+      );
+
+
+    var months =
+      getMonths();
 
 
     return {
@@ -469,52 +1163,35 @@
       principal:
         principal,
 
-
       annualRate:
         annualRate,
 
-
       months:
-        getMonths(),
-
+        months,
 
       processingFee:
-        readDecimalInput(
-          document.getElementById(
-            "processing-fee"
-          ),
-          0
+        Math.max(
+          0,
+          processing
         ),
-
 
       extraMonthly:
-        readDecimalInput(
-          document.getElementById(
-            "extra-monthly"
-          ),
-          0
+        Math.max(
+          0,
+          extra
         ),
-
 
       prepayment:
-        readDecimalInput(
-          document.getElementById(
-            "prepayment"
-          ),
-          0
+        Math.max(
+          0,
+          lumpSum
         ),
-
 
       prepaymentMonth:
         Math.max(
           1,
           Math.round(
-            readDecimalInput(
-              document.getElementById(
-                "prepayment-month"
-              ),
-              1
-            )
+            prepaymentAt
           )
         )
 
@@ -523,552 +1200,113 @@
   }
 
 
-  /* =====================================================
-     ERROR
-  ===================================================== */
+  /*
+   * ============================================================
+   * VALIDATION
+   * ============================================================
+   */
 
-  function showError(
-    message
+  function validateOptions(
+    options
   ) {
-
-    document.getElementById(
-      "calculator-results"
-    ).hidden =
-      true;
-
-
-    var error =
-      document.getElementById(
-        "emi-error"
-      );
-
-
-    error.textContent =
-      message;
-
-
-    error.hidden =
-      false;
-
-  }
-
-
-  /* =====================================================
-     DONUT CHART
-  ===================================================== */
-
-  function drawDonut(
-    data
-  ) {
-
-    var radius = 70;
-
-
-    var circumference =
-      2 *
-      Math.PI *
-      radius;
-
-
-    var principalLength =
-      circumference *
-      (
-        data.principalPercentage /
-        100
-      );
-
-
-    var interestLength =
-      circumference *
-      (
-        data.interestPercentage /
-        100
-      );
-
-
-    var principal =
-      document.getElementById(
-        "donut-principal"
-      );
-
-
-    var interest =
-      document.getElementById(
-        "donut-interest"
-      );
-
-
-    principal.style.strokeDasharray =
-      principalLength +
-      " " +
-      circumference;
-
-
-    principal.style.strokeDashoffset =
-      "0";
-
-
-    interest.style.strokeDasharray =
-      interestLength +
-      " " +
-      circumference;
-
-
-    interest.style.strokeDashoffset =
-      String(
-        -principalLength
-      );
-
-  }
-
-
-  /* =====================================================
-     BALANCE CHART
-  ===================================================== */
-
-  function drawBalanceChart(
-    schedule
-  ) {
-
-    var container =
-      document.getElementById(
-        "balance-chart"
-      );
-
 
     if (
-      !schedule ||
-      !schedule.length
+      !Number.isFinite(
+        options.principal
+      )
     ) {
 
-      container.innerHTML =
-        "";
-
-      return;
+      return "Please enter a valid loan amount.";
 
     }
 
 
-    var width = 640;
-    var height = 230;
+    if (
+      options.principal < 1000
+    ) {
 
-    var left = 20;
-    var right = 12;
+      return "Loan amount should be at least ₹1,000.";
 
-    var top = 15;
-    var bottom = 30;
+    }
 
 
-    var maxBalance =
-      Math.max.apply(
-        null,
-        schedule.map(
-          function (row) {
+    if (
+      options.principal > 100000000
+    ) {
 
-            return row.openingBalance;
+      return "Loan amount cannot be more than ₹10 crore.";
 
-          }
-        )
-      );
+    }
 
 
     if (
       !Number.isFinite(
-        maxBalance
-      ) ||
-      maxBalance <= 0
+        options.annualRate
+      )
     ) {
 
-      maxBalance = 1;
+      return "Please enter a valid interest rate.";
 
     }
-
-
-    var points =
-      schedule.map(
-        function (
-          row,
-          index
-        ) {
-
-          var x =
-            left +
-            (
-              index /
-              Math.max(
-                1,
-                schedule.length - 1
-              )
-            ) *
-            (
-              width -
-              left -
-              right
-            );
-
-
-          var y =
-            top +
-            (
-              1 -
-              (
-                row.closingBalance /
-                maxBalance
-              )
-            ) *
-            (
-              height -
-              top -
-              bottom
-            );
-
-
-          return {
-            x: x,
-            y: y
-          };
-
-        }
-      );
-
-
-    var path =
-      points.map(
-        function (
-          point,
-          index
-        ) {
-
-          return (
-            index === 0
-              ? "M"
-              : "L"
-          ) +
-          " " +
-          point.x +
-          " " +
-          point.y;
-
-        }
-      ).join(
-        " "
-      );
-
-
-    var first =
-      points[0];
-
-
-    var last =
-      points[
-        points.length - 1
-      ];
-
-
-    var areaPath =
-      path +
-      " L " +
-      last.x +
-      " " +
-      (
-        height -
-        bottom
-      ) +
-      " L " +
-      first.x +
-      " " +
-      (
-        height -
-        bottom
-      ) +
-      " Z";
-
-
-    container.innerHTML =
-
-      '<svg ' +
-      'viewBox="0 0 ' +
-      width +
-      ' ' +
-      height +
-      '" ' +
-      'role="img" ' +
-      'aria-label="Loan balance over time">' +
-
-      '<line ' +
-      'class="calc-chart-grid" ' +
-      'x1="' +
-      left +
-      '" ' +
-      'y1="' +
-      top +
-      '" ' +
-      'x2="' +
-      left +
-      '" ' +
-      'y2="' +
-      (
-        height -
-        bottom
-      ) +
-      '"></line>' +
-
-      '<line ' +
-      'class="calc-chart-grid" ' +
-      'x1="' +
-      left +
-      '" ' +
-      'y1="' +
-      (
-        height -
-        bottom
-      ) +
-      '" ' +
-      'x2="' +
-      (
-        width -
-        right
-      ) +
-      '" ' +
-      'y2="' +
-      (
-        height -
-        bottom
-      ) +
-      '"></line>' +
-
-      '<path ' +
-      'class="calc-chart-area" ' +
-      'd="' +
-      areaPath +
-      '"></path>' +
-
-      '<path ' +
-      'class="calc-chart-line" ' +
-      'd="' +
-      path +
-      '"></path>' +
-
-      '<text ' +
-      'class="calc-chart-label" ' +
-      'x="' +
-      left +
-      '" ' +
-      'y="' +
-      (
-        height -
-        8
-      ) +
-      '">Start</text>' +
-
-      '<text ' +
-      'class="calc-chart-label" ' +
-      'x="' +
-      (
-        width -
-        45
-      ) +
-      '" ' +
-      'y="' +
-      (
-        height -
-        8
-      ) +
-      '">End</text>' +
-
-      '</svg>';
-
-  }
-
-
-  /* =====================================================
-     YEARLY SUMMARY
-  ===================================================== */
-
-  function drawYearlySummary(
-    rows
-  ) {
-
-    var container =
-      document.getElementById(
-        "yearly-summary"
-      );
 
 
     if (
-      !rows ||
-      !rows.length
+      options.annualRate < 0
     ) {
 
-      container.innerHTML =
-        "";
-
-      return;
+      return "Interest rate cannot be negative.";
 
     }
-
-
-    var html =
-      '<table class="calc-table">' +
-      '<thead>' +
-      '<tr>' +
-      '<th>Year</th>' +
-      '<th>Payment</th>' +
-      '<th>Principal</th>' +
-      '<th>Interest</th>' +
-      '<th>Balance</th>' +
-      '</tr>' +
-      '</thead>' +
-      '<tbody>';
-
-
-    rows.forEach(
-      function (row) {
-
-        html +=
-
-          '<tr>' +
-
-          '<td>' +
-          row.year +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.payment
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.principal
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.interest
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.closingBalance
-          ) +
-          '</td>' +
-
-          '</tr>';
-
-      }
-    );
-
-
-    container.innerHTML =
-      html +
-      "</tbody></table>";
-
-  }
-
-
-  /* =====================================================
-     AMORTIZATION SCHEDULE
-  ===================================================== */
-
-  function drawSchedule(
-    rows
-  ) {
-
-    var container =
-      document.getElementById(
-        "amortization-table"
-      );
 
 
     if (
-      !rows ||
-      !rows.length
+      options.annualRate > 40
     ) {
 
-      container.innerHTML =
-        "";
-
-      return;
+      return "Interest rate cannot be more than 40%.";
 
     }
 
 
-    var html =
-      '<table class="calc-table">' +
-      '<thead>' +
-      '<tr>' +
-      '<th>Month</th>' +
-      '<th>Payment</th>' +
-      '<th>Principal</th>' +
-      '<th>Interest</th>' +
-      '<th>Extra</th>' +
-      '<th>Balance</th>' +
-      '</tr>' +
-      '</thead>' +
-      '<tbody>';
+    if (
+      !Number.isFinite(
+        options.months
+      )
+    ) {
+
+      return "Please enter a valid loan tenure.";
+
+    }
 
 
-    rows.forEach(
-      function (row) {
+    if (
+      options.months < 1
+    ) {
 
-        html +=
+      return "Loan tenure should be at least 1 month.";
 
-          '<tr>' +
-
-          '<td>' +
-          row.month +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.payment
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.principal
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.interest
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.extraPayment
-          ) +
-          '</td>' +
-
-          '<td>' +
-          utils.formatCurrency(
-            row.closingBalance
-          ) +
-          '</td>' +
-
-          '</tr>';
-
-      }
-    );
+    }
 
 
-    container.innerHTML =
-      html +
-      "</tbody></table>";
+    if (
+      options.months > 360
+    ) {
+
+      return "Loan tenure cannot be more than 30 years.";
+
+    }
+
+
+    return "";
 
   }
 
 
-  /* =====================================================
-     NUMBER ANIMATION
-  ===================================================== */
+  /*
+   * ============================================================
+   * RESULT ANIMATION
+   * ============================================================
+   */
 
   function animateNumber(
     element,
@@ -1078,19 +1316,49 @@
   ) {
 
     if (!element) {
+
       return;
+
     }
 
 
+    target =
+      Number(target);
+
+
     if (
-      window.matchMedia &&
-      window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      ).matches
+      !Number.isFinite(target)
     ) {
+
+      target =
+        0;
+
+    }
+
+
+    var reducedMotion =
+      false;
+
+
+    if (
+      window.matchMedia
+    ) {
+
+      reducedMotion =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+    }
+
+
+    if (reducedMotion) {
 
       element.textContent =
         formatter(target);
+
+      element.dataset.number =
+        String(target);
 
       return;
 
@@ -1099,9 +1367,19 @@
 
     var start =
       Number(
-        element.dataset.lastNumber ||
+        element.dataset.number ||
         0
       );
+
+
+    if (
+      !Number.isFinite(start)
+    ) {
+
+      start =
+        0;
+
+    }
 
 
     var startTime =
@@ -1113,8 +1391,10 @@
     ) {
 
       if (!startTime) {
+
         startTime =
           timestamp;
+
       }
 
 
@@ -1153,12 +1433,6 @@
         );
 
 
-      element.dataset.lastNumber =
-        String(
-          target
-        );
-
-
       if (
         progress < 1
       ) {
@@ -1166,6 +1440,11 @@
         window.requestAnimationFrame(
           frame
         );
+
+      } else {
+
+        element.dataset.number =
+          String(target);
 
       }
 
@@ -1179,161 +1458,684 @@
   }
 
 
-  /* =====================================================
-     DISPLAY RESULTS
-  ===================================================== */
+  /*
+   * ============================================================
+   * DONUT CHART
+   * ============================================================
+   */
 
-  function displayResults(
+  function drawDonut(
     data
   ) {
 
-    document.getElementById(
-      "calculator-results"
-    ).hidden =
-      false;
-
-
-    document.getElementById(
-      "emi-error"
-    ).hidden =
-      true;
-
-
-    animateNumber(
-
-      document.getElementById(
-        "emi-value"
-      ),
-
-      data.monthlyPayment,
-
-      utils.formatCurrency,
-
-      650
-
-    );
-
-
-    animateNumber(
-
-      document.getElementById(
-        "interest-value"
-      ),
-
-      data.totalInterest,
-
-      utils.formatCurrency,
-
-      800
-
-    );
-
-
-    animateNumber(
-
-      document.getElementById(
-        "payment-value"
-      ),
-
-      data.totalPayment,
-
-      utils.formatCurrency,
-
-      900
-
-    );
-
-
-    document.getElementById(
-      "duration-value"
-    ).textContent =
-      utils.formatDuration(
-        data.actualMonths
+    var principalCircle =
+      byId(
+        "donut-principal"
       );
 
 
-    document.getElementById(
-      "principal-percent"
-    ).textContent =
-      utils.formatNumber(
-        data.principalPercentage,
-        1
-      ) +
-      "%";
-
-
-    document.getElementById(
-      "interest-percent"
-    ).textContent =
-      utils.formatNumber(
-        data.interestPercentage,
-        1
-      ) +
-      "%";
-
-
-    document.getElementById(
-      "emi-bar"
-    ).style.width =
-      Math.max(
-        8,
-        Math.min(
-          100,
-          data.principalPercentage
-        )
-      ) +
-      "%";
-
-
-    drawDonut(
-      data
-    );
-
-
-    drawBalanceChart(
-      data.schedule
-    );
-
-
-    drawYearlySummary(
-      data.yearlySummary
-    );
-
-
-    drawSchedule(
-      data.schedule
-    );
-
-
-    var savingsBox =
-      document.getElementById(
-        "savings-box"
+    var interestCircle =
+      byId(
+        "donut-interest"
       );
 
 
     if (
-      data.interestSaved > 0 ||
-      data.monthsSaved > 0
+      !principalCircle ||
+      !interestCircle
+    ) {
+
+      return;
+
+    }
+
+
+    var radius =
+      Number(
+        principalCircle.getAttribute(
+          "r"
+        )
+      ) || 70;
+
+
+    var circumference =
+      2 *
+      Math.PI *
+      radius;
+
+
+    var principalPercent =
+      clamp(
+        data.principalPercentage,
+        0,
+        100
+      );
+
+
+    var interestPercent =
+      clamp(
+        data.interestPercentage,
+        0,
+        100
+      );
+
+
+    var principalLength =
+      circumference *
+      principalPercent /
+      100;
+
+
+    var interestLength =
+      circumference *
+      interestPercent /
+      100;
+
+
+    principalCircle.style.strokeDasharray =
+      principalLength +
+      " " +
+      circumference;
+
+
+    principalCircle.style.strokeDashoffset =
+      "0";
+
+
+    interestCircle.style.strokeDasharray =
+      interestLength +
+      " " +
+      circumference;
+
+
+    interestCircle.style.strokeDashoffset =
+      String(
+        -principalLength
+      );
+
+  }
+    /*
+   * ============================================================
+   * BALANCE CHART
+   * ============================================================
+   */
+
+  function drawBalanceChart(
+    schedule
+  ) {
+
+    var container =
+      byId(
+        "balance-chart"
+      );
+
+    if (!container) {
+      return;
+    }
+
+    if (
+      !schedule ||
+      !schedule.length
+    ) {
+
+      container.innerHTML =
+        "";
+
+      return;
+
+    }
+
+    var width = 640;
+    var height = 240;
+
+    var left = 24;
+    var right = 14;
+    var top = 18;
+    var bottom = 34;
+
+    var availableWidth =
+      width -
+      left -
+      right;
+
+    var availableHeight =
+      height -
+      top -
+      bottom;
+
+    var maxBalance = 0;
+
+    schedule.forEach(
+      function (row) {
+
+        maxBalance =
+          Math.max(
+            maxBalance,
+            Number(
+              row.openingBalance
+            ) || 0
+          );
+
+      }
+    );
+
+    if (
+      maxBalance <= 0
+    ) {
+
+      maxBalance = 1;
+
+    }
+
+    var points = [];
+
+    schedule.forEach(
+      function (
+        row,
+        index
+      ) {
+
+        var denominator =
+          Math.max(
+            1,
+            schedule.length - 1
+          );
+
+        var x =
+          left +
+          (
+            index /
+            denominator
+          ) *
+          availableWidth;
+
+        var balance =
+          Math.max(
+            0,
+            Number(
+              row.closingBalance
+            ) || 0
+          );
+
+        var y =
+          top +
+          (
+            1 -
+            (
+              balance /
+              maxBalance
+            )
+          ) *
+          availableHeight;
+
+        points.push({
+          x: x,
+          y: y
+        });
+
+      }
+    );
+
+    var path = "";
+
+    points.forEach(
+      function (
+        point,
+        index
+      ) {
+
+        path +=
+          (
+            index === 0
+              ? "M "
+              : " L "
+          ) +
+          point.x +
+          " " +
+          point.y;
+
+      }
+    );
+
+    var first =
+      points[0];
+
+    var last =
+      points[
+        points.length - 1
+      ];
+
+    var baseline =
+      height -
+      bottom;
+
+    var areaPath =
+      path +
+      " L " +
+      last.x +
+      " " +
+      baseline +
+      " L " +
+      first.x +
+      " " +
+      baseline +
+      " Z";
+
+    container.innerHTML =
+
+      '<svg ' +
+      'class="calc-balance-svg" ' +
+      'viewBox="0 0 ' +
+      width +
+      ' ' +
+      height +
+      '" ' +
+      'role="img" ' +
+      'aria-label="Loan balance over time">' +
+
+      '<line ' +
+      'class="calc-chart-grid" ' +
+      'x1="' +
+      left +
+      '" ' +
+      'y1="' +
+      top +
+      '" ' +
+      'x2="' +
+      (
+        width -
+        right
+      ) +
+      '" ' +
+      'y2="' +
+      top +
+      '"></line>' +
+
+      '<line ' +
+      'class="calc-chart-grid" ' +
+      'x1="' +
+      left +
+      '" ' +
+      'y1="' +
+      (
+        top +
+        availableHeight / 2
+      ) +
+      '" ' +
+      'x2="' +
+      (
+        width -
+        right
+      ) +
+      '" ' +
+      'y2="' +
+      (
+        top +
+        availableHeight / 2
+      ) +
+      '"></line>' +
+
+      '<line ' +
+      'class="calc-chart-grid" ' +
+      'x1="' +
+      left +
+      '" ' +
+      'y1="' +
+      baseline +
+      '" ' +
+      'x2="' +
+      (
+        width -
+        right
+      ) +
+      '" ' +
+      'y2="' +
+      baseline +
+      '"></line>' +
+
+      '<path ' +
+      'class="calc-chart-area" ' +
+      'd="' +
+      areaPath +
+      '"></path>' +
+
+      '<path ' +
+      'class="calc-chart-line" ' +
+      'd="' +
+      path +
+      '"></path>' +
+
+      '<text ' +
+      'class="calc-chart-label" ' +
+      'x="' +
+      left +
+      '" ' +
+      'y="' +
+      (
+        height - 10
+      ) +
+      '">Start</text>' +
+
+      '<text ' +
+      'class="calc-chart-label" ' +
+      'x="' +
+      (
+        width - 45
+      ) +
+      '" ' +
+      'y="' +
+      (
+        height - 10
+      ) +
+      '">End</text>' +
+
+      '</svg>';
+
+  }
+
+
+  /*
+   * ============================================================
+   * YEARLY SUMMARY
+   * ============================================================
+   */
+
+  function drawYearlySummary(
+    rows
+  ) {
+
+    var container =
+      byId(
+        "yearly-summary"
+      );
+
+    if (!container) {
+      return;
+    }
+
+    if (
+      !rows ||
+      !rows.length
+    ) {
+
+      container.innerHTML =
+        "";
+
+      return;
+
+    }
+
+    var html = "";
+
+    html +=
+      '<table class="calc-table">';
+
+    html +=
+      "<thead>";
+
+    html +=
+      "<tr>";
+
+    html +=
+      "<th>Year</th>";
+
+    html +=
+      "<th>Payment</th>";
+
+    html +=
+      "<th>Principal</th>";
+
+    html +=
+      "<th>Interest</th>";
+
+    html +=
+      "<th>Balance</th>";
+
+    html +=
+      "</tr>";
+
+    html +=
+      "</thead>";
+
+    html +=
+      "<tbody>";
+
+    rows.forEach(
+      function (row) {
+
+        html +=
+          "<tr>";
+
+        html +=
+          "<td>" +
+          row.year +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.payment
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.principal
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.interest
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.closingBalance
+          ) +
+          "</td>";
+
+        html +=
+          "</tr>";
+
+      }
+    );
+
+    html +=
+      "</tbody>";
+
+    html +=
+      "</table>";
+
+    container.innerHTML =
+      html;
+
+  }
+
+
+  /*
+   * ============================================================
+   * AMORTIZATION SCHEDULE
+   * ============================================================
+   */
+
+  function drawSchedule(
+    rows
+  ) {
+
+    var container =
+      byId(
+        "amortization-table"
+      );
+
+    if (!container) {
+      return;
+    }
+
+    if (
+      !rows ||
+      !rows.length
+    ) {
+
+      container.innerHTML =
+        "";
+
+      return;
+
+    }
+
+    var html = "";
+
+    html +=
+      '<table class="calc-table">';
+
+    html +=
+      "<thead>";
+
+    html +=
+      "<tr>";
+
+    html +=
+      "<th>Month</th>";
+
+    html +=
+      "<th>Payment</th>";
+
+    html +=
+      "<th>Principal</th>";
+
+    html +=
+      "<th>Interest</th>";
+
+    html +=
+      "<th>Extra</th>";
+
+    html +=
+      "<th>Balance</th>";
+
+    html +=
+      "</tr>";
+
+    html +=
+      "</thead>";
+
+    html +=
+      "<tbody>";
+
+    rows.forEach(
+      function (row) {
+
+        html +=
+          "<tr>";
+
+        html +=
+          "<td>" +
+          row.month +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.payment
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.principal
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.interest
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.extraPayment
+          ) +
+          "</td>";
+
+        html +=
+          "<td>" +
+          formatCurrency(
+            row.closingBalance
+          ) +
+          "</td>";
+
+        html +=
+          "</tr>";
+
+      }
+    );
+
+    html +=
+      "</tbody>";
+
+    html +=
+      "</table>";
+
+    container.innerHTML =
+      html;
+
+  }
+
+
+  /*
+   * ============================================================
+   * SAVINGS BOX
+   * ============================================================
+   */
+
+  function updateSavings(
+    data
+  ) {
+
+    var savingsBox =
+      byId(
+        "savings-box"
+      );
+
+    if (!savingsBox) {
+      return;
+    }
+
+    var interestSaved =
+      Number(
+        data.interestSaved
+      ) || 0;
+
+    var monthsSaved =
+      Number(
+        data.monthsSaved
+      ) || 0;
+
+    if (
+      interestSaved > 0 ||
+      monthsSaved > 0
     ) {
 
       savingsBox.hidden =
         false;
 
-
       savingsBox.textContent =
-
         "Extra payments could save approximately " +
-
-        utils.formatCurrency(
-          data.interestSaved
+        formatCurrency(
+          interestSaved
         ) +
-
         " in interest and " +
-
         utils.formatDuration(
-          data.monthsSaved
+          monthsSaved
         ) +
-
         " of repayment time.";
 
     } else {
@@ -1341,558 +2143,209 @@
       savingsBox.hidden =
         true;
 
+      savingsBox.textContent =
+        "";
+
     }
 
   }
 
 
-  /* =====================================================
-     CALCULATE
-  ===================================================== */
-
-  function calculate() {
-
-    var options =
-      getOptions();
-
-
-    if (
-      options.principal < 1000 ||
-      options.principal > 100000000 ||
-      options.annualRate < 0 ||
-      options.annualRate > 40 ||
-      options.months < 1 ||
-      options.months > 360
-    ) {
-
-      showError
-          "Please enter values within
-  the allowed loan, interest and
-  tenure ranges."
-);
-
-return;
-
-}
-
-var prepaymentMonth =
-  options.prepaymentMonth;
-
-if (
-  prepaymentMonth >
-  options.months
-) {
-
-  options.prepaymentMonth =
-    options.months;
-
-}
-
-var data =
-  calculator.calculate(
-    options
-  );
-
-if (!data) {
-
-  showError(
-    "Please enter valid loan details."
-  );
-
-  return;
-
-}
-
-displayResults(
-  data
-);
-
-}
-
-/* ====================================================
-   LIVE CALCULATION
-==================================================== */
-
-function maybeCalculate() {
-
-  if (liveUpdate) {
-
-    calculate();
-
-  }
-
-}
-
-/* ====================================================
-   SLIDER SYNC
-==================================================== */
-
-function updateSliderFromTextInput() {
-
-  var loan =
-    readDecimalInput(
-      loanAmount,
-      null
-    );
-
-  if (
-    loan !== null &&
-    loan >= 1000 &&
-    loan <= 100000000
-  ) {
-
-    loanSlider.value =
-      String(
-        Math.round(loan)
-      );
-
-  }
-
-  var rate =
-    readDecimalInput(
-      interestRate,
-      null
-    );
-
-  if (
-    rate !== null &&
-    rate >= 0 &&
-    rate <= 40
-  ) {
-
-    rateSlider.value =
-      String(rate);
-
-  }
-
-  var tenureValue =
-    readDecimalInput(
-      tenure,
-      null
-    );
-
-  if (
-    tenureValue !== null &&
-    tenureValue >=
-      Number(tenure.min) &&
-    tenureValue <=
-      Number(tenure.max)
-  ) {
-
-    tenureSlider.value =
-      String(
-        Math.round(
-          tenureValue
-        )
-      );
-
-  }
-
-}/* ====================================================
-   INTEREST RATE TYPING
-==================================================== */
-
-function sanitizeInterestTyping(
-  event
-) {
-
-  var value =
-    interestRate.value;
-
   /*
-   * Keep the decimal point while
-   * the user is typing.
-   *
-   * Examples:
-   * 7
-   * 7.
-   * 7.4
-   * 7.45
+   * ============================================================
+   * DISPLAY RESULTS
+   * ============================================================
    */
 
-  value =
-    value.replace(
-      /[^0-9.]/g,
-      ""
-    );
-
-  var firstDot =
-    value.indexOf(".");
-
-  if (
-    firstDot !== -1
+  function displayResults(
+    data
   ) {
 
-    value =
-      value.slice(
-        0,
-        firstDot + 1
+    clearError();
+
+    if (results) {
+
+      results.hidden =
+        false;
+
+    }
+
+    animateNumber(
+      byId("emi-value"),
+      data.monthlyPayment,
+      formatCurrency,
+      650
+    );
+
+    animateNumber(
+      byId("interest-value"),
+      data.totalInterest,
+      formatCurrency,
+      750
+    );
+
+    animateNumber(
+      byId("payment-value"),
+      data.totalPayment,
+      formatCurrency,
+      850
+    );
+
+    setText(
+      "duration-value",
+      utils.formatDuration(
+        data.actualMonths
+      )
+    );
+
+    setText(
+      "principal-percent",
+      formatNumber(
+        data.principalPercentage,
+        1
       ) +
-      value
-        .slice(firstDot + 1)
-        .replace(/\./g, "");
-
-    var parts =
-      value.split(".");
-
-    value =
-      parts[0].slice(0, 2) +
-      "." +
-      (
-        parts[1] || ""
-      ).slice(0, 2);
-
-  } else {
-
-    value =
-      value.slice(0, 2);
-
-  }
-
-  if (
-    Number(value) > 40
-  ) {
-
-    value = "40";
-
-  }
-
-  interestRate.value =
-    value;
-
-}
-
-function normalizeInterestOnBlur() {
-
-  var value =
-    readDecimalInput(
-      interestRate,
-      0
+      "%"
     );
 
-  value =
-    clamp(
-      value,
-      0,
-      40
+    setText(
+      "interest-percent",
+      formatNumber(
+        data.interestPercentage,
+        1
+      ) +
+      "%"
     );
 
-  interestRate.value =
-    String(value);
+    var emiBar =
+      byId(
+        "emi-bar"
+      );
 
-  rateSlider.value =
-    String(value);
+    if (emiBar) {
 
-  updateLiveValues();
-
-  maybeCalculate();
-
-}
-
-/* ====================================================
-   HELP PANEL
-==================================================== */
-
-function openHelp(
-  key,
-  button
-) {
-
-  var help = {
-
-    "loan-amount": [
-      "Loan Amount",
-      "Enter the amount you plan to borrow. Use the amount of the loan itself, not the total amount you expect to repay."
-    ],
-
-    "interest-rate": [
-      "Interest Rate",
-      "Enter the yearly interest rate offered by the lender. You can enter decimal rates such as 7.45%. The calculator converts the yearly rate into a monthly rate for the EMI calculation."
-    ],
-
-    "loan-tenure": [
-      "Loan Tenure",
-      "Choose how long you plan to repay the loan. A longer tenure can reduce the monthly EMI, but it can also increase the total interest paid."
-    ],
-
-    "processing-fee": [
-      "Processing Fee",
-      "Enter the fee charged for processing the loan if you want it included in the overall cost shown by the calculator. This is separate from the EMI formula."
-    ],
-
-    "extra-monthly": [
-      "Extra Monthly Payment",
-      "Enter any additional amount you plan to pay every month above your normal EMI. The calculator shows how this can reduce interest and repayment time."
-    ],
-
-    "prepayment": [
-      "One-Time Prepayment",
-      "Enter a lump-sum amount you plan to pay toward the loan before the scheduled end date."
-    ],
-
-    "prepayment-month": [
-      "Prepayment Month",
-      "Choose the month in which you expect to make the one-time prepayment."
-    ],
-
-    "total-interest": [
-      "Total Interest",
-      "This is the total interest paid over the calculated repayment period."
-    ],
-
-    "total-payment": [
-      "Total Payment",
-      "This is the total of principal and interest paid through the calculated repayment schedule. Processing fee is shown separately where applicable."
-    ],
-
-    "payoff-time": [
-      "Payoff Time",
-      "This shows how long the loan takes to finish based on the payment options entered."
-    ],
-
-    "monthly-emi": [
-      "Monthly EMI",
-      "This is the regular monthly instalment calculated from the loan amount, interest rate and selected tenure."
-    ],
-
-    "payment-breakdown": [
-      "Payment Breakdown",
-      "This shows how the calculated total payment is divided between the loan principal and interest."
-    ],
-
-    "loan-balance": [
-      "Loan Balance",
-      "This graph shows how the outstanding loan balance falls as payments are made over time."
-    ]
-
-  };
-
-  var item =
-    help[key];
-
-  if (!item) {
-    return;
-  }
-
-  var panel =
-    document.getElementById(
-      "calc-help-panel"
-    );
-
-  var title =
-    document.getElementById(
-      "calc-help-title"
-    );
-
-  var text =
-    document.getElementById(
-      "calc-help-text"
-    );
-
-  if (!panel || !title || !text) {
-    return;
-  }
-
-  title.textContent =
-    item[0];
-
-  text.textContent =
-    item[1];
-
-  panel.hidden =
-    false;
-
-  if (button) {
-    button.setAttribute(
-      "aria-expanded",
-      "true"
-    );
-  }
-
-}
-
-function closeHelp() {
-
-  var panel =
-    document.getElementById(
-      "calc-help-panel"
-    );
-
-  if (panel) {
-    panel.hidden =
-      true;
-  }
-
-  document
-    .querySelectorAll(
-      "[data-help]"
-    )
-    .forEach(
-      function (button) {
-
-        button.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-
-      }
-    );
-
-}/* ====================================================
-   INPUT EVENTS
-==================================================== */
-
-loanAmount.addEventListener(
-  "input",
-  function () {
-
-    updateSliderFromTextInput();
-    maybeCalculate();
-
-  }
-);
-
-interestRate.addEventListener(
-  "input",
-  function (event) {
-
-    sanitizeInterestTyping(
-      event
-    );
-
-    updateSliderFromTextInput();
-    updateLiveValues();
-    maybeCalculate();
-
-  }
-);
-
-interestRate.addEventListener(
-  "blur",
-  function () {
-
-    normalizeInterestOnBlur();
-
-  }
-);
-
-tenure.addEventListener(
-  "input",
-  function () {
-
-    updateSliderFromTextInput();
-    updateLiveValues();
-    maybeCalculate();
-
-  }
-);
-
-/* ====================================================
-   SLIDER EVENTS
-==================================================== */
-
-loanSlider.addEventListener(
-  "input",
-  function () {
-
-    loanAmount.value =
-      String(
-        Math.round(
-          Number(
-            loanSlider.value
+      emiBar.style.width =
+        Math.max(
+          5,
+          Math.min(
+            100,
+            data.principalPercentage
           )
-        )
+        ) +
+        "%";
+
+    }
+
+    drawDonut(
+      data
+    );
+
+    drawBalanceChart(
+      data.schedule
+    );
+
+    drawYearlySummary(
+      data.yearlySummary
+    );
+
+    drawSchedule(
+      data.schedule
+    );
+
+    updateSavings(
+      data
+    );
+
+    if (results) {
+
+      results.classList.remove(
+        "calculator-reveal"
       );
 
-    updateLiveValues();
-    maybeCalculate();
+      void results.offsetWidth;
+
+      results.classList.add(
+        "calculator-reveal"
+      );
+
+    }
 
   }
-);
+    /*
+   * ============================================================
+   * CALCULATE
+   * ============================================================
+   */
 
-rateSlider.addEventListener(
-  "input",
-  function () {
+  function calculate() {
+    clearError();
 
-    interestRate.value =
-      String(
-        Number(
-          rateSlider.value
-        )
+    var options = getOptions();
+
+    if (!validateOptions(options)) {
+      return;
+    }
+
+    var calculator =
+      window.EMIFORMULA_CALCULATOR;
+
+    if (
+      !calculator ||
+      typeof calculator.calculate !== "function"
+    ) {
+      showError(
+        "The calculator is temporarily unavailable. Please refresh the page and try again."
       );
+      return;
+    }
 
-    updateLiveValues();
-    maybeCalculate();
+    var data =
+      calculator.calculate(options);
 
+    if (!data) {
+      showError(
+        "Please enter valid loan details and try again."
+      );
+      return;
+    }
+
+    lastCalculation = data;
+
+    displayResults(data);
   }
-);
 
-tenureSlider.addEventListener(
-  "input",
-  function () {
 
-    tenure.value =
-      String(
-        Math.round(
-          Number(
-            tenureSlider.value
-          )
-        )
-      );
+  /*
+   * ============================================================
+   * MAYBE CALCULATE
+   * ============================================================
+   */
 
-    updateLiveValues();
-    maybeCalculate();
+  function maybeCalculate() {
+    if (!state.liveUpdate) {
+      return;
+    }
 
+    calculate();
   }
-);
 
-/* ====================================================
-   ADVANCED OPTIONS
-==================================================== */
 
-[
-  "processing-fee",
-  "extra-monthly",
-  "prepayment",
-  "prepayment-month"
-].forEach(
-  function (id) {
+  /*
+   * ============================================================
+   * LOAN AMOUNT EVENTS
+   * ============================================================
+   */
 
-    var field =
-      document.getElementById(
-        id
-      );
+  if (elements.loanAmount) {
 
-    field.addEventListener(
+    elements.loanAmount.addEventListener(
       "input",
       function () {
 
-        if (
-          id ===
-          "prepayment-month"
-        ) {
+        syncLoanAmountFromInput();
 
-          var months =
-            getMonths();
+        updateLoanAmountRange();
 
-          var value =
-            readDecimalInput(
-              field,
-              1
-            );
-
-          field.value =
-            String(
-              Math.max(
-                1,
-                Math.min(
-                  months,
-                  Math.round(value)
-                )
-              )
-            );
-
-        }
+        updateLiveLoanAmount();
 
         maybeCalculate();
 
@@ -1900,206 +2353,517 @@ tenureSlider.addEventListener(
     );
 
   }
-);
 
-/* ====================================================
-   TENURE TOGGLE
-==================================================== */
 
-document
-  .getElementById(
-    "years-toggle"
-  )
-  .addEventListener(
-    "click",
-    function () {
+  if (elements.loanAmountRange) {
 
-      setTenureMode(
-        "years"
-      );
+    elements.loanAmountRange.addEventListener(
+      "input",
+      function () {
 
-      calculate();
+        syncLoanAmountFromRange();
 
-    }
-  );
+        updateLiveLoanAmount();
 
-document
-  .getElementById(
-    "months-toggle"
-  )
-  .addEventListener(
-    "click",
-    function () {
+        maybeCalculate();
 
-      setTenureMode(
-        "months"
-      );
+      }
+    );
 
-      calculate();
+  }
 
-    }
-  );
 
-/* ====================================================
-   CALCULATE BUTTON
-==================================================== */
+  /*
+   * ============================================================
+   * INTEREST RATE EVENTS
+   * ============================================================
+   */
 
-document
-  .getElementById(
-    "calculate-emi"
-  )
-  .addEventListener(
-    "click",
-    calculate
-  );
+  if (elements.interestRate) {
 
-/* ====================================================
-   LIVE UPDATE SWITCH
-==================================================== */
+    elements.interestRate.addEventListener(
+      "input",
+      function () {
 
-document
-  .getElementById(
-    "live-update"
-  )
-  .addEventListener(
-    "change",
-    function () {
+        syncInterestRate();
 
-      liveUpdate =
-        this.checked;
+        updateLiveInterestRate();
 
-      if (liveUpdate) {
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  if (elements.interestRateRange) {
+
+    elements.interestRateRange.addEventListener(
+      "input",
+      function () {
+
+        syncInterestRateFromRange();
+
+        updateLiveInterestRate();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * TENURE YEARS EVENTS
+   * ============================================================
+   */
+
+  if (elements.tenureYears) {
+
+    elements.tenureYears.addEventListener(
+      "input",
+      function () {
+
+        syncTenureYears();
+
+        updateTenureRange();
+
+        updateLiveTenure();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  if (elements.tenureYearsRange) {
+
+    elements.tenureYearsRange.addEventListener(
+      "input",
+      function () {
+
+        syncTenureYearsFromRange();
+
+        updateLiveTenure();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * TENURE MONTHS EVENTS
+   * ============================================================
+   */
+
+  if (elements.tenureMonths) {
+
+    elements.tenureMonths.addEventListener(
+      "input",
+      function () {
+
+        syncTenureMonths();
+
+        updateTenureRange();
+
+        updateLiveTenure();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  if (elements.tenureMonthsRange) {
+
+    elements.tenureMonthsRange.addEventListener(
+      "input",
+      function () {
+
+        syncTenureMonthsFromRange();
+
+        updateLiveTenure();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * PROCESSING FEE EVENTS
+   * ============================================================
+   */
+
+  if (elements.processingFee) {
+
+    elements.processingFee.addEventListener(
+      "input",
+      function () {
+
+        updateProcessingFeeLimit();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * EXTRA MONTHLY PAYMENT EVENTS
+   * ============================================================
+   */
+
+  if (elements.extraMonthly) {
+
+    elements.extraMonthly.addEventListener(
+      "input",
+      function () {
+
+        updateExtraPaymentLimit();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * PREPAYMENT EVENTS
+   * ============================================================
+   */
+
+  if (elements.prepayment) {
+
+    elements.prepayment.addEventListener(
+      "input",
+      function () {
+
+        updatePrepaymentLimit();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * PREPAYMENT MONTH EVENTS
+   * ============================================================
+   */
+
+  if (elements.prepaymentMonth) {
+
+    elements.prepaymentMonth.addEventListener(
+      "input",
+      function () {
+
+        updatePrepaymentMonthLimit();
+
+        maybeCalculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * CALCULATE BUTTON
+   * ============================================================
+   */
+
+  if (elements.calculateButton) {
+
+    elements.calculateButton.addEventListener(
+      "click",
+      function () {
+
         calculate();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * RESET BUTTON
+   * ============================================================
+   */
+
+  if (elements.resetButton) {
+
+    elements.resetButton.addEventListener(
+      "click",
+      function () {
+
+        resetCalculator();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * LIVE UPDATE SWITCH
+   * ============================================================
+   */
+
+  if (elements.liveUpdate) {
+
+    elements.liveUpdate.addEventListener(
+      "change",
+      function () {
+
+        state.liveUpdate =
+          Boolean(
+            elements.liveUpdate.checked
+          );
+
+        if (state.liveUpdate) {
+          calculate();
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * TENURE MODE BUTTONS
+   * ============================================================
+   */
+
+  if (elements.tenureYearButton) {
+
+    elements.tenureYearButton.addEventListener(
+      "click",
+      function () {
+
+        setTenureMode("years");
+
+      }
+    );
+
+  }
+
+
+  if (elements.tenureMonthButton) {
+
+    elements.tenureMonthButton.addEventListener(
+      "click",
+      function () {
+
+        setTenureMode("months");
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * ADVANCED OPTIONS
+   * ============================================================
+   */
+
+  if (elements.advancedToggle) {
+
+    elements.advancedToggle.addEventListener(
+      "click",
+      function () {
+
+        toggleAdvancedOptions();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * HELP BUTTONS
+   * ============================================================
+   */
+
+  document
+    .querySelectorAll(
+      "[data-calculator-help]"
+    )
+    .forEach(
+      function (button) {
+
+        button.addEventListener(
+          "click",
+          function () {
+
+            var key =
+              button.getAttribute(
+                "data-calculator-help"
+              );
+
+            openHelpPanel(key);
+
+          }
+        );
+
+      }
+    );
+
+
+  /*
+   * ============================================================
+   * HELP PANEL CLOSE
+   * ============================================================
+   */
+
+  if (elements.helpClose) {
+
+    elements.helpClose.addEventListener(
+      "click",
+      function () {
+
+        closeHelpPanel();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * HELP PANEL OVERLAY
+   * ============================================================
+   */
+
+  if (elements.helpOverlay) {
+
+    elements.helpOverlay.addEventListener(
+      "click",
+      function (event) {
+
+        if (
+          event.target ===
+          elements.helpOverlay
+        ) {
+
+          closeHelpPanel();
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * KEYBOARD SUPPORT
+   * ============================================================
+   */
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (
+        event.key === "Escape"
+      ) {
+
+        closeHelpPanel();
+
+      }
+
+      if (
+        event.key === "Enter" &&
+        document.activeElement &&
+        document.activeElement.matches(
+          ".calc-input"
+        )
+      ) {
+
+        calculate();
+
       }
 
     }
   );
 
-/* ====================================================
-   HELP BUTTONS
-==================================================== */
 
-document
-  .querySelectorAll(
-    "[data-help]"
-  )
-  .forEach(
-    function (button) {
+  /*
+   * ============================================================
+   * INITIAL STATE
+   * ============================================================
+   */
 
-      button.addEventListener(
-        "click",
-        function () {
+  applyDefaults();
 
-          openHelp(
-            button.dataset.help,
-            button
-          );
+  updateLoanAmountRange();
 
-        }
-      );
+  updateInterestRateRange();
 
-    }
+  updateTenureRange();
+
+  updateProcessingFeeLimit();
+
+  updateExtraPaymentLimit();
+
+  updatePrepaymentLimit();
+
+  updatePrepaymentMonthLimit();
+
+  updateLiveLoanAmount();
+
+  updateLiveInterestRate();
+
+  updateLiveTenure();
+
+  setTenureMode(
+    state.tenureMode
   );
 
-document
-  .getElementById(
-    "calc-help-close"
-  )
-  .addEventListener(
-    "click",
-    closeHelp
-  );/* ====================================================
-   RESET
-==================================================== */
 
-document
-  .getElementById(
-    "reset-emi"
-  )
-  .addEventListener(
-    "click",
-    function () {
+  /*
+   * ============================================================
+   * INITIAL CALCULATION
+   * ============================================================
+   */
 
-      liveUpdate =
-        true;
+  calculate();
 
-      document
-        .getElementById(
-          "live-update"
-        )
-        .checked =
-        true;
-
-      syncLoan(
-        config.defaults.principal
-      );
-
-      syncRate(
-        config.defaults.annualRate
-      );
-
-      setTenureMode(
-        "years",
-        false
-      );
-
-      syncTenure(
-        config.defaults.years
-      );
-
-      document
-        .getElementById(
-          "processing-fee"
-        )
-        .value =
-        "0";
-
-      document
-        .getElementById(
-          "extra-monthly"
-        )
-        .value =
-        "0";
-
-      document
-        .getElementById(
-          "prepayment"
-        )
-        .value =
-        "0";
-
-      document
-        .getElementById(
-          "prepayment-month"
-        )
-        .value =
-        "12";
-
-      closeHelp();
-
-      calculate();
-
-    }
-  );
-
-/* ====================================================
-   INITIAL STATE
-==================================================== */
-
-updateTenureLimits();
-
-syncLoan(
-  config.defaults.principal
-);
-
-syncRate(
-  config.defaults.annualRate
-);
-
-syncTenure(
-  config.defaults.years
-);
-
-calculate();
 
 })();
