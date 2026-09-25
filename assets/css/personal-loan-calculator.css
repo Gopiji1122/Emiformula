@@ -5,3 +5,43 @@
 .loan-results{display:grid;gap:16px}.loan-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.loan-kpi{padding:17px;border:1px solid var(--loan-line);border-radius:18px;background:#fff;transition:transform .25s ease,box-shadow .25s ease}.loan-kpi.flash{transform:translateY(-3px);box-shadow:0 12px 25px rgba(15,118,110,.1)}.loan-kpi small{display:block;color:var(--loan-muted);font-size:.72rem;font-weight:750}.loan-kpi strong{display:block;margin-top:6px;font-size:1.08rem;color:var(--loan-ink)}.loan-main-result{display:grid;grid-template-columns:240px 1fr;gap:20px;padding:22px}.loan-donut-box{display:grid;place-items:center}.loan-donut{width:190px;height:190px;border-radius:50%;background:conic-gradient(var(--loan-accent) 0 75%,var(--loan-gold) 75% 100%);position:relative;transition:background .45s ease;box-shadow:inset 0 0 0 1px rgba(0,0,0,.03)}.loan-donut:after{content:"";position:absolute;inset:27px;background:#fff;border-radius:50%}.loan-donut-center{position:absolute;inset:0;display:grid;place-items:center;z-index:1;text-align:center}.loan-donut-center strong{font-size:1.1rem}.loan-donut-center span{font-size:.7rem;color:var(--loan-muted)}.loan-breakdown{display:grid;align-content:center;gap:10px}.loan-breakdown h3{margin:0 0 4px}.loan-break-row{display:grid;grid-template-columns:10px 1fr auto;gap:10px;align-items:center;font-size:.83rem}.loan-dot{width:10px;height:10px;border-radius:50%;background:var(--loan-accent)}.loan-dot.gold{background:var(--loan-gold)}.loan-bar{height:9px;background:#eef2f7;border-radius:99px;overflow:hidden;margin-top:2px}.loan-bar i{display:block;height:100%;width:0;background:var(--loan-accent);border-radius:99px;transition:width .55s ease}.loan-bar.gold i{background:var(--loan-gold)}
 .loan-timeline{padding:20px}.loan-timeline h3{margin:0}.loan-timeline-line{height:11px;background:#e8eef0;border-radius:99px;overflow:hidden;margin:18px 0}.loan-timeline-fill{height:100%;width:0;background:linear-gradient(90deg,var(--loan-accent),var(--loan-accent-2));transition:width .7s ease}.loan-timeline-meta{display:flex;justify-content:space-between;font-size:.76rem;color:var(--loan-muted)}.loan-analysis{display:grid;grid-template-columns:1fr 1fr;gap:16px}.loan-panel{padding:20px}.loan-panel h3{margin:0 0 14px;color:var(--loan-ink);font-size:1rem}.loan-table{width:100%;border-collapse:collapse;font-size:.78rem}.loan-table th,.loan-table td{padding:9px 6px;border-bottom:1px solid #edf0f4;text-align:right;white-space:nowrap}.loan-table th:first-child,.loan-table td:first-child{text-align:left}.loan-table th{color:var(--loan-muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.04em}.loan-table tr.current td{font-weight:850;background:#f0fdfa}.loan-bars{display:grid;gap:11px}.loan-bar-row{display:grid;grid-template-columns:48px 1fr 86px;gap:8px;align-items:center;font-size:.75rem}.loan-bar-track{height:10px;background:#eef2f7;border-radius:99px;overflow:hidden}.loan-bar-track i{display:block;height:100%;background:linear-gradient(90deg,var(--loan-accent),var(--loan-accent-2));border-radius:99px;width:0;transition:width .6s ease}.loan-chart-wrap{overflow:hidden}.loan-chart{width:100%;height:210px;display:block}.loan-chart-grid{stroke:#e8edf2;stroke-width:1}.loan-chart-line{fill:none;stroke:var(--loan-accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:700;stroke-dashoffset:700;animation:loanDraw .9s ease forwards}.loan-chart-area{fill:rgba(20,184,166,.09)}@keyframes loanDraw{to{stroke-dashoffset:0}}.loan-chart-label{font-size:11px;fill:#667085}.loan-section{margin-top:28px}.loan-section>h2{color:var(--loan-ink)}.loan-section p{color:#4b5563;line-height:1.75}.loan-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.loan-info-card{padding:22px}.loan-info-card h3{color:var(--loan-ink)}.loan-formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:#0f172a;color:#e2e8f0;padding:17px;border-radius:14px;overflow:auto;font-size:.8rem;line-height:1.6;white-space:pre-wrap}.loan-example{background:#f0fdfa;border:1px solid #ccfbf1;padding:16px;border-radius:15px}.loan-faq{display:grid;gap:10px}.loan-faq details{background:#fff;border:1px solid var(--loan-line);border-radius:14px;padding:15px 17px}.loan-faq summary{font-weight:800;cursor:pointer}.loan-faq p{margin:9px 0 0;font-size:.88rem}
 @media(max-width:900px){.loan-grid{grid-template-columns:1fr}.loan-kpis{grid-template-columns:repeat(2,1fr)}.loan-main-result{grid-template-columns:1fr}.loan-donut-box{padding:5px}.loan-analysis,.loan-guide-grid{grid-template-columns:1fr}}@media(max-width:560px){.loan-hero,.loan-input-card,.loan-panel,.loan-timeline,.loan-main-result{padding:18px;border-radius:20px}.loan-kpis{gap:8px}.loan-kpi{padding:13px}.loan-kpi strong{font-size:.95rem}.loan-two{grid-template-columns:1fr}.loan-actions{grid-template-columns:1fr}.loan-bar-row{grid-template-columns:40px 1fr 72px}.loan-donut{width:165px;height:165px}.loan-chart{height:175px}}
+
+/* =========================================================
+   DESKTOP / TABLET LAYOUT FIX
+   Keep the calculator setup and results balanced and full-width.
+   ========================================================= */
+.loan-grid {
+  width: 100%;
+  grid-template-columns: minmax(320px, .9fr) minmax(0, 1.6fr);
+  align-items: start;
+}
+
+.loan-grid > * {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.loan-results {
+  width: 100%;
+  min-width: 0;
+}
+
+.loan-kpis,
+.loan-main-result,
+.loan-analysis,
+.loan-chart-wrap,
+.loan-results > .loan-card {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .loan-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .loan-input-card,
+  .loan-results {
+    width: 100%;
+  }
+}
