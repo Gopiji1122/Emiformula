@@ -12,7 +12,7 @@
     breakCopy: $('res-break-copy'), gross: $('res-gross'), oldInterest: $('res-old-interest'), newInterest: $('res-new-interest'),
     monthly: $('res-monthly'), costsBar: $('bar-costs'), savingsBar: $('bar-savings'), costsLabel: $('label-costs'), savingsLabel: $('label-savings'),
     timeline: $('bt-timeline'), donut: $('bt-interest-donut'), donutPercent: $('bt-donut-percent'), legendNew: $('bt-legend-new-interest'),
-    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile')
+    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile'), annualChart: $('bt-annual-chart'), advancedRateGap: $('bt-advanced-rate-gap'), costRatio: $('bt-cost-ratio'), advancedMonthly: $('bt-advanced-monthly')
   };
 
   var lastResult = null;
@@ -106,6 +106,45 @@
       '</svg>';
   }
 
+  function renderAnnualChart(rows) {
+    if (!el.annualChart) return;
+    rows = Array.isArray(rows) ? rows : [];
+    if (!rows.length) { el.annualChart.innerHTML = '<div class="bt-chart-empty">No annual comparison available.</div>'; return; }
+    var width = 820, height = 250, left = 58, right = 20, top = 22, bottom = 34;
+    var pw = width - left - right, ph = height - top - bottom;
+    var values = [];
+    rows.forEach(function (r) { values.push(Number(r.oldBalance)||0, Number(r.newBalance)||0); });
+    var max = Math.max.apply(null, values.concat([1]));
+    var x = function(i){ return left + (rows.length === 1 ? pw/2 : i*pw/(rows.length-1)); };
+    var y = function(v){ return top + (max-v)/max*ph; };
+    var oldPts = rows.map(function(r,i){ return x(i).toFixed(1)+','+y(Number(r.oldBalance)||0).toFixed(1); }).join(' ');
+    var newPts = rows.map(function(r,i){ return x(i).toFixed(1)+','+y(Number(r.newBalance)||0).toFixed(1); }).join(' ');
+    var labels = rows.map(function(r,i){ return '<text x="'+x(i)+'" y="'+(height-10)+'" text-anchor="middle" font-size="10" fill="#64748b">Y'+esc(r.year)+'</text>'; }).join('');
+    el.annualChart.innerHTML = '<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="Annual remaining balance comparison chart">' +
+      '<line x1="'+left+'" y1="'+(top+ph)+'" x2="'+(left+pw)+'" y2="'+(top+ph)+'" stroke="#dbe5e9"/>' +
+      '<polyline points="'+oldPts+'" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+      '<polyline points="'+newPts+'" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' + labels + '</svg>';
+  }
+
+  function updateAdvancedSummary(result) {
+    if (!result) return;
+    var gap = Math.abs(Number(result.rateDifference)||0);
+    var ratio = Number(result.grossInterestSaving) > 0 ? (Number(result.switchingCosts)||0) / Number(result.grossInterestSaving) * 100 : 0;
+    if (el.advancedRateGap) el.advancedRateGap.textContent = gap.toFixed(2) + ' pp';
+    if (el.costRatio) el.costRatio.textContent = Math.round(Math.max(0, ratio)) + '%';
+    if (el.advancedMonthly) el.advancedMonthly.textContent = money(result.monthlyEmiDifference);
+  }
+
+  function applyPreset(name) {
+    if (!name) return;
+    if (name === 'same-tenure') el.newMonths.value = el.oldMonths.value;
+    if (name === 'lower-rate') el.newRate.value = Math.max(0, Number(el.oldRate.value || 0) - 1).toFixed(1);
+    if (name === 'fee-shock') el.other.value = '25000';
+    if (name === 'clear-fees') { el.foreclosure.value = '0'; el.processing.value = '0'; el.foreclosureGST.value = '0'; el.processingGST.value = '0'; el.other.value = '0'; }
+    calculate();
+    document.querySelectorAll('[data-bt-preset]').forEach(function(btn){ btn.classList.toggle('active', btn.getAttribute('data-bt-preset') === name); });
+  }
+
   function calculate() {
     el.balanceVal.textContent = money(Number(el.balance.value) || 0);
     el.otherVal.textContent = money(Number(el.other.value) || 0);
@@ -167,8 +206,12 @@
 
     renderDonut(result);
     renderCumulativeChart(result.monthlyComparison || [], result.breakEvenMonth);
+    renderAnnualChart(result.annualSummary || []);
+    updateAdvancedSummary(result);
     renderTimeline(result.timeline || []);
   }
+
+  document.querySelectorAll('[data-bt-preset]').forEach(function (btn) { btn.addEventListener('click', function () { applyPreset(btn.getAttribute('data-bt-preset')); }); });
 
   var inputs = [el.balance,el.oldRate,el.oldMonths,el.newRate,el.newMonths,el.foreclosure,el.processing,el.foreclosureGST,el.processingGST,el.other,el.floating,el.purpose,el.year];
   inputs.forEach(function (node) { node.addEventListener('input', calculate); node.addEventListener('change', calculate); });
