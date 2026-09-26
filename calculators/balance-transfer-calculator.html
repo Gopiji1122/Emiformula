@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="../assets/css/layout.css">
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/balance-transfer-calculator.css">
+<link rel="stylesheet" href="../assets/css/export-report.css">
 </head>
 <body>
 <div class="page-shell">
@@ -86,6 +87,11 @@
 </aside>
 
 <section class="loan-results bt-results">
+<div class="calc-export-toolbar" data-export-toolbar data-export-type="balance-transfer" aria-label="Export calculator results">
+<div><strong>Export your balance-transfer analysis</strong><span>Fixed desktop-style report on every device</span></div>
+<div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">📄 Export PDF</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div>
+<span class="calc-export-status" data-export-status hidden aria-live="polite"></span>
+</div>
 <div id="bt-verdict" class="bt-verdict bt-neutral"><strong>Calculating…</strong><span>Comparing the two loan scenarios.</span></div>
 <div class="loan-kpis">
 <div class="loan-kpi"><small>Current EMI</small><strong id="res-old-emi">₹0</strong></div>
@@ -103,6 +109,25 @@
 <div><small>Current remaining interest</small><strong id="res-old-interest">₹0</strong></div>
 <div><small>New loan interest</small><strong id="res-new-interest">₹0</strong></div>
 <div><small>Monthly EMI difference</small><strong id="res-monthly">₹0</strong></div>
+</div>
+</div>
+
+<div class="bt-analytics">
+<div class="bt-chart-card">
+<h3>Interest impact</h3>
+<p>How the new loan changes the remaining interest bill.</p>
+<div class="bt-donut-area">
+<div class="bt-donut" id="bt-interest-donut" aria-label="Interest saving composition"><div class="bt-donut-center"><strong id="bt-donut-percent">0%</strong><span>interest saved</span></div></div>
+<div class="bt-legend">
+<div class="bt-legend-row"><i class="bt-legend-dot"></i><span>New loan interest</span><strong id="bt-legend-new-interest">₹0</strong></div>
+<div class="bt-legend-row"><i class="bt-legend-dot alt"></i><span>Gross interest saving</span><strong id="bt-legend-saving">₹0</strong></div>
+<div class="bt-legend-row"><i class="bt-legend-dot" style="background:#f97316"></i><span>Switching costs</span><strong id="bt-legend-cost">₹0</strong></div>
+</div></div>
+</div>
+<div class="bt-chart-card">
+<h3>Cumulative transfer benefit</h3>
+<p>After switching costs, month by month. The zero line marks break-even.</p>
+<div class="bt-svg-wrap" id="bt-cumulative-chart"><div class="bt-chart-empty">Calculating chart…</div></div>
 </div>
 </div>
 
@@ -147,5 +172,6 @@
 <script src="../assets/js/components.js"></script>
 <script src="../assets/js/balance-transfer-engine.js"></script>
 <script src="../assets/js/balance-transfer-ui.js"></script>
+<script src="../assets/js/export-report.js"></script>
 </body>
 </html>
