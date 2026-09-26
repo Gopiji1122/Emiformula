@@ -16,6 +16,18 @@
     );
   }
 
+  function resolveSiteLinks(root) {
+    if (!root) return;
+    var siteRoot = basePath || window.location.origin;
+    siteRoot = siteRoot.replace(/\/+$/, "");
+    root.querySelectorAll("a[data-site-path]").forEach(function (link) {
+      var path = link.getAttribute("href") || "/";
+      if (!path.startsWith("/")) path = "/" + path;
+      link.setAttribute("href", siteRoot + path);
+      link.removeAttribute("data-site-path");
+    });
+  }
+
   function closeAllPanels() {
     document
       .querySelectorAll("[data-header-panel]")
@@ -228,6 +240,7 @@
           .then(
             function (html) {
               placeholder.innerHTML = html;
+              resolveSiteLinks(placeholder);
               setupHeader();
             }
           )
