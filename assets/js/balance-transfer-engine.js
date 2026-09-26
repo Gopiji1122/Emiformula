@@ -68,11 +68,36 @@
     var cumulative = -switchingCosts;
     var breakEvenMonth = null;
     var timeline = [];
+    var monthlyComparison = [];
+    var annualSummary = [];
+    var annualMap = {};
 
     for (var m = 1; m <= horizon; m++) {
       var oldPayment = m <= oldMonths ? current.rows[m - 1].payment : 0;
       var newPayment = m <= newMonths ? next.rows[m - 1].payment : 0;
       cumulative += oldPayment - newPayment;
+
+      var oldRow = m <= oldMonths ? current.rows[m - 1] : null;
+      var newRow = m <= newMonths ? next.rows[m - 1] : null;
+      var monthRow = {
+        month: m,
+        oldPayment: oldPayment,
+        newPayment: newPayment,
+        oldInterest: oldRow ? oldRow.interest : 0,
+        newInterest: newRow ? newRow.interest : 0,
+        oldPrincipal: oldRow ? oldRow.principal : 0,
+        newPrincipal: newRow ? newRow.principal : 0,
+        cumulative: cumulative
+      };
+      monthlyComparison.push(monthRow);
+      var yearNo = Math.ceil(m / 12);
+      if (!annualMap[yearNo]) annualMap[yearNo] = { year: yearNo, oldPayment: 0, newPayment: 0, oldInterest: 0, newInterest: 0, oldPrincipal: 0, newPrincipal: 0 };
+      annualMap[yearNo].oldPayment += oldPayment;
+      annualMap[yearNo].newPayment += newPayment;
+      annualMap[yearNo].oldInterest += monthRow.oldInterest;
+      annualMap[yearNo].newInterest += monthRow.newInterest;
+      annualMap[yearNo].oldPrincipal += monthRow.oldPrincipal;
+      annualMap[yearNo].newPrincipal += monthRow.newPrincipal;
 
       if (breakEvenMonth === null && cumulative >= 0) {
         breakEvenMonth = m;
@@ -82,6 +107,8 @@
         timeline.push({ month: m, cumulative: cumulative });
       }
     }
+
+    Object.keys(annualMap).forEach(function (key) { annualSummary.push(annualMap[key]); });
 
     var monthlyEmiDifference = current.payment - next.payment;
     var simpleBreakEven = monthlyEmiDifference > 0
@@ -101,6 +128,8 @@
       breakEvenMonth: breakEvenMonth,
       simpleBreakEvenMonth: simpleBreakEven,
       timeline: timeline,
+      monthlyComparison: monthlyComparison,
+      annualSummary: annualSummary,
       oldMonths: oldMonths,
       newMonths: newMonths
     };
