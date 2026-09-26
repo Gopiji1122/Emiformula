@@ -709,16 +709,27 @@
   border-radius: 2px;
 }
 
-/* Real desktop layout: do not collapse the calculator at tablet widths. */
-@media (min-width: 901px) {
+/* Keep input and results side-by-side on desktop and wider tablets. */
+@media (min-width: 701px) {
   .loan-grid {
-    grid-template-columns: minmax(360px, 410px) minmax(0, 1fr);
+    grid-template-columns: minmax(300px, 38%) minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .loan-input-card {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .loan-results {
+    grid-column: 2;
+    grid-row: 1;
   }
 }
 
 @media (min-width: 701px) and (max-width: 900px) {
   .loan-grid {
-    grid-template-columns: minmax(300px, 38%) minmax(0, 62%);
+    grid-template-columns: minmax(280px, 38%) minmax(0, 1fr);
     gap: 14px;
   }
 
@@ -749,6 +760,11 @@
 }
 
 @media (max-width: 700px) {
+  .loan-input-card,
+  .loan-results {
+    grid-column: auto;
+    grid-row: auto;
+  }
   .loan-grid {
     grid-template-columns: 1fr;
   }
