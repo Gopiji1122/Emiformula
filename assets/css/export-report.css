@@ -1,0 +1,86 @@
+/* Shared calculator export toolbar. The generated PDF uses its own fixed report CSS. */
+.calc-export-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border: 1px solid #dbe3ee;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.calc-export-toolbar > div:first-child {
+  min-width: 0;
+}
+
+.calc-export-toolbar strong,
+.calc-export-toolbar span {
+  display: block;
+}
+
+.calc-export-toolbar strong {
+  font-size: 0.92rem;
+}
+
+.calc-export-toolbar > div:first-child span {
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.calc-export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.calc-export-button {
+  min-height: 42px;
+  padding: 8px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.calc-export-button:hover {
+  border-color: #94a3b8;
+}
+
+.calc-export-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.22);
+  outline-offset: 2px;
+}
+
+.calc-export-primary {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #fff;
+}
+
+.calc-export-status {
+  flex-basis: 100%;
+  color: #475569;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 700px) {
+  .calc-export-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .calc-export-actions {
+    width: 100%;
+  }
+
+  .calc-export-button {
+    flex: 1 1 0;
+  }
+}
