@@ -73,6 +73,24 @@
 <div class="loan-input"><span>₹</span><input id="bt-other" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div>
 </div>
 
+<div class="bt-advanced-card" id="bt-advanced-options">
+<div class="bt-advanced-head">
+  <div><span class="bt-advanced-kicker">ADVANCED MODE</span><h3>Stress-test the transfer</h3><p>Try common scenarios without changing the core calculation method.</p></div>
+  <span class="bt-live-chip">Live</span>
+</div>
+<div class="bt-preset-grid" role="group" aria-label="Transfer scenario presets">
+  <button type="button" class="bt-preset" data-bt-preset="same-tenure"><strong>Same tenure</strong><span>Match the new term to months left</span></button>
+  <button type="button" class="bt-preset" data-bt-preset="lower-rate"><strong>Lower-rate test</strong><span>Test a 1 percentage-point cut</span></button>
+  <button type="button" class="bt-preset" data-bt-preset="fee-shock"><strong>Fee stress test</strong><span>Add ₹25,000 switching cost</span></button>
+  <button type="button" class="bt-preset" data-bt-preset="clear-fees"><strong>Zero-fee case</strong><span>See the result without switch fees</span></button>
+</div>
+<div class="bt-advanced-summary">
+  <div><small>Rate gap</small><strong id="bt-advanced-rate-gap">0.0 pp</strong></div>
+  <div><small>Cost / gross saving</small><strong id="bt-cost-ratio">0%</strong></div>
+  <div><small>Monthly change</small><strong id="bt-advanced-monthly">₹0</strong></div>
+</div>
+</div>
+
 <div class="bt-regulatory-card">
 <label class="bt-check"><input id="bt-floating" type="checkbox" checked><span>Current loan is floating-rate</span></label>
 <div class="bt-select-row">
@@ -137,6 +155,12 @@
 <div class="bt-legend-row"><i class="bt-legend-dot cost"></i><span>Switching costs</span><strong id="bt-legend-cost">₹0</strong></div>
 </div></div>
 </div>
+<div class="bt-chart-card bt-annual-card">
+<h3>Repayment path by year</h3>
+<p>Compare how much principal and interest remain under each scenario.</p>
+<div class="bt-annual-chart" id="bt-annual-chart"><div class="bt-chart-empty">Calculating annual view…</div></div>
+<div class="bt-chart-legend"><span><i class="old"></i>Current balance</span><span><i class="new"></i>New balance</span></div>
+</div>
 <div class="bt-chart-card">
 <h3>Cumulative transfer benefit</h3>
 <p>After switching costs, month by month. The zero line marks break-even.</p>
@@ -177,7 +201,7 @@
 <h3>Regulatory note</h3>
 <p>RBI rules on pre-payment charges depend on the loan's rate type, borrower/purpose, lender and applicable directions. The calculator does not treat every floating-rate loan as automatically fee-free. Verify the charge in your lender's current statement, Key Facts Statement or sanction documents.</p>
 </section>
-</div></section></div>
+</div></div></section></div>
 </main>
 <div data-component="footer"></div>
 </div>
