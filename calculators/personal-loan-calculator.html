@@ -55,8 +55,8 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <details class="loan-advanced"><summary>Advanced repayment options</summary><div class="loan-advanced-body">
 <div class="loan-field"><div class="loan-label"><span>Insurance / other upfront cost</span></div><div class="loan-input"><span>₹</span><input id="loan-insurance" type="number" min="0" max="1000000" step="100" value="0" inputmode="numeric"></div></div>
 <div class="loan-field"><div class="loan-label"><span>Extra monthly payment</span></div><div class="loan-input"><span>₹</span><input id="loan-extra" type="number" min="0" max="1000000" step="500" value="0" inputmode="numeric"></div><input id="loan-extra-range" class="loan-range" type="range" min="0" max="100000" step="500" value="0"></div>
-<div class="loan-two"><div><div class="loan-label"><span>One-time prepayment</span></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div><input id="loan-prepayment-range" class="loan-range" type="range" min="0" max="10000000" step="1000" value="0"></div><div><div class="loan-label"><span>Prepayment month</span></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
-</details>
+<div class="loan-two"><div><div class="loan-label"><span>One-time prepayment</span></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div><input id="loan-prepayment-range" class="loan-range" type="range" min="0" max="10000000" step="1000" value="0"></div></div><div><div class="loan-label"><span>Prepayment month</span></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
+</div></details>
 <div class="loan-actions"><button class="loan-btn loan-btn-primary" id="loan-calculate" type="button">Calculate Loan Cost</button><button class="loan-btn loan-btn-secondary" id="loan-reset" type="button">Reset</button></div>
 <p id="loan-error" class="loan-error" aria-live="polite"></p><p class="loan-note">Processing fee and insurance/other upfront costs are treated as deductions from the sanctioned amount. Actual lender terms may differ.</p>
 </aside>
@@ -123,6 +123,11 @@ n = number of monthly payments</div><p class="loan-note">For a zero-interest sce
 </div></section></main>
 <div data-component="footer"></div>
 </div>
+<script src="../assets/js/site-config.js"></script>
+<script src="../assets/js/search-data.js"></script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/search.js"></script>
+<script src="../assets/js/footer.js"></script>
 <script src="../assets/js/components.js"></script>
 <script src="../assets/js/site.js"></script>
 <script src="../assets/js/personal-loan-engine.js"></script>
