@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="../assets/css/header.css">
 <link rel="stylesheet" href="../assets/css/search.css">
 <link rel="stylesheet" href="../assets/css/footer.css">
-<link rel="stylesheet" href="../assets/css/responsive.css">
 <link rel="stylesheet" href="../assets/css/layout.css">
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/personal-loan-calculator.css">
+
+  <link rel="stylesheet" href="../assets/css/responsive.css">
 <script src="../seo/seo-config.js"></script>
 <script>
 window.EMIFORMULA_PAGE_SEO={
@@ -57,7 +58,7 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-field"><div class="loan-label"><span>Insurance / other upfront cost</span></div><div class="loan-input"><span>₹</span><input id="loan-insurance" type="number" min="0" max="1000000" step="100" value="0" inputmode="numeric"></div></div>
 <div class="loan-field"><div class="loan-label"><span>Extra monthly payment</span></div><div class="loan-input"><span>₹</span><input id="loan-extra" type="number" min="0" max="1000000" step="500" value="0" inputmode="numeric"></div><input id="loan-extra-range" class="loan-range" type="range" min="0" max="100000" step="500" value="0"></div>
 <div class="loan-two"><div><div class="loan-label"><span>One-time prepayment</span></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div><input id="loan-prepayment-range" class="loan-range" type="range" min="0" max="10000000" step="1000" value="0"></div></div><div><div class="loan-label"><span>Prepayment month</span></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
-</div></details>
+</details>
 <div class="loan-actions"><button class="loan-btn loan-btn-primary" id="loan-calculate" type="button">Calculate Loan Cost</button><button class="loan-btn loan-btn-secondary" id="loan-reset" type="button">Reset</button></div>
 <p id="loan-error" class="loan-error" aria-live="polite"></p><p class="loan-note">Processing fee and insurance/other upfront costs are treated as deductions from the sanctioned amount. Actual lender terms may differ.</p>
 </aside>
