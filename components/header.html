@@ -1,27 +1,30 @@
-<!-- EMIFORMULA — Shared Header -->
 <header class="site-header" data-site-header>
   <div class="header-container">
-    <a class="site-logo" href="/Emiformula/" aria-label="EMIFORMULA home">
+    <a class="site-logo" href="./" aria-label="EMIFORMULA home">
       <span class="site-logo-mark" aria-hidden="true">E</span>
       <span class="site-logo-text">EMIFORMULA</span>
     </a>
 
     <nav class="desktop-nav" aria-label="Main navigation">
-      <a class="nav-link nav-link-active" href="/Emiformula/">Home</a>
+      <a class="nav-link" href="./">Home</a>
 
       <button class="nav-button" type="button" data-header-menu="calculators" aria-expanded="false" aria-controls="calculator-menu">
         Calculators <span class="nav-chevron" aria-hidden="true">⌄</span>
       </button>
+
       <button class="nav-button" type="button" data-header-menu="guides" aria-expanded="false" aria-controls="guide-menu">
         Guides <span class="nav-chevron" aria-hidden="true">⌄</span>
       </button>
+
       <button class="nav-button" type="button" data-header-menu="about" aria-expanded="false" aria-controls="about-menu">
         About <span class="nav-chevron" aria-hidden="true">⌄</span>
       </button>
     </nav>
 
     <div class="header-actions">
-      <button class="header-icon-button" type="button" aria-label="Search" title="Search" data-header-search><span aria-hidden="true">⌕</span></button>
+      <button class="header-icon-button" type="button" aria-label="Search" title="Search" data-header-search>
+        <span aria-hidden="true">⌕</span>
+      </button>
       <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-navigation" data-menu-toggle>
         <span></span><span></span><span></span>
       </button>
@@ -29,53 +32,60 @@
   </div>
 
   <div class="header-panel" id="calculator-menu" data-header-panel="calculators" hidden>
-    <div class="header-panel-inner header-category-panel">
-      <div class="header-panel-intro"><strong>Calculator Categories</strong><p>Choose a focused calculator category.</p></div>
-      <a class="header-category-link" href="/Emiformula/categories/emi.html"><b>EMI</b><span>Monthly payments and repayment</span></a>
-      <a class="header-category-link" href="/Emiformula/categories/loan.html"><b>Loan</b><span>Borrowing cost and loan planning</span></a>
-      <a class="header-category-link" href="/Emiformula/categories/financial.html"><b>Financial</b><span>Growth, returns and investment</span></a>
+    <div class="header-panel-inner">
+      <strong>Calculators</strong>
+      <div class="header-panel-links">
+        <a href="./calculators/emi-calculator.html">EMI Calculator</a>
+        <a href="./calculators/personal-loan-calculator.html">Personal Loan Calculator</a>
+        <a href="./calculators/compound-interest-calculator.html">Compound Interest Calculator</a>
+      </div>
     </div>
   </div>
 
   <div class="header-panel" id="guide-menu" data-header-panel="guides" hidden>
     <div class="header-panel-inner">
       <strong>Guides</strong>
-      <p>Practical guides are being added for EMI, loans and financial growth.</p>
+      <p>Practical financial guides are being added to EMIFORMULA.</p>
     </div>
   </div>
 
   <div class="header-panel" id="about-menu" data-header-panel="about" hidden>
     <div class="header-panel-inner">
-      <strong>About EMIFORMULA</strong>
-      <p>Learn about the site, contact options and the information-use terms.</p>
+      <strong>Information</strong>
+      <div class="header-panel-links">
+        <a href="./pages/about.html">About</a>
+        <a href="./pages/contact.html">Contact</a>
+        <a href="./pages/privacy-policy.html">Privacy Policy</a>
+        <a href="./pages/terms.html">Terms &amp; Disclaimer</a>
+      </div>
     </div>
   </div>
 
   <div class="mobile-navigation" id="mobile-navigation" data-mobile-navigation hidden>
     <nav aria-label="Mobile navigation">
-      <a class="mobile-nav-link" href="/Emiformula/">Home</a>
-
-      <button class="mobile-nav-button" type="button" data-mobile-panel="calculators" aria-expanded="false">
+      <a class="mobile-nav-link" href="./">Home</a>
+      <button class="mobile-nav-button" type="button" data-mobile-panel="calculators">
         <span>Calculators</span><span aria-hidden="true">+</span>
       </button>
-      <div class="mobile-submenu" data-mobile-submenu="calculators">
-        <a href="/Emiformula/categories/emi.html"><strong>EMI</strong><span>Monthly payments</span></a>
-        <a href="/Emiformula/categories/loan.html"><strong>Loan</strong><span>Borrowing cost</span></a>
-        <a href="/Emiformula/categories/financial.html"><strong>Financial</strong><span>Growth &amp; returns</span></a>
+      <div class="mobile-nav-panel" data-mobile-content="calculators" hidden>
+        <a href="./calculators/emi-calculator.html">EMI Calculator</a>
+        <a href="./calculators/personal-loan-calculator.html">Personal Loan Calculator</a>
+        <a href="./calculators/compound-interest-calculator.html">Compound Interest Calculator</a>
       </div>
-
-      <button class="mobile-nav-button" type="button" data-mobile-panel="guides" aria-expanded="false">
+      <button class="mobile-nav-button" type="button" data-mobile-panel="guides">
         <span>Guides</span><span aria-hidden="true">+</span>
       </button>
-      <div class="mobile-submenu" data-mobile-submenu="guides">
-        <a href="/Emiformula/"><strong>EMI &amp; Loan Guides</strong><span>Coming with guide pages</span></a>
+      <div class="mobile-nav-panel" data-mobile-content="guides" hidden>
+        <span class="mobile-nav-note">Guides are being added.</span>
       </div>
-
-      <button class="mobile-nav-button" type="button" data-mobile-panel="about" aria-expanded="false">
-        <span>About</span><span aria-hidden="true">+</span>
+      <button class="mobile-nav-button" type="button" data-mobile-panel="about">
+        <span>Information</span><span aria-hidden="true">+</span>
       </button>
-      <div class="mobile-submenu" data-mobile-submenu="about">
-        <a href="/Emiformula/"><strong>About EMIFORMULA</strong><span>Site information</span></a>
+      <div class="mobile-nav-panel" data-mobile-content="about" hidden>
+        <a href="./pages/about.html">About</a>
+        <a href="./pages/contact.html">Contact</a>
+        <a href="./pages/privacy-policy.html">Privacy Policy</a>
+        <a href="./pages/terms.html">Terms &amp; Disclaimer</a>
       </div>
     </nav>
   </div>
