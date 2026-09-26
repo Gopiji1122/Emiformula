@@ -14,6 +14,40 @@
 <link rel="stylesheet" href="../assets/css/layout.css">
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/compound-interest-calculator.css">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"Compound Interest Calculator",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"Web",
+  "url":"https://gopiji1122.github.io/Emiformula/calculators/compound-interest-calculator.html",
+  "description":"Calculate future value, contributions, compound interest and investment growth."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Does a higher compounding frequency always create a much larger result?",
+      "acceptedAnswer":{"@type":"Answer","text":"For the same nominal rate and assumptions, more frequent compounding can increase the calculated result, although the difference depends on the rate and period."}
+    },
+    {
+      "@type":"Question",
+      "name":"Can I enter a decimal interest rate?",
+      "acceptedAnswer":{"@type":"Answer","text":"Yes. Manual inputs accept decimal values such as 7.25%. Sliders use practical whole-number steps, while the exact manually entered value is retained for calculation."}
+    },
+    {
+      "@type":"Question",
+      "name":"What is the difference between invested amount and interest?",
+      "acceptedAnswer":{"@type":"Answer","text":"Invested amount is the money you contribute. Interest is the additional growth produced by the assumed return."}
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="page-shell">
@@ -22,7 +56,6 @@
   <div class="page-container">
     <section class="page-section"><div class="page-full">
       <div data-component="breadcrumbs"></div>
-      <div data-component="page-title"></div>
       <div class="compound-wrap">
         <section class="compound-hero">
           <div class="compound-hero-copy">
@@ -147,6 +180,29 @@
           <div class="compound-formula"><span>Compound growth</span><strong>A = P(1 + r/n)<sup>nt</sup></strong><small>Regular contributions are modelled separately and added throughout the investment period.</small></div>
           <h2>Example</h2>
           <p>If you start with ₹1,00,000, add ₹5,000 each month and earn an 8% annual return for 10 years, the calculator shows how much of the ending value came from your contributions and how much came from growth.</p>
+          <h2>What the calculator result means</h2>
+          <p><strong>Total invested</strong> is the starting amount plus the contributions entered in the calculator. <strong>Interest earned</strong> is the calculated growth above those contributions. <strong>Future value</strong> combines both parts at the end of the selected period.</p>
+          <p>The result is a projection, not a promise of future investment performance. A real investment can have changing returns, fees, taxes, market movements and other conditions that are not represented by a fixed-rate mathematical model.</p>
+
+          <h2>How to use this calculator</h2>
+          <ol>
+            <li>Enter the amount you plan to start with.</li>
+            <li>Add a monthly contribution if you expect to invest regularly.</li>
+            <li>Enter an assumed annual return or interest rate. Decimal values such as 7.25% are supported.</li>
+            <li>Choose the investment period and compounding frequency.</li>
+            <li>If useful, add an inflation assumption or annual contribution increase.</li>
+            <li>Review the future value, total invested amount, interest and year-by-year table together.</li>
+          </ol>
+
+          <h2>Why time can make a difference</h2>
+          <p>Compounding becomes more noticeable as the calculation period becomes longer because earlier growth remains part of the amount used for later calculations. Regular contributions can also become a significant part of the final value. For that reason, it is useful to compare more than one time period instead of focusing on a single projected number.</p>
+
+          <h2>Example with a different scenario</h2>
+          <p>Suppose you start with ₹40,000, add ₹2,500 each month, and use an assumed annual return of 7.5% for 12 years. The calculator can separate the money you put in from the additional growth produced by the mathematical model. Changing the period, contribution or assumed return lets you see how sensitive the projection is to each input.</p>
+
+          <h2>Important assumptions</h2>
+          <p>This calculator uses the assumptions shown on the page. Contribution timing, compounding frequency, rounding and other product-specific rules can differ between real financial products. Always compare the calculator assumptions with the actual terms of the account, investment or financial product you are considering.</p>
+
           <h2>Frequently asked questions</h2>
           <details><summary>Does a higher compounding frequency always create a much larger result?</summary><p>For the same nominal rate and assumptions, more frequent compounding can increase the calculated result, although the difference depends on the rate and period.</p></details>
           <details><summary>Can I enter a decimal interest rate?</summary><p>Yes. Manual inputs accept decimals such as 7.25%. Sliders use practical whole-number steps, while the exact manually entered value is retained for calculation.</p></details>
