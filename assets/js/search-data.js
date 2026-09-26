@@ -24,4 +24,8 @@ window.EMIFORMULA_SEARCH_INDEX = [
     category: "Financial Calculators",
     url: "./calculators/compound-interest-calculator.html"
   }
+,
+  { title: "EMI Calculators", description: "Browse EMI calculation tools.", category: "Calculator Categories", url: "./categories/emi.html" },
+  { title: "Loan Calculators", description: "Browse loan calculation tools.", category: "Calculator Categories", url: "./categories/loan.html" },
+  { title: "Financial Calculators", description: "Browse financial calculation tools.", category: "Calculator Categories", url: "./categories/financial.html" }
 ];
