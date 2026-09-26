@@ -72,6 +72,11 @@
     href="../assets/css/calculator.css"
   >
 
+  <link
+    rel="stylesheet"
+    href="../assets/css/export-report.css"
+  >
+
 
   <!-- =====================================================
        SEO CONFIGURATION
@@ -705,6 +710,19 @@
                     id="calculator-results"
                   >
 
+                    <div class="calc-export-toolbar" data-export-toolbar aria-label="Export calculator results">
+                      <div>
+                        <strong>Export your calculation</strong>
+                        <span>Fixed desktop-style report on every device</span>
+                      </div>
+                      <div class="calc-export-actions">
+                        <button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">📄 Export PDF</button>
+                        <button type="button" class="calc-export-button" data-export-action="csv">CSV</button>
+                        <button type="button" class="calc-export-button" data-export-action="json">JSON</button>
+                      </div>
+                      <span class="calc-export-status" data-export-status hidden aria-live="polite"></span>
+                    </div>
+
 
                     <!-- =================================
                          HERO RESULT
@@ -1185,6 +1203,7 @@
 <script src="../assets/js/calculator-engine.js"></script>
 <script src="../assets/js/calculator-utils.js"></script>
 <script src="../assets/js/calculator-ui.js"></script>
+<script src="../assets/js/export-report.js"></script>
 
 </body>
 
