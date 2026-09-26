@@ -1,0 +1,110 @@
+(function (global) {
+  'use strict';
+
+  function emi(principal, annualRate, months) {
+    if (!(principal > 0) || !(months > 0)) return 0;
+    if (annualRate === 0) return principal / months;
+    var r = annualRate / 1200;
+    var factor = Math.pow(1 + r, months);
+    return principal * r * factor / (factor - 1);
+  }
+
+  function schedule(principal, annualRate, months) {
+    var payment = emi(principal, annualRate, months);
+    var balance = principal;
+    var rows = [];
+    var totalInterest = 0;
+
+    for (var month = 1; month <= months; month++) {
+      var interest = annualRate === 0 ? 0 : balance * (annualRate / 1200);
+      var principalPart = payment - interest;
+
+      if (month === months || principalPart > balance) {
+        principalPart = balance;
+        payment = principalPart + interest;
+      }
+
+      balance = Math.max(0, balance - principalPart);
+      totalInterest += interest;
+      rows.push({ month: month, payment: payment, interest: interest, principal: principalPart, balance: balance });
+    }
+    return { payment: payment, totalInterest: totalInterest, rows: rows };
+  }
+
+  function calculate(input) {
+    var P = Number(input.balance);
+    var oldRate = Number(input.oldRate);
+    var oldMonths = Number(input.oldMonths);
+    var newRate = Number(input.newRate);
+    var newMonths = Number(input.newMonths);
+
+    if (!(P > 0) || !(oldMonths > 0) || !(newMonths > 0) ||
+        oldRate < 0 || newRate < 0) {
+      return { valid: false, error: 'Enter valid loan amount, rates and tenures.' };
+    }
+
+    var current = schedule(P, oldRate, oldMonths);
+    var next = schedule(P, newRate, newMonths);
+
+    var switchingCosts =
+      Math.max(0, Number(input.foreclosure) || 0) +
+      Math.max(0, Number(input.foreclosureGST) || 0) +
+      Math.max(0, Number(input.processing) || 0) +
+      Math.max(0, Number(input.processingGST) || 0) +
+      Math.max(0, Number(input.other) || 0);
+
+    var grossInterestSaving = current.totalInterest - next.totalInterest;
+    var netSaving = grossInterestSaving - switchingCosts;
+
+    /*
+      Cumulative economic benefit:
+      We compare each month's cash payment under the two schedules.
+      If one loan ends earlier, its payment becomes zero after its final month.
+      The cumulative difference is the amount saved by the new path before
+      switching costs. Break-even occurs when that cumulative benefit reaches
+      switchingCosts.
+    */
+    var horizon = Math.max(oldMonths, newMonths);
+    var cumulative = -switchingCosts;
+    var breakEvenMonth = null;
+    var timeline = [];
+
+    for (var m = 1; m <= horizon; m++) {
+      var oldPayment = m <= oldMonths ? current.rows[m - 1].payment : 0;
+      var newPayment = m <= newMonths ? next.rows[m - 1].payment : 0;
+      cumulative += oldPayment - newPayment;
+
+      if (breakEvenMonth === null && cumulative >= 0) {
+        breakEvenMonth = m;
+      }
+
+      if (m === 1 || m === 12 || m % 12 === 0 || m === horizon || m === breakEvenMonth) {
+        timeline.push({ month: m, cumulative: cumulative });
+      }
+    }
+
+    var monthlyEmiDifference = current.payment - next.payment;
+    var simpleBreakEven = monthlyEmiDifference > 0
+      ? Math.ceil(switchingCosts / monthlyEmiDifference)
+      : null;
+
+    return {
+      valid: true,
+      currentEMI: current.payment,
+      newEMI: next.payment,
+      currentInterest: current.totalInterest,
+      newInterest: next.totalInterest,
+      grossInterestSaving: grossInterestSaving,
+      switchingCosts: switchingCosts,
+      netSaving: netSaving,
+      monthlyEmiDifference: monthlyEmiDifference,
+      breakEvenMonth: breakEvenMonth,
+      simpleBreakEvenMonth: simpleBreakEven,
+      timeline: timeline,
+      oldMonths: oldMonths,
+      newMonths: newMonths
+    };
+  }
+
+  global.EMIFORMULA_BALANCE_TRANSFER = { calculate: calculate };
+})(window);
