@@ -321,3 +321,189 @@
     margin-bottom: 2.75rem;
   }
 }
+
+/* --- EMIFORMULA homepage tool cards --- */
+.home-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 3.5rem;
+}
+
+.home-tool-card {
+  position: relative;
+  min-height: 330px;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--background);
+  box-shadow: 0 10px 28px rgba(15,23,42,.07);
+  animation: cardReveal .65s ease both;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.home-tool-card:nth-child(2) { animation-delay: .08s; }
+.home-tool-card:nth-child(3) { animation-delay: .16s; }
+
+.home-tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 5px;
+}
+
+.home-tool-emi::before { background: #2563eb; }
+.home-tool-loan::before { background: #7c3aed; }
+.home-tool-financial::before { background: #059669; }
+
+.home-tool-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 42px rgba(15,23,42,.12);
+}
+
+.home-tool-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.home-tool-icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+
+.home-tool-emi .home-tool-icon { color: #1d4ed8; background: #eff6ff; }
+.home-tool-loan .home-tool-icon { color: #6d28d9; background: #f5f3ff; }
+.home-tool-financial .home-tool-icon { color: #047857; background: #ecfdf5; }
+
+.home-tool-label {
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  color: var(--text-secondary);
+}
+
+.home-tool-card h3 {
+  margin: 0 0 .65rem;
+  font-size: 1.38rem;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.home-tool-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: .92rem;
+  line-height: 1.65;
+}
+
+.home-tool-actions {
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  margin-top: auto;
+  padding-top: 1.4rem;
+}
+
+.home-action-primary,
+.home-action-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 43px;
+  padding: .65rem .85rem;
+  border-radius: 11px;
+  font-size: .86rem;
+  font-weight: 800;
+}
+
+.home-action-primary { color: #fff; }
+.home-tool-emi .home-action-primary { background: #2563eb; }
+.home-tool-loan .home-action-primary { background: #7c3aed; }
+.home-tool-financial .home-action-primary { background: #059669; }
+
+.home-action-secondary {
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  background: var(--surface);
+}
+
+.home-action-primary span,
+.home-action-secondary span,
+.home-info-link span {
+  transition: transform .2s ease;
+}
+
+.home-action-primary:hover span,
+.home-action-secondary:hover span,
+.home-info-link:hover span {
+  transform: translateX(4px);
+}
+
+.home-info-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 0 0 4rem;
+  padding: 1.7rem 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--surface), var(--background));
+  box-shadow: 0 8px 24px rgba(15,23,42,.05);
+}
+
+.home-info-band h2 {
+  margin: 0 0 .55rem;
+  max-width: 700px;
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+}
+
+.home-info-band p:not(.home-kicker) {
+  max-width: 700px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.home-info-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .home-tool-grid { grid-template-columns: 1fr; }
+  .home-tool-card { min-height: 280px; }
+  .home-info-band { align-items: flex-start; flex-direction: column; }
+}
+
+@media (max-width: 640px) {
+  .home-hero { margin-top: 1rem; margin-bottom: 2.5rem; border-radius: 20px; }
+  .home-hero-actions { flex-direction: column; }
+  .home-hero-button { width: 100%; }
+  .home-section-head { align-items: flex-start; flex-direction: column; }
+  .home-feature-strip { grid-template-columns: 1fr; }
+  .home-info-band { padding: 1.35rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-tool-card,
+  .home-category-card,
+  .home-hero::before,
+  .home-hero::after { animation: none; }
+  .home-tool-card,
+  .home-category-card,
+  .home-hero-button { transition: none; }
+}
