@@ -29,11 +29,12 @@
 <h1>Balance Transfer Break-Even Calculator</h1>
 <p class="page-title-description">Compare your current loan with a new offer, including switching costs, applicable GST and the estimated break-even month.</p>
 </header>
-<div class="loan-wrap">
+<div class="loan-wrap bt-page">
 <section class="bt-hero">
-<h2>Will switching actually save you money?</h2>
-<p>Compare the remaining cost of your current loan with a new offer. Enter the charges shown by your lenders instead of relying on advertised rates alone.</p>
-<div class="bt-trust">No phone number required. 100% free calculation.</div>
+<div class="bt-hero-grid">
+<div><div class="bt-eyebrow"><i></i>Loan switching intelligence</div><h2>See the real cost of moving your loan.</h2><p>Compare the current repayment path with a new balance-transfer offer — including fees, taxes, rate savings and the month your transfer recovers its switching costs.</p></div>
+<div class="bt-hero-actions"><div class="bt-hero-badge"><strong id="hero-rate-gap">1.50 pp</strong><span>rate difference</span></div><div class="bt-hero-badge"><strong id="hero-tenure-gap">0 mo</strong><span>tenure difference</span></div></div>
+</div>
 </section>
 
 <div class="loan-grid bt-grid">
@@ -101,8 +102,8 @@
 </div>
 
 <div class="loan-card loan-main-result bt-main">
-<h3>Break-even</h3>
-<div class="bt-break-number" id="res-breakeven">—</div>
+<div class="bt-main-head"><div><div class="bt-main-kicker">Transfer economics</div><h3>Break-even point</h3></div><div class="bt-break-pill" id="bt-break-pill">● Live calculation</div></div>
+<div class="bt-break-number" id="res-breakeven">—</div><div class="bt-break-pill" id="bt-break-pill-mobile">Cumulative benefit after switching costs</div>
 <p id="res-break-copy">Enter valid loan details to calculate the break-even point.</p>
 <div class="bt-mini-grid">
 <div><small>Gross interest saving</small><strong id="res-gross">₹0</strong></div>
@@ -110,6 +111,18 @@
 <div><small>New loan interest</small><strong id="res-new-interest">₹0</strong></div>
 <div><small>Monthly EMI difference</small><strong id="res-monthly">₹0</strong></div>
 </div>
+</div>
+
+<div class="bt-comparison">
+<div class="bt-scenario current"><div class="bt-scenario-label">Current loan</div><div class="bt-scenario-emi" id="compare-old-emi">₹0</div><div class="bt-scenario-sub">monthly EMI</div><div class="bt-scenario-metrics"><div><small>Rate</small><strong id="compare-old-rate">0%</strong></div><div><small>Remaining</small><strong id="compare-old-months">0 mo</strong></div></div></div>
+<div class="bt-vs">VS</div>
+<div class="bt-scenario new"><div class="bt-scenario-label">New offer</div><div class="bt-scenario-emi" id="compare-new-emi">₹0</div><div class="bt-scenario-sub">monthly EMI</div><div class="bt-scenario-metrics"><div><small>Rate</small><strong id="compare-new-rate">0%</strong></div><div><small>Tenure</small><strong id="compare-new-months">0 mo</strong></div></div></div>
+</div>
+
+<div class="bt-insight-grid">
+<div class="bt-insight accent"><small>Interest reduction</small><strong id="insight-interest-pct">0%</strong><p>Estimated share of current remaining interest avoided.</p></div>
+<div class="bt-insight"><small>Monthly cash-flow change</small><strong id="insight-monthly">₹0</strong><p>Difference between the two monthly payment paths.</p></div>
+<div class="bt-insight"><small>Total repayment difference</small><strong id="insight-total">₹0</strong><p>Difference in scheduled payments before switching costs.</p></div>
 </div>
 
 <div class="bt-analytics">
@@ -121,13 +134,13 @@
 <div class="bt-legend">
 <div class="bt-legend-row"><i class="bt-legend-dot"></i><span>New loan interest</span><strong id="bt-legend-new-interest">₹0</strong></div>
 <div class="bt-legend-row"><i class="bt-legend-dot alt"></i><span>Gross interest saving</span><strong id="bt-legend-saving">₹0</strong></div>
-<div class="bt-legend-row"><i class="bt-legend-dot" style="background:#f97316"></i><span>Switching costs</span><strong id="bt-legend-cost">₹0</strong></div>
+<div class="bt-legend-row"><i class="bt-legend-dot cost"></i><span>Switching costs</span><strong id="bt-legend-cost">₹0</strong></div>
 </div></div>
 </div>
 <div class="bt-chart-card">
 <h3>Cumulative transfer benefit</h3>
 <p>After switching costs, month by month. The zero line marks break-even.</p>
-<div class="bt-svg-wrap" id="bt-cumulative-chart"><div class="bt-chart-empty">Calculating chart…</div></div>
+<div class="bt-svg-wrap" id="bt-cumulative-chart"><div class="bt-chart-empty">Calculating chart…</div></div><div class="bt-chart-legend"><span><i class="new"></i>Cumulative benefit</span><span><i class="zero"></i>Break-even line</span></div>
 </div>
 </div>
 
