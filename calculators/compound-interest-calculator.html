@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compound Interest Calculator | EMIFORMULA</title>
+<meta name="description" content="Calculate compound growth, total contributions, interest earned and investment value with interactive charts and comparisons.">
+<link rel="canonical" href="https://gopiji1122.github.io/Emiformula/calculators/compound-interest-calculator.html">
+<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/compound-interest-calculator.css">
+</head>
+<body>
+<div data-component="header"></div>
+<main class="page-main compound-page">
+  <div class="page-container">
+    <section class="page-section page-full">
+      <div class="compound-wrap">
+        <section class="compound-hero">
+          <div class="compound-hero-copy">
+            <span class="compound-eyebrow">Financial Calculator</span>
+            <h1>Compound Interest Calculator</h1>
+            <p>See how your starting money and regular contributions can grow through compounding over time.</p>
+          </div>
+          <div class="compound-hero-orbit" aria-hidden="true">
+            <span>₹</span><i></i><i></i><i></i>
+          </div>
+        </section>
+
+        <div class="compound-grid">
+          <section class="compound-card compound-input-card" aria-labelledby="compound-input-title">
+            <div class="compound-card-head">
+              <div>
+                <span class="compound-kicker">Build your scenario</span>
+                <h2 id="compound-input-title">Investment Setup</h2>
+              </div>
+              <button type="button" class="compound-reset" id="compound-reset">Reset</button>
+            </div>
+
+            <div class="compound-field">
+              <div class="compound-label"><label for="compound-principal">Initial investment</label><span id="compound-principal-value">₹1,00,000</span></div>
+              <div class="compound-money"><span>₹</span><input id="compound-principal" type="number" min="0" max="100000000" step="1" value="100000" inputmode="decimal"></div>
+              <input id="compound-principal-range" class="compound-range" type="range" min="0" max="100000000" step="1000" value="100000" aria-label="Initial investment slider">
+              <div class="compound-minmax"><span>₹0</span><span>₹10 Cr</span></div>
+            </div>
+
+            <div class="compound-field">
+              <div class="compound-label"><label for="compound-monthly">Monthly contribution</label><span id="compound-monthly-value">₹5,000</span></div>
+              <div class="compound-money"><span>₹</span><input id="compound-monthly" type="number" min="0" max="1000000" step="1" value="5000" inputmode="decimal"></div>
+              <input id="compound-monthly-range" class="compound-range" type="range" min="0" max="1000000" step="500" value="5000" aria-label="Monthly contribution slider">
+              <div class="compound-minmax"><span>₹0</span><span>₹10 L</span></div>
+            </div>
+
+            <div class="compound-field">
+              <div class="compound-label"><label for="compound-rate">Annual return / interest</label><span id="compound-rate-value">8%</span></div>
+              <div class="compound-number-suffix"><input id="compound-rate" type="number" min="0" max="50" step="0.01" value="8" inputmode="decimal"><span>%</span></div>
+              <input id="compound-rate-range" class="compound-range" type="range" min="0" max="50" step="1" value="8" aria-label="Annual return slider">
+              <div class="compound-minmax"><span>0%</span><span>50%</span></div>
+            </div>
+
+            <div class="compound-field">
+              <div class="compound-label"><label for="compound-years">Investment period</label><span id="compound-years-value">10 years</span></div>
+              <div class="compound-number-suffix"><input id="compound-years" type="number" min="1" max="50" step="0.01" value="10" inputmode="decimal"><span>years</span></div>
+              <input id="compound-years-range" class="compound-range" type="range" min="1" max="50" step="1" value="10" aria-label="Investment period slider">
+              <div class="compound-minmax"><span>1 year</span><span>50 years</span></div>
+            </div>
+
+            <div class="compound-options">
+              <div class="compound-label"><span>Compounding frequency</span></div>
+              <div class="compound-frequency" role="group" aria-label="Compounding frequency">
+                <button type="button" data-frequency="1">Annually</button>
+                <button type="button" data-frequency="4">Quarterly</button>
+                <button type="button" data-frequency="12" class="is-active">Monthly</button>
+              </div>
+            </div>
+
+            <details class="compound-advanced">
+              <summary>Advanced growth options</summary>
+              <div class="compound-advanced-body">
+                <div class="compound-field">
+                  <div class="compound-label"><label for="compound-stepup">Annual contribution increase</label><span id="compound-stepup-value">0%</span></div>
+                  <div class="compound-number-suffix"><input id="compound-stepup" type="number" min="0" max="50" step="0.01" value="0" inputmode="decimal"><span>%</span></div>
+                  <input id="compound-stepup-range" class="compound-range" type="range" min="0" max="50" step="1" value="0" aria-label="Annual contribution increase slider">
+                </div>
+                <div class="compound-field">
+                  <div class="compound-label"><label for="compound-inflation">Inflation rate</label><span id="compound-inflation-value">0%</span></div>
+                  <div class="compound-number-suffix"><input id="compound-inflation" type="number" min="0" max="20" step="0.01" value="0" inputmode="decimal"><span>%</span></div>
+                  <input id="compound-inflation-range" class="compound-range" type="range" min="0" max="20" step="0.5" value="0" aria-label="Inflation rate slider">
+                </div>
+              </div>
+            </details>
+
+            <button type="button" id="compound-calculate" class="compound-primary">Calculate Growth</button>
+            <p id="compound-error" class="compound-error" role="alert" hidden></p>
+          </section>
+
+          <section class="compound-results" aria-live="polite">
+            <div class="compound-kpis">
+              <article class="compound-kpi"><span>Future value</span><strong id="compound-future">₹0</strong><small>Projected portfolio value</small></article>
+              <article class="compound-kpi"><span>Total invested</span><strong id="compound-invested">₹0</strong><small>Your contributions</small></article>
+              <article class="compound-kpi"><span>Interest earned</span><strong id="compound-interest">₹0</strong><small>Growth from compounding</small></article>
+            </div>
+
+            <section class="compound-card compound-growth-card">
+              <div class="compound-card-head">
+                <div><span class="compound-kicker">Growth story</span><h2>Contributions vs Growth</h2></div>
+                <span id="compound-duration-label" class="compound-pill">10 years</span>
+              </div>
+              <div class="compound-visual-grid">
+                <div class="compound-donut-wrap">
+                  <div class="compound-donut" id="compound-donut" aria-label="Contribution and interest breakdown"><div><strong id="compound-donut-total">₹0</strong><span>future value</span></div></div>
+                  <div class="compound-legend"><span><i class="legend-invested"></i>Invested <b id="compound-legend-invested">₹0</b></span><span><i class="legend-interest"></i>Interest <b id="compound-legend-interest">₹0</b></span></div>
+                </div>
+                <div class="compound-chart-panel">
+                  <div class="compound-chart-title">Portfolio growth by year</div>
+                  <svg id="compound-growth-chart" viewBox="0 0 700 300" role="img" aria-label="Portfolio growth chart"></svg>
+                </div>
+              </div>
+            </section>
+
+            <section class="compound-card compound-analysis-card">
+              <div class="compound-card-head"><div><span class="compound-kicker">What changes the result?</span><h2>Growth Comparisons</h2></div></div>
+              <div class="compound-comparison-grid">
+                <div><h3>Compounding frequency</h3><div id="compound-frequency-bars"></div></div>
+                <div><h3>Return-rate sensitivity</h3><div id="compound-rate-bars"></div></div>
+              </div>
+            </section>
+
+            <section class="compound-card compound-table-card">
+              <div class="compound-card-head"><div><span class="compound-kicker">Year by year</span><h2>Growth Summary</h2></div></div>
+              <div class="compound-table-scroll"><table><thead><tr><th>Year</th><th>Contributed</th><th>Interest</th><th>Value</th></tr></thead><tbody id="compound-yearly"></tbody></table></div>
+            </section>
+          </section>
+        </div>
+
+        <section class="compound-content compound-card">
+          <h2>How compound interest works</h2>
+          <p>Compound interest means returns can themselves become part of the amount that earns future returns. Regular contributions can add another layer of growth because new money enters the investment over time.</p>
+          <div class="compound-formula"><span>Compound growth</span><strong>A = P(1 + r/n)<sup>nt</sup></strong><small>Regular contributions are modelled separately and added throughout the investment period.</small></div>
+          <h2>Example</h2>
+          <p>If you start with ₹1,00,000, add ₹5,000 each month and earn an 8% annual return for 10 years, the calculator shows how much of the ending value came from your contributions and how much came from growth.</p>
+          <h2>Frequently asked questions</h2>
+          <details><summary>Does a higher compounding frequency always create a much larger result?</summary><p>For the same nominal rate and assumptions, more frequent compounding can increase the calculated result, although the difference depends on the rate and period.</p></details>
+          <details><summary>Can I enter a decimal interest rate?</summary><p>Yes. Manual inputs accept decimals such as 7.25%. Sliders use practical whole-number steps, while the exact manually entered value is retained for calculation.</p></details>
+          <details><summary>What is the difference between invested amount and interest?</summary><p>Invested amount is the money you contribute. Interest is the additional growth produced by the assumed return.</p></details>
+        </section>
+      </div>
+    </section>
+  </div>
+</main>
+<div data-component="footer"></div>
+<script src="../assets/js/site-config.js"></script>
+<script src="../assets/js/search-data.js"></script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../assets/js/search.js"></script>
+<script src="../assets/js/footer.js"></script>
+<script src="../assets/js/components.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="../assets/js/compound-interest-engine.js"></script>
+<script src="../configs/calculators/compound-interest-calculator.js"></script>
+<script src="../assets/js/compound-interest-ui.js"></script>
+<script src="../seo/compound-interest-schema.js"></script>
+</body>
+</html>
