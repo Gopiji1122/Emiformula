@@ -22,15 +22,41 @@ function bars(id,items,formatter){
  root.innerHTML=items.map(function(x){return '<div class="compound-bar-row"><span>'+x.label+'</span><div><i style="width:'+Math.max(3,(x.value/max)*100)+'%"></i></div><b>'+formatter(x.value)+'</b></div>';}).join("");
 }
 function update(){
- var result=E.calculate({principal:num("compound-principal"),monthlyContribution:num("compound-monthly"),annualRate:num("compound-rate"),years:num("compound-years"),frequency:Number(document.querySelector(".compound-frequency .is-active")?.dataset.frequency||12),annualStepUp:num("compound-stepup"),inflation:num("compound-inflation")});
- setText("compound-principal-value",money(num("compound-principal")));setText("compound-monthly-value",money(num("compound-monthly")));
- setText("compound-rate-value",num("compound-rate")+"%");setText("compound-years-value",num("compound-years")+" years");setText("compound-stepup-value",num("compound-stepup")+"%");setText("compound-inflation-value",num("compound-inflation")+"%");
- setText("compound-future",money(result.futureValue));setText("compound-invested",money(result.totalContributed));setText("compound-interest",money(result.totalInterest));setText("compound-donut-total",money(result.futureValue));
- setText("compound-legend-invested",money(result.totalContributed));setText("compound-legend-interest",money(result.totalInterest));setText("compound-duration-label",result.years+" years");
- var total=result.futureValue||1,deg=result.totalInterest/total*360;$("compound-donut").style.setProperty("--interest-deg",deg+"deg");
- svgChart(result.schedule);bars("compound-frequency-bars",result.frequency,money);bars("compound-rate-bars",result.rates,function(v){return money(v);});
- $("compound-yearly").innerHTML=result.schedule.map(function(r){return "<tr><td>"+r.year+"</td><td>"+money(r.contributed)+"</td><td>"+money(r.interest)+"</td><td>"+money(r.value)+"</td></tr>";}).join("");
+ var activeFrequency=document.querySelector(".compound-frequency .is-active");
+ var frequency=activeFrequency?Number(activeFrequency.dataset.frequency):12;
+ var result=E.calculate({
+   principal:num("compound-principal"),
+   monthlyContribution:num("compound-monthly"),
+   annualRate:num("compound-rate"),
+   years:num("compound-years"),
+   frequency:frequency,
+   annualStepUp:num("compound-stepup"),
+   inflation:num("compound-inflation")
+ });
+ setText("compound-principal-value",money(num("compound-principal")));
+ setText("compound-monthly-value",money(num("compound-monthly")));
+ setText("compound-rate-value",num("compound-rate")+"%");
+ setText("compound-years-value",num("compound-years")+" years");
+ setText("compound-stepup-value",num("compound-stepup")+"%");
+ setText("compound-inflation-value",num("compound-inflation")+"%");
+ setText("compound-future",money(result.futureValue));
+ setText("compound-invested",money(result.totalContributed));
+ setText("compound-interest",money(result.totalInterest));
+ setText("compound-donut-total",money(result.futureValue));
+ setText("compound-legend-invested",money(result.totalContributed));
+ setText("compound-legend-interest",money(result.totalInterest));
+ setText("compound-duration-label",result.years+" years");
+ var total=result.futureValue||1;
+ var deg=result.totalInterest/total*360;
+ $("compound-donut").style.setProperty("--interest-deg",deg+"deg");
+ svgChart(result.schedule);
+ bars("compound-frequency-bars",result.frequency,money);
+ bars("compound-rate-bars",result.rates,function(v){return money(v);});
+ $("compound-yearly").innerHTML=result.schedule.map(function(r){
+   return "<tr><td>"+r.year+"</td><td>"+money(r.contributed)+"</td><td>"+money(r.interest)+"</td><td>"+money(r.value)+"</td></tr>";
+ }).join("");
 }
+
 function init(){
  [["compound-principal","compound-principal-range"],["compound-monthly","compound-monthly-range"],["compound-rate","compound-rate-range"],["compound-years","compound-years-range"],["compound-stepup","compound-stepup-range"],["compound-inflation","compound-inflation-range"]].forEach(function(x){bindPair(x[0],x[1]);});
  document.querySelectorAll("[data-frequency]").forEach(function(b){b.addEventListener("click",function(){document.querySelectorAll("[data-frequency]").forEach(function(x){x.classList.remove("is-active");});b.classList.add("is-active");update();});});
