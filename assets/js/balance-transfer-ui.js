@@ -12,7 +12,7 @@
     breakCopy: $('res-break-copy'), gross: $('res-gross'), oldInterest: $('res-old-interest'), newInterest: $('res-new-interest'),
     monthly: $('res-monthly'), costsBar: $('bar-costs'), savingsBar: $('bar-savings'), costsLabel: $('label-costs'), savingsLabel: $('label-savings'),
     timeline: $('bt-timeline'), donut: $('bt-interest-donut'), donutPercent: $('bt-donut-percent'), legendNew: $('bt-legend-new-interest'),
-    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart')
+    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile')
   };
 
   var lastResult = null;
@@ -129,12 +129,26 @@
     animateNumber(el.gross, result.grossInterestSaving, money); animateNumber(el.oldInterest, result.currentInterest, money);
     animateNumber(el.newInterest, result.newInterest, money); animateNumber(el.monthly, result.monthlyEmiDifference, money);
 
+    if (el.heroRateGap) el.heroRateGap.textContent = Math.abs(result.rateDifference).toFixed(2) + ' pp';
+    if (el.heroTenureGap) el.heroTenureGap.textContent = (result.tenureDifference > 0 ? '-' : result.tenureDifference < 0 ? '+' : '') + Math.abs(result.tenureDifference) + ' mo';
+    if (el.compareOldEmi) el.compareOldEmi.textContent = money(result.currentEMI);
+    if (el.compareNewEmi) el.compareNewEmi.textContent = money(result.newEMI);
+    if (el.compareOldRate) el.compareOldRate.textContent = Number(el.oldRate.value).toFixed(2) + '%';
+    if (el.compareNewRate) el.compareNewRate.textContent = Number(el.newRate.value).toFixed(2) + '%';
+    if (el.compareOldMonths) el.compareOldMonths.textContent = result.oldMonths + ' mo';
+    if (el.compareNewMonths) el.compareNewMonths.textContent = result.newMonths + ' mo';
+    if (el.interestPct) el.interestPct.textContent = Math.max(0, result.interestSavingPct).toFixed(1) + '%';
+    if (el.insightMonthly) el.insightMonthly.textContent = money(result.monthlyEmiDifference);
+    if (el.insightTotal) el.insightTotal.textContent = money(result.totalCashflowSaving);
+
     var previousBreak = el.breakEven.dataset.value || '';
     var breakText = result.breakEvenMonth !== null ? 'Month ' + result.breakEvenMonth : 'Not reached';
     el.breakEven.textContent = breakText;
     el.breakEven.dataset.value = result.breakEvenMonth == null ? '' : String(result.breakEvenMonth);
     if (previousBreak !== el.breakEven.dataset.value) { el.breakEven.classList.remove('bt-pop'); void el.breakEven.offsetWidth; el.breakEven.classList.add('bt-pop'); }
     el.breakCopy.textContent = result.breakEvenMonth !== null ? 'Based on the entered assumptions, cumulative savings recover the switching costs in month ' + result.breakEvenMonth + '.' : 'The calculated savings do not recover the switching costs within the compared repayment horizon.';
+    if (el.breakPill) el.breakPill.textContent = result.breakEvenMonth !== null ? '● Break-even: month ' + result.breakEvenMonth : '● Break-even not reached';
+    if (el.breakPillMobile) el.breakPillMobile.textContent = result.breakEvenMonth !== null ? 'Switching costs recovered by month ' + result.breakEvenMonth : 'Switching costs are not recovered within the comparison horizon';
 
     var maxBar = Math.max(result.switchingCosts, result.grossInterestSaving, 1);
     requestAnimationFrame(function () { el.costsBar.style.width = pct(result.switchingCosts / maxBar * 100) + '%'; el.savingsBar.style.width = pct(Math.max(0, result.grossInterestSaving) / maxBar * 100) + '%'; });
