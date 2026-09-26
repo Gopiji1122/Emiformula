@@ -7,13 +7,22 @@
 <meta name="description" content="Calculate compound growth, total contributions, interest earned and investment value with interactive charts and comparisons.">
 <link rel="canonical" href="https://gopiji1122.github.io/Emiformula/calculators/compound-interest-calculator.html">
 <link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/header.css">
+<link rel="stylesheet" href="../assets/css/search.css">
+<link rel="stylesheet" href="../assets/css/footer.css">
+<link rel="stylesheet" href="../assets/css/responsive.css">
+<link rel="stylesheet" href="../assets/css/layout.css">
+<link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/compound-interest-calculator.css">
 </head>
 <body>
+<div class="page-shell">
 <div data-component="header"></div>
-<main class="page-main compound-page">
+<main class="page-main calculator-page compound-page">
   <div class="page-container">
-    <section class="page-section page-full">
+    <section class="page-section"><div class="page-full">
+      <div data-component="breadcrumbs"></div>
+      <div data-component="page-title"></div>
       <div class="compound-wrap">
         <section class="compound-hero">
           <div class="compound-hero-copy">
@@ -144,10 +153,11 @@
           <details><summary>What is the difference between invested amount and interest?</summary><p>Invested amount is the money you contribute. Interest is the additional growth produced by the assumed return.</p></details>
         </section>
       </div>
-    </section>
+    </div></section>
   </div>
 </main>
 <div data-component="footer"></div>
+</div>
 <script src="../assets/js/site-config.js"></script>
 <script src="../assets/js/search-data.js"></script>
 <script src="../assets/js/navigation.js"></script>
