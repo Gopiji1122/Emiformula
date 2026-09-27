@@ -51,6 +51,7 @@
     var horizon = Math.max(oldMonths, newMonths);
     var cumulative = -switchingCosts;
     var breakEvenMonth = null;
+    var cashFlowRecoveryMonth = null;
     var timeline = [];
     var monthlyComparison = [];
     var annualSummary = [];
@@ -62,12 +63,13 @@
       cumulative += oldPayment - newPayment;
       var oldRow = m <= oldMonths ? current.rows[m - 1] : null;
       var newRow = m <= newMonths ? next.rows[m - 1] : null;
+      var economicPosition = cumulative + (oldRow ? oldRow.balance : 0) - (newRow ? newRow.balance : 0);
       var monthRow = {
         month: m, oldPayment: oldPayment, newPayment: newPayment,
         oldInterest: oldRow ? oldRow.interest : 0, newInterest: newRow ? newRow.interest : 0,
         oldPrincipal: oldRow ? oldRow.principal : 0, newPrincipal: newRow ? newRow.principal : 0,
         oldBalance: oldRow ? oldRow.balance : 0, newBalance: newRow ? newRow.balance : 0,
-        monthlyCashflowSaving: oldPayment - newPayment, cumulative: cumulative
+        monthlyCashflowSaving: oldPayment - newPayment, cumulative: cumulative, economicPosition: economicPosition
       };
       monthlyComparison.push(monthRow);
       var yearNo = Math.ceil(m / 12);
@@ -80,8 +82,8 @@
       annualMap[yearNo].newPrincipal += monthRow.newPrincipal;
       annualMap[yearNo].oldBalance = monthRow.oldBalance;
       annualMap[yearNo].newBalance = monthRow.newBalance;
-      if (breakEvenMonth === null && cumulative >= 0) breakEvenMonth = m;
-      if (m === 1 || m === 12 || m % 12 === 0 || m === horizon || m === breakEvenMonth) timeline.push({ month: m, cumulative: cumulative });
+      if (cashFlowRecoveryMonth === null && cumulative >= 0) cashFlowRecoveryMonth = m;
+      if (m === 1 || m === 12 || m % 12 === 0 || m === horizon) timeline.push({ month: m, cumulative: cumulative, economicPosition: economicPosition });
     }
     Object.keys(annualMap).forEach(function (key) { annualSummary.push(annualMap[key]); });
 
@@ -91,6 +93,20 @@
     var rateDifference = oldRate - newRate;
     var tenureDifference = oldMonths - newMonths;
     var totalCashflowSaving = current.totalPayment - next.totalPayment;
+    var totalCostBreakEvenMonth = null;
+    if (netSaving >= 0) {
+      for (var b = 0; b < monthlyComparison.length; b++) {
+        var staysPositive = true;
+        for (var k = b; k < monthlyComparison.length; k++) {
+          if (monthlyComparison[k].economicPosition < -0.01) { staysPositive = false; break; }
+        }
+        if (staysPositive && monthlyComparison[b].economicPosition >= -0.01) {
+          totalCostBreakEvenMonth = monthlyComparison[b].month;
+          break;
+        }
+      }
+    }
+    breakEvenMonth = totalCostBreakEvenMonth;
 
     return {
       valid: true, currentEMI: current.payment, newEMI: next.payment,
@@ -98,7 +114,7 @@
       currentTotalPayment: current.totalPayment, newTotalPayment: next.totalPayment,
       grossInterestSaving: grossInterestSaving, switchingCosts: switchingCosts,
       netSaving: netSaving, totalCashflowSaving: totalCashflowSaving,
-      monthlyEmiDifference: monthlyEmiDifference, breakEvenMonth: breakEvenMonth,
+      monthlyEmiDifference: monthlyEmiDifference, breakEvenMonth: breakEvenMonth, totalCostBreakEvenMonth: totalCostBreakEvenMonth, cashFlowRecoveryMonth: cashFlowRecoveryMonth,
       simpleBreakEvenMonth: simpleBreakEven, interestSavingPct: interestSavingPct,
       rateDifference: rateDifference, tenureDifference: tenureDifference,
       timeline: timeline, monthlyComparison: monthlyComparison, annualSummary: annualSummary,

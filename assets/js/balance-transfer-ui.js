@@ -12,7 +12,7 @@
     breakCopy: $('res-break-copy'), gross: $('res-gross'), oldInterest: $('res-old-interest'), newInterest: $('res-new-interest'),
     monthly: $('res-monthly'), costsBar: $('bar-costs'), savingsBar: $('bar-savings'), costsLabel: $('label-costs'), savingsLabel: $('label-savings'),
     timeline: $('bt-timeline'), donut: $('bt-interest-donut'), donutPercent: $('bt-donut-percent'), legendNew: $('bt-legend-new-interest'),
-    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), heroCost: $('hero-cost'), newRateVal: $('bt-new-rate-val'), newMonthsVal: $('bt-new-months-val'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile'), breakRing: document.querySelector('.bt-break-ring')
+    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), heroCost: $('hero-cost'), newRateVal: $('bt-new-rate-val'), newMonthsVal: $('bt-new-months-val'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), interestPctLabel: $('insight-interest-label'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile'), breakRing: document.querySelector('.bt-break-ring')
   };
 
   var lastResult = null;
@@ -57,47 +57,58 @@
   function renderTimeline(rows) {
     if (!rows.length) { el.timeline.innerHTML = '<p class="loan-note">No timeline available.</p>'; return; }
     el.timeline.innerHTML = rows.map(function (row) {
-      var cls = row.cumulative >= 0 ? 'positive' : '';
-      return '<div class="bt-timeline-row ' + cls + '"><span>Month ' + row.month + '</span><strong>' + money(row.cumulative) + '</strong></div>';
+      var value = Number(row.economicPosition);
+      var cls = value >= 0 ? 'positive' : '';
+      return '<div class="bt-timeline-row ' + cls + '"><span>Month ' + row.month + '</span><strong>' + money(value) + '</strong></div>';
     }).join('');
   }
 
   function renderDonut(result) {
     var currentInterest = Math.max(0, Number(result.currentInterest) || 0);
     var newInterest = Math.max(0, Number(result.newInterest) || 0);
-    var saving = Math.max(0, Number(result.grossInterestSaving) || 0);
-    var ratio = currentInterest > 0 ? pct(saving / currentInterest * 100) : 0;
-    var degrees = ratio * 3.6;
-    if (el.donut) el.donut.style.background = 'conic-gradient(var(--bt-accent) 0deg ' + degrees + 'deg, #cbd5e1 ' + degrees + 'deg 360deg)';
-    animateNumber(el.donutPercent, ratio, function (v) { return Math.round(v) + '%'; }, 650);
-    el.legendNew.textContent = money(newInterest);
-    el.legendSaving.textContent = money(saving);
-    el.legendCost.textContent = money(result.switchingCosts);
+    var gross = Number(result.grossInterestSaving) || 0;
+    var magnitude = currentInterest > 0 ? Math.min(100, Math.abs(gross) / currentInterest * 100) : 0;
+    var degrees = magnitude * 3.6;
+    var negative = gross < 0;
+    var color = negative ? '#d45b63' : '#15956f';
+    if (el.donut) el.donut.style.background = 'conic-gradient(' + color + ' 0deg ' + degrees + 'deg, #dbe4ea ' + degrees + 'deg 360deg)';
+    animateNumber(el.donutPercent, magnitude, function (v) { return Math.round(v) + '%'; }, 650);
+    if (el.legendNew) el.legendNew.textContent = money(newInterest);
+    if (el.legendSaving) el.legendSaving.textContent = money(gross);
+    if (el.legendCost) el.legendCost.textContent = money(result.switchingCosts);
+    var savingLabel = el.legendSaving ? el.legendSaving.parentElement.querySelector('span') : null;
+    if (savingLabel) savingLabel.textContent = negative ? 'Interest cost increase' : 'Gross interest saving';
+    var centerLabel = el.donut ? el.donut.querySelector('.bt-donut-center span') : null;
+    if (centerLabel) centerLabel.textContent = negative ? 'interest increase' : 'interest saved';
+    if (el.donut) el.donut.classList.toggle('is-negative', negative);
   }
 
   function renderCumulativeChart(rows, breakEvenMonth) {
     if (!rows || !rows.length) { el.cumulativeChart.innerHTML = '<div class="bt-chart-empty">No timeline available.</div>'; return; }
     var width = 820, height = 260, left = 54, right = 22, top = 22, bottom = 38;
     var pw = width - left - right, ph = height - top - bottom;
-    var values = rows.map(function (r) { return Number(r.cumulative) || 0; });
+    var values = rows.map(function (r) { return Number(r.economicPosition) || 0; });
     var min = Math.min.apply(null, values.concat([0])), max = Math.max.apply(null, values.concat([0]));
     if (max === min) max = min + 1;
     var x = function (i) { return left + (rows.length === 1 ? pw / 2 : i * pw / (rows.length - 1)); };
     var y = function (v) { return top + (max - v) / (max - min) * ph; };
-    var points = rows.map(function (r, i) { return x(i).toFixed(1) + ',' + y(Number(r.cumulative) || 0).toFixed(1); }).join(' ');
+    var points = rows.map(function (r, i) { return x(i).toFixed(1) + ',' + y(Number(r.economicPosition) || 0).toFixed(1); }).join(' ');
+    var finalNegative = (Number(rows[rows.length - 1].economicPosition) || 0) < 0;
+    var chartColor = finalNegative ? '#d45b63' : '#0f766e';
+    var fillTop = finalNegative ? '#d45b63' : '#14b8a6';
     var zeroY = y(0).toFixed(1);
     var breakIndex = rows.findIndex(function (r) { return Number(r.month) === Number(breakEvenMonth); });
     var breakMark = '';
     if (breakIndex >= 0) {
-      var bx = x(breakIndex), by = y(Number(rows[breakIndex].cumulative) || 0);
+      var bx = x(breakIndex), by = y(Number(rows[breakIndex].economicPosition) || 0);
       breakMark = '<line x1="' + bx + '" y1="' + top + '" x2="' + bx + '" y2="' + (top + ph) + '" stroke="#14b8a6" stroke-dasharray="5 5"/><circle cx="' + bx + '" cy="' + by + '" r="6" fill="#fff" stroke="#0f766e" stroke-width="3"/><text x="' + bx + '" y="' + (top + 13) + '" text-anchor="middle" font-size="11" font-weight="700" fill="#0f766e">Month ' + esc(breakEvenMonth) + '</text>';
     }
     var area = left + ',' + (top + ph) + ' ' + points + ' ' + (left + pw) + ',' + (top + ph);
-    el.cumulativeChart.innerHTML = '<svg viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="Cumulative transfer benefit chart">' +
-      '<defs><linearGradient id="btAreaGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#14b8a6" stop-opacity=".24"/><stop offset="1" stop-color="#14b8a6" stop-opacity="0"/></linearGradient></defs>' +
+    el.cumulativeChart.innerHTML = '<svg viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="Economic position after switching costs and outstanding balance adjustment">' +
+      '<defs><linearGradient id="btAreaGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + fillTop + '" stop-opacity=".24"/><stop offset="1" stop-color="' + fillTop + '" stop-opacity="0"/></linearGradient></defs>' +
       '<line x1="' + left + '" y1="' + zeroY + '" x2="' + (left + pw) + '" y2="' + zeroY + '" stroke="#94a3b8" stroke-dasharray="5 5"/>' +
       '<polygon points="' + area + '" fill="url(#btAreaGrad)"/>' +
-      '<polyline points="' + points + '" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
+      '<polyline points="' + points + '" fill="none" stroke="' + chartColor + '" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
       breakMark +
       '<text x="' + left + '" y="' + (height - 12) + '" font-size="11" fill="#64748b">Month ' + rows[0].month + '</text>' +
       '<text x="' + (left + pw) + '" y="' + (height - 12) + '" text-anchor="end" font-size="11" fill="#64748b">Month ' + rows[rows.length - 1].month + '</text>' +
@@ -140,42 +151,61 @@
     if (el.compareNewRate) el.compareNewRate.textContent = Number(el.newRate.value).toFixed(2) + '%';
     if (el.compareOldMonths) el.compareOldMonths.textContent = result.oldMonths + ' mo';
     if (el.compareNewMonths) el.compareNewMonths.textContent = result.newMonths + ' mo';
-    if (el.interestPct) el.interestPct.textContent = Math.max(0, result.interestSavingPct).toFixed(1) + '%';
+    if (el.interestPct) el.interestPct.textContent = Math.abs(result.interestSavingPct).toFixed(1) + '%';
+    if (el.interestPctLabel) el.interestPctLabel.textContent = result.grossInterestSaving < 0 ? 'Interest increase' : 'Interest reduction';
     if (el.insightMonthly) el.insightMonthly.textContent = money(result.monthlyEmiDifference);
     if (el.insightTotal) el.insightTotal.textContent = money(result.totalCashflowSaving);
 
     var previousBreak = el.breakEven.dataset.value || '';
-    var breakText = result.breakEvenMonth !== null ? 'Month ' + result.breakEvenMonth : 'Not reached';
+    var breakText = result.totalCostBreakEvenMonth !== null ? 'Month ' + result.totalCostBreakEvenMonth : 'Not reached';
     el.breakEven.textContent = breakText;
-    el.breakEven.dataset.value = result.breakEvenMonth == null ? '' : String(result.breakEvenMonth);
+    el.breakEven.dataset.value = result.totalCostBreakEvenMonth == null ? '' : String(result.totalCostBreakEvenMonth);
     if (previousBreak !== el.breakEven.dataset.value) { el.breakEven.classList.remove('bt-pop'); void el.breakEven.offsetWidth; el.breakEven.classList.add('bt-pop'); }
-    el.breakCopy.textContent = result.breakEvenMonth !== null ? 'Based on the entered assumptions, cumulative savings recover the switching costs in month ' + result.breakEvenMonth + '.' : 'The calculated savings do not recover the switching costs within the compared repayment horizon.';
-    if (el.breakPill) el.breakPill.textContent = result.breakEvenMonth !== null ? '● Break-even: month ' + result.breakEvenMonth : '● Break-even not reached';
-    if (el.breakPillMobile) el.breakPillMobile.textContent = result.breakEvenMonth !== null ? 'Switching costs recovered by month ' + result.breakEvenMonth : 'Switching costs are not recovered within the comparison horizon';
+    if (result.totalCostBreakEvenMonth !== null) {
+      el.breakCopy.textContent = 'After switching costs and the remaining-loan balance are accounted for, the total-cost position reaches break-even in month ' + result.totalCostBreakEvenMonth + '.';
+    } else if (result.cashFlowRecoveryMonth !== null && result.netSaving < 0) {
+      el.breakCopy.textContent = 'The lower EMI recovers the switching cost on a cash-flow basis in month ' + result.cashFlowRecoveryMonth + ', but the total-cost position remains negative because the repayment path is longer or otherwise more expensive.';
+    } else {
+      el.breakCopy.textContent = 'The total-cost position does not recover the switching costs within the compared repayment horizon.';
+    }
+    if (el.breakPill) el.breakPill.textContent = result.totalCostBreakEvenMonth !== null ? '● Total-cost break-even: month ' + result.totalCostBreakEvenMonth : '● Total-cost break-even not reached';
+    if (el.breakPillMobile) el.breakPillMobile.textContent = result.cashFlowRecoveryMonth !== null && result.totalCostBreakEvenMonth === null ? 'Cash-flow recovery: month ' + result.cashFlowRecoveryMonth + ' · total-cost break-even not reached' : (result.totalCostBreakEvenMonth !== null ? 'Total-cost recovery by month ' + result.totalCostBreakEvenMonth : 'No total-cost recovery within the comparison horizon');
 
-    var maxBar = Math.max(result.switchingCosts, result.grossInterestSaving, 1);
-    requestAnimationFrame(function () { el.costsBar.style.width = pct(result.switchingCosts / maxBar * 100) + '%'; el.savingsBar.style.width = pct(Math.max(0, result.grossInterestSaving) / maxBar * 100) + '%'; });
+    var maxBar = Math.max(result.switchingCosts, Math.abs(result.grossInterestSaving), 1);
+    requestAnimationFrame(function () { el.costsBar.style.width = pct(result.switchingCosts / maxBar * 100) + '%'; el.savingsBar.style.width = pct(Math.abs(result.grossInterestSaving) / maxBar * 100) + '%'; });
     el.costsLabel.textContent = money(result.switchingCosts); el.savingsLabel.textContent = money(result.grossInterestSaving);
+    if (el.savingsBar) el.savingsBar.classList.toggle('bt-negative', result.grossInterestSaving < 0);
+    var savingsName = document.getElementById('label-savings-name');
+    if (savingsName) savingsName.textContent = result.grossInterestSaving < 0 ? 'Interest cost increase' : 'Gross interest saved';
 
     if (el.breakRing) {
       var horizon = Math.max(1, result.oldMonths || result.newMonths || 1);
-      var progress = result.breakEvenMonth !== null ? Math.max(8, Math.min(96, result.breakEvenMonth / horizon * 100)) : 4;
-      el.breakRing.style.background = 'conic-gradient(#55d8c7 0 ' + progress + '%, rgba(255,255,255,.1) ' + progress + '% 100%)';
+      var progress = result.totalCostBreakEvenMonth !== null ? Math.max(8, Math.min(96, result.totalCostBreakEvenMonth / horizon * 100)) : 0;
+      var ringColor = result.netSaving < 0 ? '#d45b63' : '#55d8c7';
+      el.breakRing.style.background = progress > 0 ? 'conic-gradient(' + ringColor + ' 0 ' + progress + '%, rgba(255,255,255,.1) ' + progress + '% 100%)' : 'conic-gradient(#d45b63 0 3%, rgba(255,255,255,.1) 3% 100%)';
+      el.breakRing.classList.toggle('is-negative', result.netSaving < 0);
     }
 
-    if (result.netSaving > 0 && result.breakEvenMonth !== null) {
+    el.net.classList.remove('bt-result-positive', 'bt-result-negative');
+    el.gross.classList.remove('bt-result-positive', 'bt-result-negative');
+    if (el.insightTotal) el.insightTotal.classList.remove('bt-result-positive', 'bt-result-negative');
+    if (result.netSaving > 0) {
+      el.net.classList.add('bt-result-positive');
       el.verdict.className = 'bt-verdict bt-good';
-      el.verdict.innerHTML = '<strong>Estimated positive saving</strong><span>Estimated net saving: ' + money(result.netSaving) + '. Break-even occurs around month ' + result.breakEvenMonth + ' under these assumptions.</span>';
-    } else if (result.netSaving <= 0) {
-      el.verdict.className = 'bt-verdict bt-bad';
-      el.verdict.innerHTML = '<strong>Estimated savings are negative</strong><span>Switching costs exceed the calculated gross interest saving by ' + money(Math.abs(result.netSaving)) + ' under these assumptions.</span>';
+      el.verdict.innerHTML = '<strong>Estimated net saving</strong><span>Estimated total saving: ' + money(result.netSaving) + (result.totalCostBreakEvenMonth !== null ? '. Total-cost break-even occurs in month ' + result.totalCostBreakEvenMonth + '.' : '.') + '</span>';
     } else {
-      el.verdict.className = 'bt-verdict bt-neutral';
-      el.verdict.innerHTML = '<strong>Break-even is not reached</strong><span>The calculated transfer does not recover its switching costs within the compared repayment horizon.</span>';
+      el.net.classList.add('bt-result-negative');
+      el.gross.classList.add('bt-result-negative');
+      if (el.insightTotal) el.insightTotal.classList.add('bt-result-negative');
+      el.verdict.className = 'bt-verdict bt-bad';
+      var detail = result.cashFlowRecoveryMonth !== null && result.monthlyEmiDifference > 0
+        ? 'Monthly EMI is lower by ' + money(result.monthlyEmiDifference) + ', but the total-cost position does not break even.'
+        : 'The calculated total cost remains higher after accounting for switching costs.';
+      el.verdict.innerHTML = '<strong>Estimated net saving is negative</strong><span>' + detail + ' Net difference: ' + money(result.netSaving) + '.</span>';
     }
 
     renderDonut(result);
-    renderCumulativeChart(result.monthlyComparison || [], result.breakEvenMonth);
+    renderCumulativeChart(result.monthlyComparison || [], result.totalCostBreakEvenMonth);
     renderTimeline(result.timeline || []);
   }
 
