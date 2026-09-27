@@ -209,8 +209,17 @@
     renderTimeline(result.timeline || []);
   }
 
+  var scheduledFrame = 0;
+  function scheduleCalculate() {
+    if (scheduledFrame) return;
+    scheduledFrame = requestAnimationFrame(function () {
+      scheduledFrame = 0;
+      calculate();
+    });
+  }
+
   var inputs = [el.balance,el.oldRate,el.oldMonths,el.newRate,el.newMonths,el.foreclosure,el.processing,el.foreclosureGST,el.processingGST,el.other,el.floating,el.purpose,el.year];
-  inputs.forEach(function (node) { if (!node) return; node.addEventListener('input', calculate); node.addEventListener('change', calculate); });
+  inputs.forEach(function (node) { if (!node) return; node.addEventListener('input', scheduleCalculate); node.addEventListener('change', scheduleCalculate); });
 
   var rangePairs = [
     ['bt-balance','bt-balance-range'],['bt-old-rate','bt-old-rate-range'],['bt-old-months','bt-old-months-range'],
@@ -220,7 +229,7 @@
     var field=document.getElementById(pair[0]), range=document.getElementById(pair[1]);
     if(!field || !range) return;
     field.addEventListener('input',function(){ range.value=field.value; });
-    range.addEventListener('input',function(){ field.value=range.value; calculate(); });
+    range.addEventListener('input',function(){ field.value=range.value; scheduleCalculate(); });
   });
 
   document.querySelectorAll('[data-bt-preset]').forEach(function(btn){
@@ -228,7 +237,7 @@
       el.balance.value=btn.getAttribute('data-bt-preset');
       var r=document.getElementById('bt-balance-range'); if(r) r.value=el.balance.value;
       document.querySelectorAll('[data-bt-preset]').forEach(function(b){b.classList.remove('active')}); btn.classList.add('active');
-      calculate();
+      scheduleCalculate();
     });
   });
   if(el.reset){ el.reset.addEventListener('click',function(){
@@ -237,7 +246,7 @@
     if(el.floating) el.floating.checked=true; if(el.purpose) el.purpose.value='individual'; if(el.year) el.year.value='2026';
     rangePairs.forEach(function(pair){var f=document.getElementById(pair[0]),r=document.getElementById(pair[1]);if(f&&r)r.value=f.value});
     document.querySelectorAll('[data-bt-preset]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-bt-preset')==='2000000')});
-    calculate();
+    scheduleCalculate();
   });}
   calculate();
 })();
