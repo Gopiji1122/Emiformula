@@ -6,13 +6,13 @@
     balance: $('bt-balance'), balanceRange: $('bt-balance-range'), balanceVal: $('bt-balance-val'),
     oldRate: $('bt-old-rate'), oldMonths: $('bt-old-months'), newRate: $('bt-new-rate'), newMonths: $('bt-new-months'),
     foreclosure: $('bt-foreclosure'), processing: $('bt-processing'), foreclosureGST: $('bt-foreclosure-gst'),
-    processingGST: $('bt-processing-gst'), other: $('bt-other'), otherVal: $('bt-other-val'), floating: $('bt-floating'),
+    processingGST: $('bt-processing-gst'), other: $('bt-other'), otherVal: $('bt-other-val'), reset: $('bt-reset'), floating: $('bt-floating'),
     purpose: $('bt-purpose'), year: $('bt-year'), regNote: $('bt-reg-note'), verdict: $('bt-verdict'),
     oldEmi: $('res-old-emi'), newEmi: $('res-new-emi'), fees: $('res-fees'), net: $('res-net'), breakEven: $('res-breakeven'),
     breakCopy: $('res-break-copy'), gross: $('res-gross'), oldInterest: $('res-old-interest'), newInterest: $('res-new-interest'),
     monthly: $('res-monthly'), costsBar: $('bar-costs'), savingsBar: $('bar-savings'), costsLabel: $('label-costs'), savingsLabel: $('label-savings'),
     timeline: $('bt-timeline'), donut: $('bt-interest-donut'), donutPercent: $('bt-donut-percent'), legendNew: $('bt-legend-new-interest'),
-    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile'), annualChart: $('bt-annual-chart'), advancedRateGap: $('bt-advanced-rate-gap'), costRatio: $('bt-cost-ratio'), advancedMonthly: $('bt-advanced-monthly')
+    legendSaving: $('bt-legend-saving'), legendCost: $('bt-legend-cost'), cumulativeChart: $('bt-cumulative-chart'), heroRateGap: $('hero-rate-gap'), heroTenureGap: $('hero-tenure-gap'), heroCost: $('hero-cost'), newRateVal: $('bt-new-rate-val'), newMonthsVal: $('bt-new-months-val'), compareOldEmi: $('compare-old-emi'), compareNewEmi: $('compare-new-emi'), compareOldRate: $('compare-old-rate'), compareNewRate: $('compare-new-rate'), compareOldMonths: $('compare-old-months'), compareNewMonths: $('compare-new-months'), interestPct: $('insight-interest-pct'), insightMonthly: $('insight-monthly'), insightTotal: $('insight-total'), breakPill: $('bt-break-pill'), breakPillMobile: $('bt-break-pill-mobile'), breakRing: document.querySelector('.bt-break-ring')
   };
 
   var lastResult = null;
@@ -106,45 +106,6 @@
       '</svg>';
   }
 
-  function renderAnnualChart(rows) {
-    if (!el.annualChart) return;
-    rows = Array.isArray(rows) ? rows : [];
-    if (!rows.length) { el.annualChart.innerHTML = '<div class="bt-chart-empty">No annual comparison available.</div>'; return; }
-    var width = 820, height = 250, left = 58, right = 20, top = 22, bottom = 34;
-    var pw = width - left - right, ph = height - top - bottom;
-    var values = [];
-    rows.forEach(function (r) { values.push(Number(r.oldBalance)||0, Number(r.newBalance)||0); });
-    var max = Math.max.apply(null, values.concat([1]));
-    var x = function(i){ return left + (rows.length === 1 ? pw/2 : i*pw/(rows.length-1)); };
-    var y = function(v){ return top + (max-v)/max*ph; };
-    var oldPts = rows.map(function(r,i){ return x(i).toFixed(1)+','+y(Number(r.oldBalance)||0).toFixed(1); }).join(' ');
-    var newPts = rows.map(function(r,i){ return x(i).toFixed(1)+','+y(Number(r.newBalance)||0).toFixed(1); }).join(' ');
-    var labels = rows.map(function(r,i){ return '<text x="'+x(i)+'" y="'+(height-10)+'" text-anchor="middle" font-size="10" fill="#64748b">Y'+esc(r.year)+'</text>'; }).join('');
-    el.annualChart.innerHTML = '<svg viewBox="0 0 '+width+' '+height+'" role="img" aria-label="Annual remaining balance comparison chart">' +
-      '<line x1="'+left+'" y1="'+(top+ph)+'" x2="'+(left+pw)+'" y2="'+(top+ph)+'" stroke="#dbe5e9"/>' +
-      '<polyline points="'+oldPts+'" fill="none" stroke="#64748b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' +
-      '<polyline points="'+newPts+'" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>' + labels + '</svg>';
-  }
-
-  function updateAdvancedSummary(result) {
-    if (!result) return;
-    var gap = Math.abs(Number(result.rateDifference)||0);
-    var ratio = Number(result.grossInterestSaving) > 0 ? (Number(result.switchingCosts)||0) / Number(result.grossInterestSaving) * 100 : 0;
-    if (el.advancedRateGap) el.advancedRateGap.textContent = gap.toFixed(2) + ' pp';
-    if (el.costRatio) el.costRatio.textContent = Math.round(Math.max(0, ratio)) + '%';
-    if (el.advancedMonthly) el.advancedMonthly.textContent = money(result.monthlyEmiDifference);
-  }
-
-  function applyPreset(name) {
-    if (!name) return;
-    if (name === 'same-tenure') el.newMonths.value = el.oldMonths.value;
-    if (name === 'lower-rate') el.newRate.value = Math.max(0, Number(el.oldRate.value || 0) - 1).toFixed(1);
-    if (name === 'fee-shock') el.other.value = '25000';
-    if (name === 'clear-fees') { el.foreclosure.value = '0'; el.processing.value = '0'; el.foreclosureGST.value = '0'; el.processingGST.value = '0'; el.other.value = '0'; }
-    calculate();
-    document.querySelectorAll('[data-bt-preset]').forEach(function(btn){ btn.classList.toggle('active', btn.getAttribute('data-bt-preset') === name); });
-  }
-
   function calculate() {
     el.balanceVal.textContent = money(Number(el.balance.value) || 0);
     el.otherVal.textContent = money(Number(el.other.value) || 0);
@@ -164,12 +125,15 @@
     }
     lastResult = result;
     animateNumber(el.oldEmi, result.currentEMI, money); animateNumber(el.newEmi, result.newEMI, money);
-    animateNumber(el.fees, result.switchingCosts, money); animateNumber(el.net, result.netSaving, money);
+    animateNumber(el.fees, result.switchingCosts, money); animateNumber(el.net, result.netSaving, money); if (el.otherVal) el.otherVal.textContent = money(result.switchingCosts);
     animateNumber(el.gross, result.grossInterestSaving, money); animateNumber(el.oldInterest, result.currentInterest, money);
     animateNumber(el.newInterest, result.newInterest, money); animateNumber(el.monthly, result.monthlyEmiDifference, money);
 
-    if (el.heroRateGap) el.heroRateGap.textContent = Math.abs(result.rateDifference).toFixed(2) + ' pp';
-    if (el.heroTenureGap) el.heroTenureGap.textContent = (result.tenureDifference > 0 ? '-' : result.tenureDifference < 0 ? '+' : '') + Math.abs(result.tenureDifference) + ' mo';
+    if (el.heroRateGap) el.heroRateGap.textContent = (result.rateDifference >= 0 ? '' : '+') + Math.abs(result.rateDifference).toFixed(2) + ' pp';
+    if (el.heroTenureGap) el.heroTenureGap.textContent = (result.tenureDifference > 0 ? '+' : result.tenureDifference < 0 ? '−' : '') + Math.abs(result.tenureDifference) + ' mo';
+    if (el.heroCost) animateNumber(el.heroCost, result.switchingCosts, money, 450);
+    if (el.newRateVal) el.newRateVal.textContent = Number(el.newRate.value).toFixed(2) + '%';
+    if (el.newMonthsVal) el.newMonthsVal.textContent = result.newMonths + ' months';
     if (el.compareOldEmi) el.compareOldEmi.textContent = money(result.currentEMI);
     if (el.compareNewEmi) el.compareNewEmi.textContent = money(result.newEMI);
     if (el.compareOldRate) el.compareOldRate.textContent = Number(el.oldRate.value).toFixed(2) + '%';
@@ -193,6 +157,12 @@
     requestAnimationFrame(function () { el.costsBar.style.width = pct(result.switchingCosts / maxBar * 100) + '%'; el.savingsBar.style.width = pct(Math.max(0, result.grossInterestSaving) / maxBar * 100) + '%'; });
     el.costsLabel.textContent = money(result.switchingCosts); el.savingsLabel.textContent = money(result.grossInterestSaving);
 
+    if (el.breakRing) {
+      var horizon = Math.max(1, result.oldMonths || result.newMonths || 1);
+      var progress = result.breakEvenMonth !== null ? Math.max(8, Math.min(96, result.breakEvenMonth / horizon * 100)) : 4;
+      el.breakRing.style.background = 'conic-gradient(#55d8c7 0 ' + progress + '%, rgba(255,255,255,.1) ' + progress + '% 100%)';
+    }
+
     if (result.netSaving > 0 && result.breakEvenMonth !== null) {
       el.verdict.className = 'bt-verdict bt-good';
       el.verdict.innerHTML = '<strong>Estimated positive saving</strong><span>Estimated net saving: ' + money(result.netSaving) + '. Break-even occurs around month ' + result.breakEvenMonth + ' under these assumptions.</span>';
@@ -206,16 +176,38 @@
 
     renderDonut(result);
     renderCumulativeChart(result.monthlyComparison || [], result.breakEvenMonth);
-    renderAnnualChart(result.annualSummary || []);
-    updateAdvancedSummary(result);
     renderTimeline(result.timeline || []);
   }
 
-  document.querySelectorAll('[data-bt-preset]').forEach(function (btn) { btn.addEventListener('click', function () { applyPreset(btn.getAttribute('data-bt-preset')); }); });
-
   var inputs = [el.balance,el.oldRate,el.oldMonths,el.newRate,el.newMonths,el.foreclosure,el.processing,el.foreclosureGST,el.processingGST,el.other,el.floating,el.purpose,el.year];
-  inputs.forEach(function (node) { node.addEventListener('input', calculate); node.addEventListener('change', calculate); });
-  el.balance.addEventListener('input', function () { el.balanceRange.value = el.balance.value; });
-  el.balanceRange.addEventListener('input', function () { el.balance.value = el.balanceRange.value; calculate(); });
+  inputs.forEach(function (node) { if (!node) return; node.addEventListener('input', calculate); node.addEventListener('change', calculate); });
+
+  var rangePairs = [
+    ['bt-balance','bt-balance-range'],['bt-old-rate','bt-old-rate-range'],['bt-old-months','bt-old-months-range'],
+    ['bt-new-rate','bt-new-rate-range'],['bt-new-months','bt-new-months-range']
+  ];
+  rangePairs.forEach(function(pair){
+    var field=document.getElementById(pair[0]), range=document.getElementById(pair[1]);
+    if(!field || !range) return;
+    field.addEventListener('input',function(){ range.value=field.value; });
+    range.addEventListener('input',function(){ field.value=range.value; calculate(); });
+  });
+
+  document.querySelectorAll('[data-bt-preset]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      el.balance.value=btn.getAttribute('data-bt-preset');
+      var r=document.getElementById('bt-balance-range'); if(r) r.value=el.balance.value;
+      document.querySelectorAll('[data-bt-preset]').forEach(function(b){b.classList.remove('active')}); btn.classList.add('active');
+      calculate();
+    });
+  });
+  if(el.reset){ el.reset.addEventListener('click',function(){
+    var defaults={balance:2000000,oldRate:10.5,oldMonths:120,newRate:9,newMonths:120,foreclosure:0,processing:20000,foreclosureGST:0,processingGST:3600,other:0};
+    Object.keys(defaults).forEach(function(k){ if(el[k]) el[k].value=defaults[k]; });
+    if(el.floating) el.floating.checked=true; if(el.purpose) el.purpose.value='individual'; if(el.year) el.year.value='2026';
+    rangePairs.forEach(function(pair){var f=document.getElementById(pair[0]),r=document.getElementById(pair[1]);if(f&&r)r.value=f.value});
+    document.querySelectorAll('[data-bt-preset]').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-bt-preset')==='2000000')});
+    calculate();
+  });}
   calculate();
 })();
