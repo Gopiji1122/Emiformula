@@ -184,8 +184,8 @@
     }).join(" ");
     var area = left + "," + (top + plotH) + " " + points + " " + (left + plotW) + "," + (top + plotH);
     return "<svg viewBox='0 0 " + width + " " + height + "' role='img' aria-label='Loan balance trend'>" +
-      "<line x1='" + left + "' y1='" + (top + plotH) + "' x2='" + (left + plotW) + "' y2='" + (top + plotH) + " stroke='#cbd5e1'/>" +
-      "<line x1='" + left + "' y1='" + top + "' x2='" + left + "' y2='" + (top + plotH) + " stroke='#cbd5e1'/>" +
+      "<line x1='" + left + "' y1='" + (top + plotH) + "' x2='" + (left + plotW) + "' y2='" + (top + plotH) + "' stroke='#cbd5e1'/>" +
+      "<line x1='" + left + "' y1='" + top + "' x2='" + left + "' y2='" + (top + plotH) + "' stroke='#cbd5e1'/>" +
       "<polygon points='" + area + "' fill='#e8f0ff' opacity='0.9'/>" +
       "<polyline points='" + points + "' fill='none' stroke='#2563eb' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>" +
       "<text x='" + left + "' y='" + (height - 12) + "' font-size='12' fill='#64748b'>Month 1</text>" +
