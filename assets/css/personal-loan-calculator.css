@@ -712,18 +712,22 @@
 /* Keep input and results side-by-side on desktop and wider tablets. */
 @media (min-width: 601px) {
   .loan-grid {
-    grid-template-columns: minmax(300px, 38%) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 38%);
     gap: 18px;
+    align-items: start;
+  }
+
+  /* Desktop: results on the LEFT, controls on the RIGHT. */
+  .loan-results {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
   }
 
   .loan-input-card {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .loan-results {
     grid-column: 2;
     grid-row: 1;
+    min-width: 0;
   }
 }
 
