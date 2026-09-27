@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="../assets/css/responsive.css">
 <link rel="stylesheet" href="../assets/css/layout.css">
 <link rel="stylesheet" href="../assets/css/components.css">
-<link rel="stylesheet" href="../assets/css/personal-loan-calculator.css">
+<link rel="stylesheet" href="../assets/css/personal-loan-calculator.css"><link rel="stylesheet" href="../assets/css/export-report.css">
 <script src="../seo/seo-config.js"></script>
 <script>
 window.EMIFORMULA_PAGE_SEO={
@@ -38,7 +38,7 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <main class="page-main calculator-page loan-page">
 <div class="page-container"><section class="page-section"><div class="page-full">
 <div data-component="breadcrumbs"></div>
-      <div class="calc-export-toolbar" data-export-toolbar data-export-type="personal-loan" aria-label="Export calculator results"><div><strong>Export your personal loan calculation</strong><span>Fixed desktop-style report on every device</span></div><div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div><span class="calc-export-status" data-export-status hidden aria-live="polite"></span></div>
+
 <header class="page-title-block" data-page-title-block><h1>Personal Loan Calculator</h1><p class="page-title-description">Explore EMI, fees, amount received, total interest and repayment scenarios for a personal loan.</p></header>
 <div class="loan-wrap">
 <section class="loan-hero">
@@ -75,7 +75,7 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-donut-box"><div class="loan-donut" id="loan-donut"><div class="loan-donut-center"><div><strong>Loan cost</strong><br><span>principal vs interest</span></div></div></div></div>
 <div class="loan-breakdown">
 <h3>Where your money goes</h3>
-<div class="loan-break-row"><i class="loan-dot"></i><span>Principal repayment</span><strong id="loan-repayment">₹6,67,320</strong></div><div class="loan-bar"><i id="loan-principal-bar"></i></div>
+<div class="loan-break-row"><i class="loan-dot"></i><span>Total EMI repayment</span><strong id="loan-repayment">₹6,67,320</strong></div><div class="loan-bar"><i id="loan-principal-bar"></i></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Interest</span><strong id="loan-interest-result">₹1,67,320</strong></div><div class="loan-bar gold"><i id="loan-interest-bar"></i></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Processing fee</span><strong id="loan-fee-result">₹10,000</strong></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Other upfront cost</span><strong id="loan-insurance-result">₹0</strong></div>
@@ -96,6 +96,8 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-card loan-panel"><h3>Year-by-year repayment</h3><div style="overflow:auto"><table class="loan-table"><thead><tr><th>Year</th><th>Paid</th><th>Principal</th><th>Interest</th><th>Balance</th></tr></thead><tbody id="yearly-body"></tbody></table></div></div>
 </section>
 </div>
+<div class="calc-export-toolbar" data-export-toolbar data-export-type="personal-loan" aria-label="Export calculator results"><div><strong>Export your personal loan calculation</strong><span>Fixed desktop-style report on every device</span></div><div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div><span class="calc-export-status" data-export-status hidden aria-live="polite"></span></div>
+
 
 <section class="loan-section">
 <h2>Personal Loan Calculator Guide</h2>
