@@ -117,10 +117,30 @@
     return result && result.valid ? { result: result, inputs: input } : null;
   }
 
+  function compoundData() {
+    var engine = window.EMIFORMULA_COMPOUND_INTEREST;
+    if (!engine || typeof engine.calculate !== "function") return null;
+    function value(id) { var el = document.getElementById(id); return el ? Number(el.value) || 0 : 0; }
+    var active = document.querySelector(".compound-frequency .is-active");
+    var frequency = active ? Number(active.getAttribute("data-frequency")) : 12;
+    var input = {
+      principal: value("compound-principal"),
+      monthlyContribution: value("compound-monthly"),
+      annualRate: value("compound-rate"),
+      years: value("compound-years"),
+      frequency: frequency,
+      annualStepUp: value("compound-stepup"),
+      inflation: value("compound-inflation")
+    };
+    var result = engine.calculate(input);
+    return result ? { result: result, inputs: input } : null;
+  }
+
   function getCurrentData() {
     var type = exportType();
     if (type === "personal-loan") return personalData();
     if (type === "balance-transfer") return balanceTransferData();
+    if (type === "compound-interest") return compoundData();
     return getData();
   }
 
@@ -325,6 +345,43 @@
     ].join("");
   }
 
+  function compoundGrowthChart(result) {
+    var rows=result.schedule||[]; if(!rows.length) return "<div class='empty-chart'>No growth schedule available.</div>";
+    var width=900,height=250,left=58,right=24,top=22,bottom=42,plotW=width-left-right,plotH=height-top-bottom;
+    var max=Math.max.apply(null,rows.map(function(r){return num(r.value);}).concat([0]))||1;
+    var pts=rows.map(function(r,i){var x=left+(rows.length===1?plotW/2:i*plotW/(rows.length-1));var y=top+(1-num(r.value)/max)*plotH;return x.toFixed(1)+","+y.toFixed(1);}).join(" ");
+    return "<svg viewBox='0 0 "+width+" "+height+"' role='img' aria-label='Compound growth by year'><line x1='"+left+"' y1='"+(top+plotH)+"' x2='"+(left+plotW)+"' y2='"+(top+plotH)+"' stroke='#cbd5e1'/><polygon points='"+left+","+(top+plotH)+" "+pts+" "+(left+plotW)+","+(top+plotH)+"' fill='#dff6f0'/><polyline points='"+pts+"' fill='none' stroke='#0f766e' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/><text x='"+left+"' y='"+(height-12)+"' font-size='12' fill='#64748b'>Year 1</text><text x='"+(left+plotW)+"' y='"+(height-12)+"' text-anchor='end' font-size='12' fill='#64748b'>Year "+rows[rows.length-1].year+"</text></svg>";
+  }
+
+  function compoundDonut(result) {
+    var total=Math.max(0,num(result.futureValue)), invested=Math.max(0,num(result.totalContributed)), interest=Math.max(0,num(result.totalInterest));
+    var pct=total?Math.max(0,Math.min(100,interest/total*100)):0;
+    return "<div class='donut-wrap'><div class='donut' style='background:conic-gradient(#0f766e 0 "+pct+"%,#dbe7ef "+pct+"% 100%)'><div class='donut-hole'><strong>"+number(pct,1)+"%</strong><span>interest</span></div></div><div class='legend'><div><i style='background:#dbe7ef'></i><span>Contributed</span><strong>"+money(invested)+"</strong></div><div><i style='background:#0f766e'></i><span>Interest</span><strong>"+money(interest)+"</strong></div></div></div>";
+  }
+
+  function compoundYearlyTable(result) {
+    var rows=result.schedule||[];
+    return "<table><thead><tr><th>Year</th><th>Total contributed</th><th>Interest earned</th><th>Value</th></tr></thead><tbody>"+rows.map(function(r){return "<tr><td>"+r.year+"</td><td>"+money(r.contributed)+"</td><td>"+money(r.interest)+"</td><td>"+money(r.value)+"</td></tr>";}).join("")+"</tbody></table>";
+  }
+
+  function buildCompoundReport(data) {
+    var r=data.result,i=data.inputs,now=new Date(),dateText=now.toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"});
+    var freq={1:"Annually",4:"Quarterly",12:"Monthly"}[i.frequency]||"Monthly";
+    return [
+      "<!doctype html><html lang='en'><head><meta charset='utf-8'><title>EMIFORMULA Compound Interest Report</title><style>",reportCss(),"</style></head><body>",
+      "<header class='report-head'><div><div class='brand'>EMIFORMULA</div><h1>Compound Interest Calculator Report</h1><p>Growth, contributions and compounding estimate</p></div><div class='meta'>Generated<br><strong>",svgEsc(dateText),"</strong></div></header>",
+      "<section class='hero-grid'><div class='panel inputs'><div class='section-title'>Investment inputs</div>",
+      row("Initial investment",money(i.principal)),row("Monthly contribution",money(i.monthlyContribution)),row("Annual return",number(i.annualRate,2)+"%"),row("Investment period",duration(i.years*12)),row("Compounding",freq),row("Annual contribution increase",number(i.annualStepUp,2)+"%"),row("Inflation assumption",number(i.inflation,2)+"%"),
+      "</div><div class='panel result-panel'><div class='section-title'>Calculated results</div><div class='kpi-grid'>",
+      kpi("Future value",money(r.futureValue),"projected value"),kpi("Total contributed",money(r.totalContributed),"starting amount + contributions"),kpi("Interest earned",money(r.totalInterest),"growth from compounding"),kpi("Real value",money(r.realValue),"after stated inflation assumption"),
+      "</div></div></section>",
+      "<section class='two-col'><div class='panel'><div class='section-title'>Contribution vs interest</div>",compoundDonut(r),"</div><div class='panel'><div class='section-title'>Growth over time</div><div class='chart'>",compoundGrowthChart(r),"</div></div></section>",
+      "<section class='panel page-break-before'><div class='section-title'>Year-by-year growth</div>",compoundYearlyTable(r),"</section>",
+      "<section class='panel'><div class='section-title'>Scenario comparisons</div><div class='kpi-grid'>",(r.frequency||[]).map(function(x){return kpi(x.label,money(x.value),"compounding frequency");}).join(""),(r.rates||[]).map(function(x){return kpi("Return "+x.label,money(x.value),"rate scenario");}).join(""),"</div></section>",
+      "<section class='notes'><h2>Assumptions and notes</h2><ul><li>The report uses the calculator inputs at export time.</li><li>Regular contributions are modeled at the end of each month.</li><li>Return, inflation and contribution-growth assumptions are estimates, not guarantees.</li><li>Actual investment outcomes, taxes, fees and market returns can differ.</li></ul><p class='footer-note'>EMIFORMULA provides calculation estimates for planning and comparison. This report is not investment advice or a guarantee of returns.</p></section><footer>EMIFORMULA · Compound Interest Calculator · ",svgEsc(dateText),"</footer></body></html>"
+    ].join("");
+  }
+
   function exportPdf() {
     var data = getCurrentData();
     if (!data) {
@@ -338,7 +395,7 @@
     }
     win.document.open();
     var type = exportType();
-    win.document.write(type === "personal-loan" ? buildPersonalReport(data) : type === "balance-transfer" ? buildBalanceReport(data) : buildReport(data));
+    win.document.write(type === "personal-loan" ? buildPersonalReport(data) : type === "balance-transfer" ? buildBalanceReport(data) : type === "compound-interest" ? buildCompoundReport(data) : buildReport(data));
     win.document.close();
     win.focus();
     setTimeout(function () {
@@ -359,6 +416,11 @@
       var bt = [["EMIFORMULA Balance Transfer Calculator Report"],["Generated",new Date().toLocaleString("en-IN")],[],["Inputs"],["Outstanding balance",i.balance],["Current rate (%)",i.oldRate],["Current tenure (months)",i.oldMonths],["New rate (%)",i.newRate],["New tenure (months)",i.newMonths],["Old lender charge",i.foreclosure],["GST on old charge",i.foreclosureGST],["New lender processing",i.processing],["GST on processing",i.processingGST],["Other switching costs",i.other],[],["Results"],["Current EMI",r.currentEMI],["New EMI",r.newEMI],["Switching costs",r.switchingCosts],["Gross interest saving",r.grossInterestSaving],["Net saving",r.netSaving],["Break-even month",r.breakEvenMonth==null?"Not reached":r.breakEvenMonth],["Current interest",r.currentInterest],["New interest",r.newInterest],["Monthly EMI difference",r.monthlyEmiDifference],[],["Break-even timeline"],["Month","Cumulative benefit after switching costs"]];
       (r.timeline||[]).forEach(function(row){bt.push([row.month,row.cumulative]);});
       download("emiformula-balance-transfer-report.csv",bt.map(function(line){return line.map(csvCell).join(",");}).join("\r\n"),"text/csv;charset=utf-8"); setStatus("CSV exported."); return;
+    }
+    if (exportType() === "compound-interest") {
+      var ci = [["EMIFORMULA Compound Interest Calculator Report"],["Generated",new Date().toLocaleString("en-IN")],[],["Inputs"],["Initial investment",i.principal],["Monthly contribution",i.monthlyContribution],["Annual return (%)",i.annualRate],["Investment period (years)",i.years],["Compounding frequency",i.frequency],["Annual contribution increase (%)",i.annualStepUp],["Inflation (%)",i.inflation],[],["Results"],["Future value",r.futureValue],["Total contributed",r.totalContributed],["Interest earned",r.totalInterest],["Real value",r.realValue],[],["Yearly schedule"],["Year","Total contributed","Interest earned","Value"]];
+      (r.schedule||[]).forEach(function(row){ci.push([row.year,row.contributed,row.interest,row.value]);});
+      download("emiformula-compound-interest-report.csv",ci.map(function(line){return line.map(csvCell).join(",");}).join("\r\n"),"text/csv;charset=utf-8"); setStatus("CSV exported."); return;
     }
     var lines = [
       ["EMIFORMULA EMI Calculator Report"],
@@ -398,8 +460,8 @@
     var data = getCurrentData();
     if (!data) { setStatus("Calculate the loan before exporting."); return; }
     var type = exportType();
-    var name = type === "personal-loan" ? "Personal Loan Calculator" : type === "balance-transfer" ? "Balance Transfer Break-Even Calculator" : "EMI Calculator";
-    var slug = type === "personal-loan" ? "personal-loan" : type === "balance-transfer" ? "balance-transfer" : "emi";
+    var name = type === "personal-loan" ? "Personal Loan Calculator" : type === "balance-transfer" ? "Balance Transfer Break-Even Calculator" : type === "compound-interest" ? "Compound Interest Calculator" : "EMI Calculator";
+    var slug = type === "personal-loan" ? "personal-loan" : type === "balance-transfer" ? "balance-transfer" : type === "compound-interest" ? "compound-interest" : "emi";
     var payload = { schemaVersion: "1.0", calculator: name, generatedAt: new Date().toISOString(), inputs: data.inputs, results: data.result };
     download("emiformula-"+slug+"-report.json", JSON.stringify(payload, null, 2), "application/json;charset=utf-8");
     setStatus("JSON exported.");
