@@ -24,7 +24,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
   <link rel="manifest" href="../assets/images/site.webmanifest">
 </head>
-<body>
+<body class="bt-calculator-page">
 <div class="page-shell">
   <div data-component="header"></div>
   <main class="page-main calculator-page bt-page">
@@ -163,6 +163,33 @@
 <script src="../assets/js/navigation.js"></script>
 <script src="../assets/js/balance-transfer-engine.js"></script>
 <script src="../assets/js/balance-transfer-ui.js"></script>
-<script src="../assets/js/export-report.js"></script>
+<script>
+(function () {
+  "use strict";
+  var loaded = false, loading = false;
+  function loadExport(action) {
+    if (loaded && window.EMIFORMULA_EXPORT && typeof window.EMIFORMULA_EXPORT[action] === "function") {
+      window.EMIFORMULA_EXPORT[action]();
+      return;
+    }
+    if (loading) return;
+    loading = true;
+    var script = document.createElement("script");
+    script.src = "../assets/js/export-report.js";
+    script.onload = function () {
+      loaded = true;
+      loading = false;
+      if (window.EMIFORMULA_EXPORT && typeof window.EMIFORMULA_EXPORT[action] === "function") {
+        window.EMIFORMULA_EXPORT[action]();
+      }
+    };
+    script.onerror = function () { loading = false; };
+    document.body.appendChild(script);
+  }
+  document.querySelectorAll("[data-export-toolbar] [data-export-action]").forEach(function (button) {
+    button.addEventListener("click", function () { loadExport(button.getAttribute("data-export-action")); });
+  });
+})();
+</script>
 </body>
 </html>
