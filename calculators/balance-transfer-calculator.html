@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Balance Transfer Break-Even Calculator | Loan Switching Savings | EMIFORMULA</title>
-<meta name="description" content="Compare your current loan with a new balance-transfer offer. Calculate EMI savings, switching costs, interest savings and the estimated break-even month.">
+<meta name="description" content="Compare your existing loan with a new balance-transfer offer. Calculate EMI changes, switching costs, interest savings and the month when costs are recovered.">
 <meta property="og:title" content="Balance Transfer Break-Even Calculator | EMIFORMULA">
-<meta property="og:description" content="Calculate loan-transfer costs, interest savings and the estimated month when switching costs are recovered.">
+<meta property="og:description" content="Compare current and new loan repayment paths, switching costs and break-even month.">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://gopiji1122.github.io/Emiformula/calculators/balance-transfer-calculator.html">
 <link rel="stylesheet" href="../assets/css/style.css">
@@ -21,192 +21,139 @@
 </head>
 <body>
 <div class="page-shell">
-<div data-component="header"></div>
-<main class="page-main calculator-page loan-page">
-<div class="page-container"><section class="page-section"><div class="page-full">
-<div data-component="breadcrumbs"></div>
-<header class="page-title-block" data-page-title-block>
-<h1>Balance Transfer Break-Even Calculator</h1>
-<p class="page-title-description">Compare your current loan with a new offer, including switching costs, applicable GST and the estimated break-even month.</p>
-</header>
-<div class="loan-wrap bt-page">
-<section class="bt-hero">
-<div class="bt-hero-grid">
-<div><div class="bt-eyebrow"><i></i>Loan switching intelligence</div><h2>See the real cost of moving your loan.</h2><p>Compare the current repayment path with a new balance-transfer offer — including fees, taxes, rate savings and the month your transfer recovers its switching costs.</p></div>
-<div class="bt-hero-actions"><div class="bt-hero-badge"><strong id="hero-rate-gap">1.50 pp</strong><span>rate difference</span></div><div class="bt-hero-badge"><strong id="hero-tenure-gap">0 mo</strong><span>tenure difference</span></div></div>
-</div>
-</section>
+  <div data-component="header"></div>
+  <main class="page-main calculator-page bt-page">
+    <div class="page-container">
+      <section class="page-section">
+        <div class="page-full">
+          <div data-component="breadcrumbs"></div>
+          <header class="page-title-block" data-page-title-block>
+            <h1>Balance Transfer Break-Even Calculator</h1>
+            <p class="page-title-description">Compare your current loan with a new offer and see how rate savings, fees and tenure changes affect the transfer.</p>
+          </header>
 
-<div class="loan-grid bt-grid">
-<aside class="loan-card loan-input-card bt-input-card">
-<div class="loan-card-head"><div><h3>Current loan</h3><span>Enter the figures from your latest loan statement.</span></div></div>
+          <section class="bt-hero" aria-labelledby="bt-hero-title">
+            <div class="bt-hero-main">
+              <div class="bt-eyebrow"><span class="bt-live-dot"></span>Loan switching analysis</div>
+              <h2 id="bt-hero-title">Know your break-even before you switch.</h2>
+              <p>Enter the figures from your current loan and the new lender's offer. The calculator compares both repayment paths month by month instead of relying only on a simple EMI difference.</p>
+              <div class="bt-hero-metrics">
+                <div><span>Rate difference</span><strong id="hero-rate-gap">1.50 pp</strong></div>
+                <div><span>Tenure difference</span><strong id="hero-tenure-gap">0 mo</strong></div>
+                <div><span>Switching cost</span><strong id="hero-cost">₹23,600</strong></div>
+              </div>
+            </div>
+            <div class="bt-hero-orb" aria-hidden="true"><span></span><i></i><b></b></div>
+          </section>
 
-<div class="loan-field">
-<div class="loan-label"><span>Outstanding balance</span><span class="loan-value" id="bt-balance-val">₹20,00,000</span></div>
-<div class="loan-input"><span>₹</span><input id="bt-balance" type="number" min="10000" max="50000000" step="10000" value="2000000" inputmode="numeric"></div>
-<input id="bt-balance-range" class="loan-range" type="range" min="10000" max="25000000" step="50000" value="2000000">
-<div class="loan-minmax"><span>₹10K</span><span>₹2.5Cr</span></div>
-</div>
+          <div class="bt-workspace">
+            <section class="bt-input-column" aria-label="Loan comparison inputs">
+              <div class="bt-section-heading">
+                <div><span class="bt-overline">Your comparison</span><h2>Enter the loan details</h2><p>Use the numbers shown in your current statement and the new lender's offer.</p></div>
+                <button type="button" class="bt-reset" id="bt-reset">Reset</button>
+              </div>
 
-<div class="loan-two">
-<div class="loan-field"><div class="loan-label"><span>Current rate</span></div><div class="loan-input"><input id="bt-old-rate" type="number" min="0" max="30" step="0.1" value="10.5"><span>% p.a.</span></div></div>
-<div class="loan-field"><div class="loan-label"><span>Months left</span></div><div class="loan-input"><input id="bt-old-months" type="number" min="1" max="360" step="1" value="120"><span>months</span></div></div>
-</div>
+              <div class="bt-stepper" aria-label="Input steps">
+                <a href="#current-loan"><span>01</span> Current loan</a><a href="#new-loan"><span>02</span> New offer</a><a href="#switching-costs"><span>03</span> Transfer costs</a>
+              </div>
 
-<div class="loan-card-head bt-section-head"><div><h3>New loan offer</h3><span>Use the actual rate and tenure offered by the new lender.</span></div></div>
-<div class="loan-two">
-<div class="loan-field"><div class="loan-label"><span>New interest rate</span></div><div class="loan-input"><input id="bt-new-rate" type="number" min="0" max="30" step="0.1" value="9.0"><span>% p.a.</span></div></div>
-<div class="loan-field"><div class="loan-label"><span>New tenure</span></div><div class="loan-input"><input id="bt-new-months" type="number" min="1" max="360" step="1" value="120"><span>months</span></div></div>
-</div>
+              <article class="bt-input-card bt-current" id="current-loan">
+                <div class="bt-card-head"><div class="bt-card-number">01</div><div><span class="bt-overline">Where you are today</span><h3>Current loan</h3></div><span class="bt-card-badge">Existing</span></div>
+                <div class="bt-presets" aria-label="Outstanding balance shortcuts"><button type="button" data-bt-preset="500000">₹5L</button><button type="button" data-bt-preset="1000000">₹10L</button><button type="button" class="active" data-bt-preset="2000000">₹20L</button><button type="button" data-bt-preset="3000000">₹30L</button></div>
+                <div class="bt-field bt-feature-field">
+                  <div class="bt-label-row"><label for="bt-balance">Outstanding balance</label><output id="bt-balance-val">₹20,00,000</output></div>
+                  <div class="bt-input-shell bt-money"><span>₹</span><input id="bt-balance" type="number" min="10000" max="50000000" step="10000" value="2000000" inputmode="numeric" aria-describedby="bt-balance-help"></div>
+                  <input id="bt-balance-range" class="bt-range" type="range" min="10000" max="25000000" step="10000" value="2000000" aria-label="Outstanding balance slider">
+                  <div class="bt-range-labels"><span>₹10K</span><span id="bt-balance-help">₹2.5Cr</span></div>
+                </div>
+                <div class="bt-two-col">
+                  <div class="bt-field"><div class="bt-label-row"><label for="bt-old-rate">Current rate</label></div><div class="bt-input-shell"><input id="bt-old-rate" type="number" min="0" max="30" step="0.05" value="10.5" inputmode="decimal"><span>% p.a.</span></div><input id="bt-old-rate-range" class="bt-range" type="range" min="0" max="30" step="0.05" value="10.5" aria-label="Current interest rate slider"></div>
+                  <div class="bt-field"><div class="bt-label-row"><label for="bt-old-months">Months remaining</label></div><div class="bt-input-shell"><input id="bt-old-months" type="number" min="1" max="360" step="1" value="120" inputmode="numeric"><span>months</span></div><input id="bt-old-months-range" class="bt-range" type="range" min="1" max="360" step="1" value="120" aria-label="Current months remaining slider"></div>
+                </div>
+              </article>
 
-<div class="loan-card-head bt-section-head"><div><h3>Switching costs</h3><span>Enter charges exactly as shown by the lender.</span></div></div>
-<div class="loan-two">
-<div class="loan-field"><div class="loan-label"><span>Old lender prepayment charge</span></div><div class="loan-input"><span>₹</span><input id="bt-foreclosure" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div></div>
-<div class="loan-field"><div class="loan-label"><span>New lender processing fee</span></div><div class="loan-input"><span>₹</span><input id="bt-processing" type="number" min="0" max="10000000" step="100" value="20000" inputmode="numeric"></div></div>
-</div>
-<div class="loan-two">
-<div class="loan-field"><div class="loan-label"><span>GST on old lender charge</span></div><div class="loan-input"><span>₹</span><input id="bt-foreclosure-gst" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div></div>
-<div class="loan-field"><div class="loan-label"><span>GST on processing fee</span></div><div class="loan-input"><span>₹</span><input id="bt-processing-gst" type="number" min="0" max="10000000" step="100" value="3600" inputmode="numeric"></div></div>
-</div>
-<div class="loan-field">
-<div class="loan-label"><span>Other switching costs</span><span class="loan-value" id="bt-other-val">₹0</span></div>
-<div class="loan-input"><span>₹</span><input id="bt-other" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div>
-</div>
+              <article class="bt-input-card bt-new" id="new-loan">
+                <div class="bt-card-head"><div class="bt-card-number">02</div><div><span class="bt-overline">What the new lender offers</span><h3>New loan offer</h3></div><span class="bt-card-badge new">New</span></div>
+                <div class="bt-two-col">
+                  <div class="bt-field"><div class="bt-label-row"><label for="bt-new-rate">New interest rate</label><output id="bt-new-rate-val">9.00%</output></div><div class="bt-input-shell"><input id="bt-new-rate" type="number" min="0" max="30" step="0.05" value="9" inputmode="decimal"><span>% p.a.</span></div><input id="bt-new-rate-range" class="bt-range" type="range" min="0" max="30" step="0.05" value="9" aria-label="New interest rate slider"></div>
+                  <div class="bt-field"><div class="bt-label-row"><label for="bt-new-months">New tenure</label><output id="bt-new-months-val">120 months</output></div><div class="bt-input-shell"><input id="bt-new-months" type="number" min="1" max="360" step="1" value="120" inputmode="numeric"><span>months</span></div><input id="bt-new-months-range" class="bt-range" type="range" min="1" max="360" step="1" value="120" aria-label="New tenure slider"></div>
+                </div>
+                <div class="bt-offer-note"><span>↘</span><div><strong>Enter the actual offer</strong><p>Use the lender's quoted rate and tenure. A lower rate is only one part of the comparison.</p></div></div>
+              </article>
 
-<div class="bt-advanced-card" id="bt-advanced-options">
-<div class="bt-advanced-head">
-  <div><span class="bt-advanced-kicker">ADVANCED MODE</span><h3>Stress-test the transfer</h3><p>Try common scenarios without changing the core calculation method.</p></div>
-  <span class="bt-live-chip">Live</span>
-</div>
-<div class="bt-preset-grid" role="group" aria-label="Transfer scenario presets">
-  <button type="button" class="bt-preset" data-bt-preset="same-tenure"><strong>Same tenure</strong><span>Match the new term to months left</span></button>
-  <button type="button" class="bt-preset" data-bt-preset="lower-rate"><strong>Lower-rate test</strong><span>Test a 1 percentage-point cut</span></button>
-  <button type="button" class="bt-preset" data-bt-preset="fee-shock"><strong>Fee stress test</strong><span>Add ₹25,000 switching cost</span></button>
-  <button type="button" class="bt-preset" data-bt-preset="clear-fees"><strong>Zero-fee case</strong><span>See the result without switch fees</span></button>
-</div>
-<div class="bt-advanced-summary">
-  <div><small>Rate gap</small><strong id="bt-advanced-rate-gap">0.0 pp</strong></div>
-  <div><small>Cost / gross saving</small><strong id="bt-cost-ratio">0%</strong></div>
-  <div><small>Monthly change</small><strong id="bt-advanced-monthly">₹0</strong></div>
-</div>
-</div>
+              <article class="bt-input-card bt-costs" id="switching-costs">
+                <div class="bt-card-head"><div class="bt-card-number">03</div><div><span class="bt-overline">What you pay to move</span><h3>Switching costs</h3></div><span class="bt-card-badge">Actual charges</span></div>
+                <div class="bt-cost-grid">
+                  <label class="bt-cost-field" for="bt-foreclosure"><span>Old lender prepayment charge</span><div class="bt-input-shell bt-money"><span>₹</span><input id="bt-foreclosure" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div></label>
+                  <label class="bt-cost-field" for="bt-foreclosure-gst"><span>GST on old lender charge</span><div class="bt-input-shell bt-money"><span>₹</span><input id="bt-foreclosure-gst" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div></label>
+                  <label class="bt-cost-field" for="bt-processing"><span>New lender processing fee</span><div class="bt-input-shell bt-money"><span>₹</span><input id="bt-processing" type="number" min="0" max="10000000" step="100" value="20000" inputmode="numeric"></div></label>
+                  <label class="bt-cost-field" for="bt-processing-gst"><span>GST on processing fee</span><div class="bt-input-shell bt-money"><span>₹</span><input id="bt-processing-gst" type="number" min="0" max="10000000" step="100" value="3600" inputmode="numeric"></div></label>
+                  <label class="bt-cost-field bt-cost-full" for="bt-other"><span>Other switching costs</span><div class="bt-input-shell bt-money"><span>₹</span><input id="bt-other" type="number" min="0" max="10000000" step="100" value="0" inputmode="numeric"></div></label>
+                </div>
+                <div class="bt-cost-total"><span>Total switching cost</span><strong id="bt-other-val">₹23,600</strong></div>
+              </article>
 
-<div class="bt-regulatory-card">
-<label class="bt-check"><input id="bt-floating" type="checkbox" checked><span>Current loan is floating-rate</span></label>
-<div class="bt-select-row">
-<label>Loan purpose
-<select id="bt-purpose"><option value="individual">Individual / non-business</option><option value="business">Business</option></select></label>
-<label>Loan sanctioned/renewed
-<select id="bt-year"><option value="2026" selected>2026 or later</option><option value="2025">2025 or earlier</option></select></label>
-</div>
-<p id="bt-reg-note" class="loan-note">Enter the actual prepayment charge from your lender. This calculator does not assume an RBI waiver without considering the loan details.</p>
-</div>
+              <article class="bt-input-card bt-rules">
+                <div class="bt-card-head"><div class="bt-card-number">+</div><div><span class="bt-overline">Optional verification</span><h3>Loan & prepayment details</h3></div></div>
+                <label class="bt-check-row"><input id="bt-floating" type="checkbox" checked><span class="bt-check-box"></span><span><strong>Current loan is floating-rate</strong><small>Used only to tailor the regulatory note.</small></span></label>
+                <div class="bt-two-col">
+                  <label class="bt-select-field">Loan purpose<select id="bt-purpose"><option value="individual">Individual / non-business</option><option value="business">Business</option></select></label>
+                  <label class="bt-select-field">Sanctioned / renewed<select id="bt-year"><option value="2026" selected>2026 or later</option><option value="2025">2025 or earlier</option></select></label>
+                </div>
+                <div class="bt-reg-note"><strong>Check the lender document</strong><p id="bt-reg-note">Enter the actual prepayment charge shown by your lender. Do not assume an RBI waiver without checking the applicable loan details.</p></div>
+              </article>
 
-<p class="loan-note">GST is entered separately because the applicable tax treatment can depend on the nature of the charge. Check your lender's statement or KFS rather than assuming every charge attracts GST.</p>
-</aside>
+              <div class="bt-privacy"><span>✓</span><div><strong>Private by design</strong><p>Calculations run in your browser. No phone number or personal account details are required.</p></div></div>
+            </section>
 
-<section class="loan-results bt-results">
-<div class="calc-export-toolbar" data-export-toolbar data-export-type="balance-transfer" aria-label="Export calculator results">
-<div><strong>Export your balance-transfer analysis</strong><span>Fixed desktop-style report on every device</span></div>
-<div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">📄 Export PDF</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div>
-<span class="calc-export-status" data-export-status hidden aria-live="polite"></span>
-</div>
-<div id="bt-verdict" class="bt-verdict bt-neutral"><strong>Calculating…</strong><span>Comparing the two loan scenarios.</span></div>
-<div class="loan-kpis">
-<div class="loan-kpi"><small>Current EMI</small><strong id="res-old-emi">₹0</strong></div>
-<div class="loan-kpi"><small>New EMI</small><strong id="res-new-emi">₹0</strong></div>
-<div class="loan-kpi"><small>Switching costs</small><strong id="res-fees">₹0</strong></div>
-<div class="loan-kpi"><small>Estimated net saving</small><strong id="res-net">₹0</strong></div>
-</div>
+            <section class="bt-results-column" aria-live="polite">
+              <div class="calc-export-toolbar" data-export-toolbar data-export-type="balance-transfer" aria-label="Export calculator results"><div><strong>Save this comparison</strong><span>PDF report · CSV · JSON</span></div><div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div><span class="calc-export-status" data-export-status hidden aria-live="polite"></span></div>
 
-<div class="loan-card loan-main-result bt-main">
-<div class="bt-main-head"><div><div class="bt-main-kicker">Transfer economics</div><h3>Break-even point</h3></div><div class="bt-break-pill" id="bt-break-pill">● Live calculation</div></div>
-<div class="bt-break-number" id="res-breakeven">—</div><div class="bt-break-pill" id="bt-break-pill-mobile">Cumulative benefit after switching costs</div>
-<p id="res-break-copy">Enter valid loan details to calculate the break-even point.</p>
-<div class="bt-mini-grid">
-<div><small>Gross interest saving</small><strong id="res-gross">₹0</strong></div>
-<div><small>Current remaining interest</small><strong id="res-old-interest">₹0</strong></div>
-<div><small>New loan interest</small><strong id="res-new-interest">₹0</strong></div>
-<div><small>Monthly EMI difference</small><strong id="res-monthly">₹0</strong></div>
-</div>
-</div>
+              <div id="bt-verdict" class="bt-verdict bt-neutral"><span class="bt-verdict-dot"></span><div><strong>Calculating…</strong><span>Comparing the two loan scenarios.</span></div></div>
 
-<div class="bt-comparison">
-<div class="bt-scenario current"><div class="bt-scenario-label">Current loan</div><div class="bt-scenario-emi" id="compare-old-emi">₹0</div><div class="bt-scenario-sub">monthly EMI</div><div class="bt-scenario-metrics"><div><small>Rate</small><strong id="compare-old-rate">0%</strong></div><div><small>Remaining</small><strong id="compare-old-months">0 mo</strong></div></div></div>
-<div class="bt-vs">VS</div>
-<div class="bt-scenario new"><div class="bt-scenario-label">New offer</div><div class="bt-scenario-emi" id="compare-new-emi">₹0</div><div class="bt-scenario-sub">monthly EMI</div><div class="bt-scenario-metrics"><div><small>Rate</small><strong id="compare-new-rate">0%</strong></div><div><small>Tenure</small><strong id="compare-new-months">0 mo</strong></div></div></div>
-</div>
+              <div class="bt-kpi-grid">
+                <article class="bt-kpi"><span>Current EMI</span><strong id="res-old-emi">₹0</strong><small>Existing loan</small></article>
+                <article class="bt-kpi bt-kpi-new"><span>New EMI</span><strong id="res-new-emi">₹0</strong><small>New offer</small></article>
+                <article class="bt-kpi"><span>Switching cost</span><strong id="res-fees">₹0</strong><small>Fees + entered taxes</small></article>
+                <article class="bt-kpi bt-kpi-net"><span>Estimated net saving</span><strong id="res-net">₹0</strong><small>After switching costs</small></article>
+              </div>
 
-<div class="bt-insight-grid">
-<div class="bt-insight accent"><small>Interest reduction</small><strong id="insight-interest-pct">0%</strong><p>Estimated share of current remaining interest avoided.</p></div>
-<div class="bt-insight"><small>Monthly cash-flow change</small><strong id="insight-monthly">₹0</strong><p>Difference between the two monthly payment paths.</p></div>
-<div class="bt-insight"><small>Total repayment difference</small><strong id="insight-total">₹0</strong><p>Difference in scheduled payments before switching costs.</p></div>
-</div>
+              <article class="bt-break-card">
+                <div class="bt-break-copy"><span class="bt-overline">The key number</span><h2>Break-even point</h2><p id="res-break-copy">Enter valid loan details to calculate the break-even point.</p><div class="bt-break-facts"><div><span>Gross interest saving</span><strong id="res-gross">₹0</strong></div><div><span>Monthly EMI difference</span><strong id="res-monthly">₹0</strong></div><div><span>Current remaining interest</span><strong id="res-old-interest">₹0</strong></div><div><span>New loan interest</span><strong id="res-new-interest">₹0</strong></div></div></div>
+                <div class="bt-break-visual"><div class="bt-break-ring"><div><strong id="res-breakeven">—</strong><span>break-even</span></div></div><span class="bt-break-pill" id="bt-break-pill">● Live calculation</span><span class="bt-break-pill bt-break-pill-secondary" id="bt-break-pill-mobile">Cumulative benefit after switching costs</span></div>
+              </article>
 
-<div class="bt-analytics">
-<div class="bt-chart-card">
-<h3>Interest impact</h3>
-<p>How the new loan changes the remaining interest bill.</p>
-<div class="bt-donut-area">
-<div class="bt-donut" id="bt-interest-donut" aria-label="Interest saving composition"><div class="bt-donut-center"><strong id="bt-donut-percent">0%</strong><span>interest saved</span></div></div>
-<div class="bt-legend">
-<div class="bt-legend-row"><i class="bt-legend-dot"></i><span>New loan interest</span><strong id="bt-legend-new-interest">₹0</strong></div>
-<div class="bt-legend-row"><i class="bt-legend-dot alt"></i><span>Gross interest saving</span><strong id="bt-legend-saving">₹0</strong></div>
-<div class="bt-legend-row"><i class="bt-legend-dot cost"></i><span>Switching costs</span><strong id="bt-legend-cost">₹0</strong></div>
-</div></div>
-</div>
-<div class="bt-chart-card bt-annual-card">
-<h3>Repayment path by year</h3>
-<p>Compare how much principal and interest remain under each scenario.</p>
-<div class="bt-annual-chart" id="bt-annual-chart"><div class="bt-chart-empty">Calculating annual view…</div></div>
-<div class="bt-chart-legend"><span><i class="old"></i>Current balance</span><span><i class="new"></i>New balance</span></div>
-</div>
-<div class="bt-chart-card">
-<h3>Cumulative transfer benefit</h3>
-<p>After switching costs, month by month. The zero line marks break-even.</p>
-<div class="bt-svg-wrap" id="bt-cumulative-chart"><div class="bt-chart-empty">Calculating chart…</div></div><div class="bt-chart-legend"><span><i class="new"></i>Cumulative benefit</span><span><i class="zero"></i>Break-even line</span></div>
-</div>
-</div>
+              <article class="bt-compare-card-wrap"><div class="bt-compare-side current"><span>Current loan</span><strong id="compare-old-emi">₹0</strong><small>monthly EMI</small><div><b id="compare-old-rate">0%</b><em>Rate</em><b id="compare-old-months">0 mo</b><em>Remaining</em></div></div><div class="bt-compare-center">VS</div><div class="bt-compare-side new"><span>New offer</span><strong id="compare-new-emi">₹0</strong><small>monthly EMI</small><div><b id="compare-new-rate">0%</b><em>Rate</em><b id="compare-new-months">0 mo</b><em>Tenure</em></div></div></article>
 
-<div class="loan-card loan-panel">
-<h3>Cost vs. saving</h3>
-<p class="loan-note">The comparison below shows switching costs against estimated gross interest savings.</p>
-<div class="bt-bar-wrap">
-<div class="bt-bar-row"><span>Switching costs</span><div class="bt-track"><div class="bt-fill bt-red" id="bar-costs"></div></div><strong id="label-costs">₹0</strong></div>
-<div class="bt-bar-row"><span>Interest saved</span><div class="bt-track"><div class="bt-fill bt-green" id="bar-savings"></div></div><strong id="label-savings">₹0</strong></div>
-</div>
-</div>
+              <div class="bt-insight-grid"><article><span>Interest reduction</span><strong id="insight-interest-pct">0%</strong><p>Share of current remaining interest avoided.</p></article><article><span>Monthly cash-flow change</span><strong id="insight-monthly">₹0</strong><p>Difference between the two payment paths.</p></article><article><span>Total repayment difference</span><strong id="insight-total">₹0</strong><p>Scheduled payment difference before switching costs.</p></article></div>
 
-<div class="loan-card loan-panel">
-<h3>What this result means</h3>
-<ul class="bt-explain">
-<li><strong>Gross interest saving</strong> compares remaining interest under the current loan with interest under the new loan.</li>
-<li><strong>Net saving</strong> subtracts switching costs from that gross saving.</li>
-<li><strong>Break-even month</strong> is found from cumulative month-by-month payment/interest differences, not just EMI difference.</li>
-</ul>
-</div>
+              <div class="bt-analytics-grid">
+                <article class="bt-chart-card"><div class="bt-chart-head"><div><span class="bt-overline">01 · Composition</span><h3>Interest impact</h3></div><span>Live</span></div><p>How much current remaining interest is replaced by the new loan.</p><div class="bt-donut-area"><div class="bt-donut" id="bt-interest-donut" aria-label="Interest saving composition"><div class="bt-donut-center"><strong id="bt-donut-percent">0%</strong><span>interest saved</span></div></div><div class="bt-legend"><div><i></i><span>New loan interest</span><strong id="bt-legend-new-interest">₹0</strong></div><div><i class="alt"></i><span>Gross interest saving</span><strong id="bt-legend-saving">₹0</strong></div><div><i class="cost"></i><span>Switching costs</span><strong id="bt-legend-cost">₹0</strong></div></div></div></article>
+                <article class="bt-chart-card"><div class="bt-chart-head"><div><span class="bt-overline">02 · Recovery curve</span><h3>Cumulative benefit</h3></div><span>Month by month</span></div><p>Switching costs are deducted first. Crossing zero indicates recovery.</p><div class="bt-svg-wrap" id="bt-cumulative-chart"><div class="bt-chart-empty">Calculating chart…</div></div><div class="bt-chart-legend"><span><i class="new"></i>Cumulative benefit</span><span><i class="zero"></i>Break-even line</span></div></article>
+              </div>
 
-<div class="loan-card loan-panel bt-timeline-panel">
-<h3>Break-even timeline</h3>
-<div id="bt-timeline" class="bt-timeline"></div>
-</div>
-</section>
-</div>
+              <article class="bt-bar-card"><div class="bt-chart-head"><div><span class="bt-overline">03 · Cost vs benefit</span><h3>Does the saving cover the switching cost?</h3></div></div><div class="bt-bar-row"><div><span>Switching costs</span><strong id="label-costs">₹0</strong></div><div class="bt-track"><div class="bt-fill bt-cost-fill" id="bar-costs"></div></div></div><div class="bt-bar-row"><div><span>Gross interest saved</span><strong id="label-savings">₹0</strong></div><div class="bt-track"><div class="bt-fill bt-saving-fill" id="bar-savings"></div></div></div></article>
 
-<section class="bt-guide loan-card">
-<h2>How to use the Balance Transfer Break-Even Calculator</h2>
-<p>Start with the outstanding balance and remaining tenure shown by your current lender. Then enter the new lender's rate and proposed tenure. Finally, add the actual switching charges shown in your lender documents.</p>
-<h3>Why the break-even month matters</h3>
-<p>A lower rate does not automatically mean a cheaper transfer. Processing charges, applicable taxes and prepayment costs can delay or eliminate the benefit. The calculator therefore compares the two repayment paths month by month.</p>
-<h3>Regulatory note</h3>
-<p>RBI rules on pre-payment charges depend on the loan's rate type, borrower/purpose, lender and applicable directions. The calculator does not treat every floating-rate loan as automatically fee-free. Verify the charge in your lender's current statement, Key Facts Statement or sanction documents.</p>
-</section>
-</div></div></section></div>
-</main>
-<div data-component="footer"></div>
+              <article class="bt-timeline-card"><div class="bt-chart-head"><div><span class="bt-overline">04 · Milestones</span><h3>Break-even timeline</h3></div></div><div id="bt-timeline" class="bt-timeline"></div></article>
+
+              <article class="bt-explain-card"><span class="bt-overline">Understand the result</span><h3>What each number means</h3><div><p><strong>Gross interest saving</strong> compares remaining interest under the current loan with interest under the new loan.</p><p><strong>Net saving</strong> subtracts switching costs from the gross saving.</p><p><strong>Break-even month</strong> uses the month-by-month repayment paths rather than simply dividing fees by EMI difference.</p></div></article>
+            </section>
+          </div>
+
+          <section class="bt-guide"><div><span class="bt-overline">Calculator guide</span><h2>How to use the Balance Transfer Break-Even Calculator</h2><p>Start with the outstanding balance and remaining tenure on your current lender statement. Then enter the new lender's actual rate and proposed tenure. Finally, add documented switching charges.</p></div><div class="bt-guide-grid"><article><strong>01</strong><h3>Enter current loan</h3><p>Use the latest outstanding balance, rate and months remaining.</p></article><article><strong>02</strong><h3>Add new offer</h3><p>Use the rate and tenure exactly as quoted by the new lender.</p></article><article><strong>03</strong><h3>Include real costs</h3><p>Add prepayment, processing, GST and other documented charges.</p></article><article><strong>04</strong><h3>Read the recovery point</h3><p>Break-even shows when cumulative savings recover switching costs.</p></article></div><div class="bt-regulatory-note"><strong>Regulatory note:</strong> Pre-payment-charge rules depend on the loan's rate type, borrower/purpose, lender and applicable directions. This calculator does not treat every floating-rate loan as automatically fee-free. Verify the charge in your current lender documents.</div></section>
+        </div>
+      </section>
+    </div>
+  </main>
+  <div data-component="footer"></div>
 </div>
 <script src="../assets/js/site-config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="../assets/js/search-data.js"></script>
+<script src="../assets/js/search.js"></script>
+<script src="../assets/js/footer.js"></script>
 <script src="../assets/js/components.js"></script>
+<script src="../assets/js/navigation.js"></script>
 <script src="../assets/js/balance-transfer-engine.js"></script>
 <script src="../assets/js/balance-transfer-ui.js"></script>
 <script src="../assets/js/export-report.js"></script>
