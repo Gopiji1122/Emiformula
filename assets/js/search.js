@@ -87,6 +87,8 @@
               >⌕</span>
 
               <input
+                id="site-search"
+                name="q"
                 class="search-input"
                 type="search"
                 autocomplete="off"
