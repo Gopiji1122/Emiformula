@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="../assets/css/footer.css">
 <link rel="stylesheet" href="../assets/css/responsive.css">
 <link rel="stylesheet" href="../assets/css/layout.css">
+<link rel="stylesheet" href="../assets/css/export-report.css">
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/personal-loan-calculator.css">
 <script src="../seo/seo-config.js"></script>
@@ -38,7 +39,7 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <main class="page-main calculator-page loan-page">
 <div class="page-container"><section class="page-section"><div class="page-full">
 <div data-component="breadcrumbs"></div>
-      <div class="calc-export-toolbar" data-export-toolbar data-export-type="personal-loan" aria-label="Export calculator results"><div><strong>Export your personal loan calculation</strong><span>Fixed desktop-style report on every device</span></div><div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div><span class="calc-export-status" data-export-status hidden aria-live="polite"></span></div>
+      
 <header class="page-title-block" data-page-title-block><h1>Personal Loan Calculator</h1><p class="page-title-description">Explore EMI, fees, amount received, total interest and repayment scenarios for a personal loan.</p></header>
 <div class="loan-wrap">
 <section class="loan-hero">
@@ -122,7 +123,9 @@ n = number of monthly payments</div><p class="loan-note">For a zero-interest sce
 </div>
 </section>
 </div>
-</div></section></main>
+</div></section>
+<div class="calc-export-toolbar" data-export-toolbar data-export-type="personal-loan" aria-label="Export calculator results"><div><strong>Export your personal loan calculation</strong><span>Fixed desktop-style report on every device</span></div><div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button></div><span class="calc-export-status" data-export-status hidden aria-live="polite"></span></div>
+</main>
 <div data-component="footer"></div>
 </div>
 <script src="../assets/js/site-config.js"></script>
