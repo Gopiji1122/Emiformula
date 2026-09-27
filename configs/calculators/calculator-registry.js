@@ -25,7 +25,14 @@
       description: "Calculate future value, contributions, compound interest and investment growth.",
       url: "/Emiformula/calculators/compound-interest-calculator.html",
       status: "active"
-    }
+    },
+    balanceTransfer: {
+      id: "balance-transfer",
+      name: "Balance Transfer Break-Even Calculator",
+      category: "Loan Calculators",
+      description: "Compare a current loan with a new offer, switching costs, interest impact and break-even analysis.",
+      url: "/Emiformula/calculators/balance-transfer-calculator.html"
+    },
   };
 
   window.EMIFORMULA_CALCULATOR_REGISTRY = Object.freeze(registry);
