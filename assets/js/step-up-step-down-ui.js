@@ -126,7 +126,7 @@
       option.textContent = item.label;
       select.appendChild(option);
     });
-    select.value = '';
+    select.value = L.defaultCurrency || '';
     select.addEventListener('change', applyCurrency);
   }
 

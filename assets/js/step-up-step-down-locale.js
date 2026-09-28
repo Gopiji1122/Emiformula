@@ -18,7 +18,7 @@
   ];
 
   var browserLocale = navigator.language || 'en-US';
-  var defaultCurrency = currencyByLanguage[browserLocale] || currencyByLanguage[browserLocale.split('-')[0]] || 'USD';
+  var defaultCurrency = currencyByLanguage[browserLocale] || '';
 
   window.StepUpDownLocale = Object.freeze({
     browserLocale: browserLocale,
