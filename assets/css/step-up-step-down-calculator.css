@@ -24,8 +24,8 @@
 .sud-hero-currency select{min-height:44px;border:1px solid #cbd8e8;border-radius:12px;background:#fff;padding:0 12px;font:inherit;color:var(--sud-ink);outline:none;transition:border-color .18s ease,box-shadow .18s ease}
 .sud-hero-currency select:focus{border-color:var(--sud-primary);box-shadow:0 0 0 3px rgba(21,87,176,.10)}
 .sud-workspace{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(360px,.9fr);gap:20px;align-items:start}
-.sud-output-column{min-width:0;grid-column:1;grid-row:1}
-.sud-input-column{min-width:0;grid-column:2;grid-row:1}
+.sud-output-column{min-width:0;grid-column:2;grid-row:1}
+.sud-input-column{min-width:0;grid-column:1;grid-row:1}
 .sud-card,.sud-results{background:#fff;border:1px solid var(--sud-line);border-radius:var(--sud-radius);box-shadow:var(--sud-shadow);padding:22px;margin:0 0 18px}
 .sud-card h2,.sud-card h3,.sud-results h2,.sud-results h3{margin-top:0}
 .sud-section-title{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}
@@ -73,6 +73,9 @@
 .sud-jump{scroll-margin-top:90px;animation:sudHighlight .9s ease}@keyframes sudHighlight{0%{box-shadow:0 0 0 0 rgba(21,87,176,.24)}100%{box-shadow:0 0 0 8px rgba(21,87,176,0)}}
 @keyframes sudFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,8px,0)}}
 @media (prefers-reduced-motion:reduce){.sud-hero-inner:before,.sud-hero-inner:after,.sud-jump{animation:none}.sud-method,.sud-calc-btn,.sud-q,.sud-icon-btn,.sud-export button{transition:none}}
+.sud-page.sud-desktop-mode .sud-workspace{grid-template-columns:minmax(0,1.25fr) minmax(360px,.9fr)}
+.sud-page.sud-desktop-mode .sud-output-column{grid-column:2;grid-row:1;order:initial}
+.sud-page.sud-desktop-mode .sud-input-column{grid-column:1;grid-row:1;order:initial}
 @media (max-width:900px){.sud-workspace{grid-template-columns:1fr}.sud-output-column,.sud-input-column{grid-column:auto;grid-row:auto}.sud-output-column{order:2}.sud-input-column{order:1}.sud-results{margin-bottom:18px}}
 @media (max-width:820px){.sud-grid,.sud-kpis{grid-template-columns:1fr 1fr}.sud-methods{grid-template-columns:1fr}.sud-chart-wrap{grid-template-columns:1fr}}
 @media (max-width:560px){.sud-card,.sud-results{padding:16px;border-radius:16px}.sud-grid,.sud-kpis,.sud-custom-row{grid-template-columns:1fr}.sud-hero-inner{padding:28px 18px;border-radius:20px}.sud-hero-currency{align-items:stretch;flex-direction:column;max-width:100%}.sud-hero-currency select{width:100%}.sud-method{min-height:auto}.sud-calc-btn{width:100%}.sud-chart{height:180px}.sud-backtop{right:14px;bottom:14px}}
