@@ -3,5 +3,5 @@ window.EMIFORMULA_EMI_GUIDE_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Understanding EMI: How Monthly Loan Payments Are Calculated",
-  "url": "https://gopiji1122.github.io/Emiformula/guides/emi-guide.html"
+  "url": "https://emiformula.com/guides/emi-guide.html"
 };
