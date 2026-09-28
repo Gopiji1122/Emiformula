@@ -1,13 +1,13 @@
 window.EMIFORMULA_CONFIG = Object.freeze({
   siteName: "EMIFORMULA",
 
-  pathPrefix: "/Emiformula",
+  pathPrefix: "/",
 
   domain:
     "https://gopiji1122.github.io",
 
   baseUrl:
-    "https://gopiji1122.github.io/Emiformula",
+    "https://emiformula.com",
 
   logo: "",
 
