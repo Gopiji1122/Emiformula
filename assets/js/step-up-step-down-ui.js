@@ -343,6 +343,101 @@
     liveTimer = setTimeout(maybeLiveCalculate, 120);
   }
 
+  var printReport = null;
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function getPlanPrintDetails() {
+    if (state.method === 'one-time') {
+      return 'One-Time Change: ' + money(num($('#sud-new-emi').value)) + ' from Month ' + Math.floor(num($('#sud-change-month').value));
+    }
+    if (state.method === 'periodic') {
+      var pct = String($('#sud-periodic-change').value || '').trim();
+      var freq = $('#sud-periodic-frequency').value || '';
+      return 'Periodic Change: ' + escapeHtml(pct) + '% ' + (Number(pct) > 0 ? 'increase' : 'decrease') + ', ' + escapeHtml(freq);
+    }
+    if (state.method === 'custom') {
+      captureCustomRows();
+      return 'Custom Schedule: ' + state.customEntries.length + ' EMI changes';
+    }
+    return 'No EMI change plan selected';
+  }
+
+  function buildPrintReport() {
+    removePrintReport();
+    if (!state.lastResult || !state.lastResult.result || !state.lastResult.result.valid) return;
+    var data = state.lastResult;
+    var result = data.result;
+    var standard = data.standard;
+    var loan = num($('#sud-loan').value);
+    var rate = num($('#sud-rate').value);
+    var years = num($('#sud-tenure').value);
+    var interestDelta = standard.interest - result.interest;
+    var timeDelta = standard.months - result.months;
+    var firstChanged = data.schedule.length > 1 ? data.schedule[1].emi : data.currentEmi;
+    var monthlyDelta = firstChanged - data.currentEmi;
+    var methodText = state.method === 'one-time' ? 'One-Time Change' : state.method === 'periodic' ? 'Periodic Change' : 'Custom Schedule';
+    var report = document.createElement('div');
+    report.className = 'sud-print-report';
+    report.innerHTML =
+      '<div class="sud-print-page sud-print-summary-page">' +
+        '<header class="sud-print-brand"><div><div class="sud-print-brand-name">E EMIFORMULA</div><h1>Step-Up / Step-Down EMI Analysis</h1><p>Loan impact report for your selected EMI change plan</p></div><div class="sud-print-currency">' + escapeHtml(state.currency || '') + '</div></header>' +
+        '<div class="sud-print-columns">' +
+          '<section class="sud-print-panel sud-print-inputs"><h2>Loan &amp; EMI Plan</h2>' +
+            '<div class="sud-print-grid">' +
+              '<div><span>Loan amount</span><strong>' + money(loan) + '</strong></div>' +
+              '<div><span>Interest rate</span><strong>' + escapeHtml(rate) + '%</strong></div>' +
+              '<div><span>Loan tenure</span><strong>' + escapeHtml(years) + ' years</strong></div>' +
+              '<div><span>Current EMI</span><strong>' + money(data.currentEmi) + '</strong></div>' +
+            '</div>' +
+            '<div class="sud-print-plan"><span>EMI change plan</span><strong>' + methodText + '</strong><small>' + getPlanPrintDetails() + '</small></div>' +
+          '</section>' +
+          '<section class="sud-print-panel sud-print-results"><h2>Loan Impact</h2>' +
+            '<div class="sud-print-kpis">' +
+              '<div><span>Loan payoff time</span><strong>' + monthsText(result.months) + '</strong></div>' +
+              '<div><span>Time saved / extended</span><strong class="' + (timeDelta >= 0 ? 'positive' : 'negative') + '">' + (timeDelta >= 0 ? timeDelta + ' months saved' : Math.abs(timeDelta) + ' months longer') + '</strong></div>' +
+              '<div><span>Total interest</span><strong>' + money(result.interest) + '</strong></div>' +
+              '<div><span>' + (interestDelta >= 0 ? 'Interest saved' : 'Additional interest') + '</span><strong class="' + (interestDelta >= 0 ? 'positive' : 'negative') + '">' + money(Math.abs(interestDelta)) + '</strong></div>' +
+              '<div><span>Total repayment</span><strong>' + money(result.paid) + '</strong></div>' +
+              '<div><span>Monthly EMI impact</span><strong class="' + (monthlyDelta >= 0 ? 'positive' : 'negative') + '">' + (monthlyDelta >= 0 ? '+' : '-') + money(Math.abs(monthlyDelta)) + '</strong></div>' +
+            '</div>' +
+          '</section>' +
+        '</div>' +
+        '<div class="sud-print-insight"><strong>Key insight</strong><p>' + escapeHtml($('#sud-insight').textContent) + '</p></div>' +
+        '<div class="sud-print-visuals"><section class="sud-print-visual-panel"><h2>Outstanding balance over time</h2><div class="sud-print-chart-holder"></div></section><section class="sud-print-visual-panel sud-print-donut-panel"><h2>Repayment composition</h2><div class="sud-print-donut-holder"></div><div class="sud-print-legend"></div></section></div>' +
+        '<div class="sud-print-footer">EMIFORMULA · For informational and calculation purposes</div>' +
+      '</div>' +
+      '<div class="sud-print-page sud-print-schedule-page">' +
+        '<header class="sud-print-section-header"><div><div class="sud-print-brand-name">E EMIFORMULA</div><h1>Month-by-Month Repayment Schedule</h1><p>Complete amortization schedule for the selected EMI plan</p></div><div class="sud-print-currency">' + escapeHtml(state.currency || '') + '</div></header>' +
+        '<table class="sud-print-table"><thead><tr><th>Month</th><th>EMI</th><th>Interest</th><th>Principal</th><th>Balance</th></tr></thead><tbody></tbody></table>' +
+        '<div class="sud-print-footer">EMIFORMULA · Month-by-month schedule</div>' +
+      '</div>';
+    document.body.appendChild(report);
+
+    var chart = $('#sud-chart');
+    var chartHolder = $('.sud-print-chart-holder', report);
+    if (chart && chartHolder) chartHolder.appendChild(chart.cloneNode(true));
+    var donut = $('#sud-donut');
+    var donutHolder = $('.sud-print-donut-holder', report);
+    if (donut && donutHolder) donutHolder.appendChild(donut.cloneNode(true));
+    var legend = $('#sud-legend');
+    var legendHolder = $('.sud-print-legend', report);
+    if (legend && legendHolder) legendHolder.innerHTML = legend.innerHTML;
+
+    var tbody = $('.sud-print-table tbody', report);
+    tbody.innerHTML = result.rows.map(function (r) {
+      return '<tr><td>' + r.month + '</td><td>' + money(r.emi) + '</td><td>' + money(r.interest) + '</td><td>' + money(r.principal) + '</td><td>' + money(r.balance) + '</td></tr>';
+    }).join('');
+    printReport = report;
+  }
+
+  function removePrintReport() {
+    if (printReport && printReport.parentNode) printReport.parentNode.removeChild(printReport);
+    printReport = null;
+  }
+
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('.sud-q');
     if (btn) { e.preventDefault(); faqJump(btn.dataset.faq); }
@@ -396,8 +491,13 @@
     if (exportType === 'json') {
       var blob = new Blob([JSON.stringify(state.lastResult, null, 2)], { type: 'application/json' }); var a2 = document.createElement('a'); a2.href = URL.createObjectURL(blob); a2.download = 'step-up-step-down-emi-result.json'; a2.click(); URL.revokeObjectURL(a2.href);
     }
-    if (exportType === 'print') window.print();
+    if (exportType === 'print') {
+      buildPrintReport();
+      window.print();
+    }
   });
+
+  window.addEventListener('afterprint', removePrintReport);
 
   window.addEventListener('scroll', function () { $('#sud-backtop').classList.toggle('is-visible', window.scrollY > 500); }, { passive: true });
   $('#sud-backtop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
