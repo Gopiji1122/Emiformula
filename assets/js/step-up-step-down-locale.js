@@ -18,7 +18,10 @@
   ];
 
   var browserLocale = navigator.language || 'en-US';
-  var defaultCurrency = currencyByLanguage[browserLocale] || '';
+  var regionCurrency = { IN:'INR', US:'USD', GB:'GBP', AU:'AUD', CA:'CAD', JP:'JPY', DE:'EUR', FR:'EUR', ES:'EUR', IT:'EUR' };
+  var detectedRegion = '';
+  try { detectedRegion = new Intl.Locale(browserLocale).region || ''; } catch (e) { detectedRegion = (browserLocale.split('-')[1] || '').toUpperCase(); }
+  var defaultCurrency = currencyByLanguage[browserLocale] || regionCurrency[detectedRegion] || '';
 
   window.StepUpDownLocale = Object.freeze({
     browserLocale: browserLocale,
