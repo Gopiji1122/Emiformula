@@ -35,6 +35,9 @@
 .sud-field{min-width:0}
 .sud-field label{display:flex;align-items:center;gap:7px;font-weight:750;font-size:.94rem;margin-bottom:7px}
 .sud-input-wrap{position:relative}
+
+.sud-required{display:inline-block;color:#c23b3b;font-weight:900;margin-right:2px}.sud-input-wrap input[readonly]{background:#f7fbff;color:var(--sud-ink);cursor:default}.sud-input-wrap input[readonly]:focus{border-color:#cbd8e8;box-shadow:none;transform:none}
+
 .sud-input-wrap input,.sud-input-wrap select{width:100%;box-sizing:border-box;min-height:50px;border:1px solid #cbd8e8;border-radius:13px;background:#fff;padding:0 14px;font:inherit;color:var(--sud-ink);outline:none;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}.sud-input-with-suffix input{padding-right:76px}.sud-input-suffix{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--sud-muted);font-size:.86rem;font-weight:750;pointer-events:none}
 .sud-input-wrap input:focus,.sud-input-wrap select:focus{border-color:var(--sud-primary);box-shadow:0 0 0 3px rgba(21,87,176,.10)}
 .sud-input-wrap input:disabled{background:#f3f6fa;color:#7b8ca0;cursor:not-allowed}
