@@ -69,13 +69,14 @@
     };
   }
 
-  function buildPeriodic(startEmi, changePct, frequency, maxChanges) {
+  function buildPeriodic(startEmi, changePct, frequency, maxMonths) {
     var periodMonths = frequency === 'quarterly' ? 3 : frequency === 'monthly' ? 1 : 12;
     var rows = [{ startMonth: 1, emi: startEmi }];
     var current = startEmi;
-    for (var i = 1; i < (maxChanges || 20); i += 1) {
+    var limit = Math.max(1, Math.floor(Number(maxMonths) || 240));
+    for (var month = 1 + periodMonths; month <= limit; month += periodMonths) {
       current = current * (1 + changePct / 100);
-      rows.push({ startMonth: 1 + i * periodMonths, emi: current });
+      rows.push({ startMonth: month, emi: current });
     }
     return rows;
   }

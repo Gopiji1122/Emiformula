@@ -159,22 +159,39 @@
         "[data-breadcrumb-current]"
       );
 
+    var breadcrumbData = window.EMIFORMULA_BREADCRUMBS || [];
+    var list = placeholder.querySelector(".breadcrumb-list");
+
+    if (breadcrumbData.length && list) {
+      list.innerHTML = '<li class="breadcrumb-item"><a href="/Emiformula/">Home</a></li>';
+      breadcrumbData.forEach(function (item, index) {
+        var sep = document.createElement("li");
+        sep.className = "breadcrumb-separator";
+        sep.setAttribute("aria-hidden", "true");
+        sep.textContent = "/";
+        list.appendChild(sep);
+        var li = document.createElement("li");
+        li.className = "breadcrumb-item" + (index === breadcrumbData.length - 1 || !item.url ? " breadcrumb-current" : "");
+        if (index === breadcrumbData.length - 1 || !item.url) {
+          li.setAttribute("aria-current", "page");
+          li.textContent = item.title;
+        } else {
+          var link = document.createElement("a");
+          link.href = item.url;
+          link.textContent = item.title;
+          li.appendChild(link);
+        }
+        list.appendChild(li);
+      });
+      return;
+    }
 
     if (!current) {
       return;
     }
 
-
-    var pageName =
-      getPageName();
-
-
-    if (pageName) {
-
-      current.textContent =
-        pageName;
-
-    }
+    var pageName = getPageName();
+    if (pageName) current.textContent = pageName;
 
   }
 

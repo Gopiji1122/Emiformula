@@ -163,7 +163,9 @@
       var newEmi = num($('#sud-new-emi').value);
       var month = Math.floor(num($('#sud-change-month').value));
       if (!newEmi) { markInvalid($('#sud-new-emi')); throw new Error('Enter the new EMI.'); }
+      var loanMonths = Math.round(num($('#sud-tenure').value) * 12);
       if (month < 2) { markInvalid($('#sud-change-month')); throw new Error('Enter a starting month of 2 or later.'); }
+      if (month > loanMonths) { markInvalid($('#sud-change-month')); throw new Error('The change month must be within the planned loan tenure (up to Month ' + loanMonths + ').'); }
       return [{ startMonth: 1, emi: currentEmi }, { startMonth: month, emi: newEmi }];
     }
     if (state.method === 'periodic') {
@@ -178,13 +180,16 @@
         markInvalid($('#sud-periodic-frequency'));
         throw new Error('Select how often the EMI should change.');
       }
-      return E.buildPeriodic(currentEmi, change, frequency, 200);
+      var loanMonths = Math.round(num($('#sud-tenure').value) * 12);
+      return E.buildPeriodic(currentEmi, change, frequency, loanMonths);
     }
     captureCustomRows();
     var entries = state.customEntries.map(function (entry) {
       return { emi: num(entry.emi), startMonth: Math.floor(num(entry.startMonth)) };
     });
+    var loanMonths = Math.round(num($('#sud-tenure').value) * 12);
     if (!entries.length || entries.some(function (x) { return !x.emi || x.startMonth < 2; })) throw new Error('Complete every custom EMI and starting month.');
+    if (entries.some(function (x) { return x.startMonth > loanMonths; })) throw new Error('Each custom change month must be within the planned loan tenure (up to Month ' + loanMonths + ').');
     for (var i = 1; i < entries.length; i += 1) {
       if (entries[i].startMonth <= entries[i - 1].startMonth) throw new Error('Each next custom change must start at least one month after the previous change.');
     }
