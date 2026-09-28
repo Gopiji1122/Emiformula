@@ -8,20 +8,45 @@
   var $$ = function (s, root) { return Array.prototype.slice.call((root || document).querySelectorAll(s)); };
   var num = E.normalizeNumber;
   var state = {
-    method: 'one-time', customCount: 1, currentSource: 'none', lastResult: null,
-    currency: L.defaultCurrency, customEntries: []
+    method: null,
+    customCount: 1,
+    currentSource: 'none',
+    lastResult: null,
+    currency: '',
+    customEntries: []
   };
 
   var loanIds = ['#sud-loan', '#sud-rate', '#sud-tenure'];
   var currentInput = $('#sud-current');
   var switchText = $('#sud-input-mode');
+  var liveTimer = null;
+  var calculating = false;
 
-  function money(n) { return L.formatMoney(n, state.currency); }
+  function money(n) { return state.currency ? L.formatMoney(n, state.currency) : '—'; }
   function monthsText(m) {
     var years = Math.floor(m / 12), months = m % 12;
     if (!years) return months + ' months';
     if (!months) return years + (years === 1 ? ' year' : ' years');
     return years + (years === 1 ? ' year ' : ' years ') + months + ' months';
+  }
+
+  function setError(message) {
+    var el = $('#sud-error');
+    el.textContent = message || '';
+    el.hidden = !message;
+  }
+
+  function clearFieldErrors() {
+    $$('.sud-field input, .sud-field select, .sud-current input').forEach(function (el) {
+      el.classList.remove('sud-invalid');
+      el.removeAttribute('aria-invalid');
+    });
+  }
+
+  function markInvalid(el) {
+    if (!el) return;
+    el.classList.add('sud-invalid');
+    el.setAttribute('aria-invalid', 'true');
   }
 
   function setLoanDisabled(disabled) {
@@ -32,101 +57,107 @@
     return loanIds.every(function (id) { return num($(id).value) > 0; });
   }
 
+  function anyLoanDetail() {
+    return loanIds.some(function (id) { return String($(id).value || '').trim() !== ''; });
+  }
+
   function routeMode() {
-    if (state.currentSource === 'loan') return 'loan';
-    if (state.currentSource === 'emi') return 'emi';
-    return 'none';
+    return state.currentSource;
   }
 
   function refreshCurrentEmi() {
-    var box = $('#sud-current-display'), display = $('#sud-current-value');
+    var display = $('#sud-current-value');
     if (state.currentSource === 'loan') {
-      var principal = num($('#sud-loan').value), rate = num($('#sud-rate').value), years = num($('#sud-tenure').value);
       currentInput.readOnly = true;
       setLoanDisabled(false);
-      if (!principal || !years || rate < 0) {
-        currentInput.value = '';
-        display.textContent = '—';
-        box.hidden = false;
-        box.querySelector('small').textContent = 'Complete Loan Amount, Interest Rate and Loan Tenure to calculate EMI.';
-        return 0;
+      var principal = num($('#sud-loan').value);
+      var rate = num($('#sud-rate').value);
+      var years = num($('#sud-tenure').value);
+      if (principal > 0 && years > 0 && rate >= 0) {
+        var emi = E.standardEmi(principal, rate, Math.round(years * 12));
+        currentInput.value = Math.round(emi * 100) / 100;
+        display.textContent = money(emi) + ' / month';
+        $('#sud-current-help').textContent = 'Calculated automatically from your Loan Amount, Interest Rate and Loan Tenure.';
+        return emi;
       }
-      var emi = E.standardEmi(principal, rate, Math.round(years * 12));
-      currentInput.value = Math.round(emi * 100) / 100;
-      display.textContent = money(emi) + ' / month';
-      box.hidden = false;
-      box.querySelector('small').textContent = 'Calculated from your loan details.';
-      return emi;
+      currentInput.value = '';
+      display.textContent = 'Complete the 3 loan details above';
+      $('#sud-current-help').textContent = 'Current EMI will appear here automatically when all 3 loan details are complete.';
+      return 0;
     }
+
     if (state.currentSource === 'emi') {
       currentInput.readOnly = false;
       setLoanDisabled(true);
       var direct = num(currentInput.value);
-      display.textContent = direct ? money(direct) + ' / month' : '—';
-      box.hidden = false;
-      box.querySelector('small').textContent = 'Entered by you.';
+      display.textContent = direct > 0 ? money(direct) + ' / month' : 'Enter your current EMI';
+      $('#sud-current-help').textContent = 'Using the Current EMI you entered. Add the 3 loan details later if you want full payoff and interest analysis.';
       return direct;
     }
+
     currentInput.readOnly = false;
     setLoanDisabled(false);
-    box.hidden = true;
+    display.textContent = 'Not entered';
+    $('#sud-current-help').textContent = 'Enter either all 3 loan details above or your Current EMI directly.';
     return 0;
   }
 
   function updateCurrencyPlaceholders() {
-    var currency = state.currency;
-    var sample = L.formatMoney(1000, currency).replace(/[\d.,\s]/g, '').trim() || currency + ' ';
-    $('#sud-loan').placeholder = sample + '10,000';
-    $('#sud-current').placeholder = sample + '500';
-    $('#sud-new-emi').placeholder = sample + '750';
-    $$('.sud-custom-emi').forEach(function (input) { input.placeholder = sample + '600'; });
+    $('#sud-loan').placeholder = 'Enter loan amount';
+    $('#sud-current').placeholder = 'Enter current EMI';
+    $('#sud-new-emi').placeholder = 'Enter new EMI';
+    $$('.sud-custom-emi').forEach(function (input) { input.placeholder = 'Enter new EMI'; });
   }
 
   function applyCurrency() {
-    var currency = $('#sud-currency').value || L.defaultCurrency;
-    state.currency = currency;
+    state.currency = $('#sud-currency').value || '';
     updateCurrencyPlaceholders();
-    if (state.currentSource) refreshCurrentEmi();
+    refreshCurrentEmi();
     if (state.lastResult) renderResults(state.lastResult.result, state.lastResult.currentEmi, state.lastResult.schedule, state.lastResult.mode, true);
+    else maybeLiveCalculate();
   }
 
   function initCurrency() {
     var select = $('#sud-currency');
+    select.innerHTML = '<option value="">Select currency</option>';
     L.options.forEach(function (item) {
       var option = document.createElement('option');
-      option.value = item.code; option.textContent = item.label;
+      option.value = item.code;
+      option.textContent = item.label;
       select.appendChild(option);
     });
-    select.value = state.currency;
+    select.value = '';
     select.addEventListener('change', applyCurrency);
   }
 
   function syncSourceFromLoanInput() {
-    if (hasLoanDetails()) {
+    if (anyLoanDetail()) {
       state.currentSource = 'loan';
-    } else if (loanIds.some(function (id) { return num($(id).value) > 0; })) {
-      state.currentSource = 'loan';
-    } else if (!num(currentInput.value)) {
+    } else if (!String(currentInput.value || '').trim()) {
       state.currentSource = 'none';
     }
     refreshCurrentEmi();
     switchText.textContent = state.currentSource === 'loan'
-      ? 'Current EMI is calculated automatically from the 3 loan details.'
+      ? 'Loan details are the active Current EMI source.'
       : state.currentSource === 'emi'
-        ? 'Using the Current EMI you entered. Add loan details to unlock full loan-impact analysis.'
+        ? 'Current EMI is entered directly. Clear it to use loan details instead.'
         : 'Enter either all 3 loan details or only your Current EMI.';
+    scheduleLive();
   }
 
   function syncSourceFromCurrentInput() {
-    if (num(currentInput.value) > 0) {
+    if (String(currentInput.value || '').trim()) {
       state.currentSource = 'emi';
-    } else if (!loanIds.some(function (id) { return num($(id).value) > 0; })) {
+    } else if (!anyLoanDetail()) {
       state.currentSource = 'none';
     }
     refreshCurrentEmi();
     switchText.textContent = state.currentSource === 'emi'
-      ? 'Using the Current EMI you entered. Add loan details to unlock full loan-impact analysis.'
-      : 'Enter either all 3 loan details or only your Current EMI.';
+      ? 'Current EMI is entered directly. Clear it to use loan details instead.'
+      : state.currentSource === 'loan'
+        ? 'Loan details are the active Current EMI source.'
+        : 'Enter either all 3 loan details or only your Current EMI.';
+    scheduleLive();
   }
 
   function renderCustomRows() {
@@ -137,8 +168,8 @@
       var entry = state.customEntries[i] || {};
       var row = document.createElement('div');
       row.className = 'sud-custom-row';
-      row.innerHTML = '<div class="sud-field"><label>New EMI <button type="button" class="sud-q" data-faq="faq-new-emi" aria-label="Learn about New EMI">?</button></label><div class="sud-input-wrap"><input type="number" min="0.01" step="0.01" class="sud-custom-emi" inputmode="decimal" placeholder="600"></div></div>' +
-        '<div class="sud-field"><label>Starts From Month <button type="button" class="sud-q" data-faq="faq-change-month" aria-label="Learn about the change month">?</button></label><div class="sud-input-wrap"><input type="number" min="2" step="1" class="sud-custom-month" inputmode="numeric" placeholder="13"></div></div>' +
+      row.innerHTML = '<div class="sud-field"><label>New EMI <button type="button" class="sud-q" data-faq="faq-new-emi" aria-label="Learn about New EMI">?</button></label><div class="sud-input-wrap"><input type="number" min="0.01" step="0.01" class="sud-custom-emi" inputmode="decimal" placeholder="Enter new EMI"></div></div>' +
+        '<div class="sud-field"><label>Starts From Month <button type="button" class="sud-q" data-faq="faq-change-month" aria-label="Learn about the change month">?</button></label><div class="sud-input-wrap"><input type="number" min="2" step="1" class="sud-custom-month" inputmode="numeric" placeholder="Enter month"></div></div>' +
         '<button type="button" class="sud-icon-btn" aria-label="Remove this change" data-remove="' + i + '">×</button>';
       wrap.appendChild(row);
       $('.sud-custom-emi', row).value = entry.emi || '';
@@ -158,19 +189,30 @@
     captureCustomRows();
     $$('.sud-dynamic').forEach(function (el) { el.hidden = el.id !== 'sud-dynamic-' + state.method; });
     if (state.method === 'custom') renderCustomRows();
+    scheduleLive();
   }
 
   function collectSchedule(currentEmi) {
+    if (!state.method) throw new Error('Choose an EMI change method.');
     if (state.method === 'one-time') {
       var newEmi = num($('#sud-new-emi').value);
       var month = Math.floor(num($('#sud-change-month').value));
-      if (!newEmi || month < 2) throw new Error('Enter the new EMI and a starting month of 2 or later.');
+      if (!newEmi) { markInvalid($('#sud-new-emi')); throw new Error('Enter the new EMI.'); }
+      if (month < 2) { markInvalid($('#sud-change-month')); throw new Error('Enter a starting month of 2 or later.'); }
       return [{ startMonth: 1, emi: currentEmi }, { startMonth: month, emi: newEmi }];
     }
     if (state.method === 'periodic') {
-      var change = Number($('#sud-periodic-change').value);
-      if (!Number.isFinite(change) || change === 0 || change <= -100) throw new Error('Enter an EMI change percentage greater than -100% and not equal to 0%. Use a positive value to increase EMI or a negative value to decrease it.');
+      var changeRaw = String($('#sud-periodic-change').value || '').trim();
+      var change = Number(changeRaw);
+      if (!changeRaw || !Number.isFinite(change) || change === 0 || change <= -100) {
+        markInvalid($('#sud-periodic-change'));
+        throw new Error('Enter a periodic EMI change percentage. Use a positive value to increase EMI or a negative value to decrease it.');
+      }
       var frequency = $('#sud-periodic-frequency').value;
+      if (!frequency) {
+        markInvalid($('#sud-periodic-frequency'));
+        throw new Error('Select how often the EMI should change.');
+      }
       return E.buildPeriodic(currentEmi, change, frequency, 200);
     }
     captureCustomRows();
@@ -184,6 +226,24 @@
     return E.buildCustom(entries, currentEmi);
   }
 
+  function clearResults() {
+    $('#sud-results').classList.add('sud-results-empty');
+    $('#sud-kpi-payoff').textContent = '—';
+    $('#sud-kpi-time').textContent = '—';
+    $('#sud-kpi-interest').textContent = '—';
+    $('#sud-kpi-interest-delta .value').textContent = '—';
+    $('#sud-kpi-total').textContent = '—';
+    $('#sud-kpi-impact .value').textContent = '—';
+    $('#sud-insight').textContent = 'Complete the required inputs and choose an EMI change method to see the impact here.';
+    $('#sud-chart').innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="#64748b" font-size="13">Your loan impact will appear here.</text>';
+    $('#sud-donut').style.setProperty('--principal-share', '0%');
+    $('#sud-donut-center').textContent = '—';
+    $('#sud-legend').innerHTML = '<span>Complete inputs to see breakdown</span>';
+    $('#sud-schedule-body').innerHTML = '';
+    $('#sud-monthly-details').open = false;
+    state.lastResult = null;
+  }
+
   function renderScheduleRows(rows) {
     $('#sud-schedule-body').innerHTML = rows.map(function (r) {
       return '<tr><td>' + r.month + '</td><td>' + money(r.emi) + '</td><td>' + money(r.interest) + '</td><td>' + money(r.principal) + '</td><td>' + money(r.balance) + '</td></tr>';
@@ -192,7 +252,7 @@
 
   function renderResults(result, currentEmi, schedule, mode, keepPosition) {
     var wrap = $('#sud-results');
-    wrap.hidden = false;
+    wrap.classList.remove('sud-results-empty');
     var full = result && result.valid;
     var loanPrincipal = num($('#sud-loan').value), loanRate = num($('#sud-rate').value), loanYears = num($('#sud-tenure').value);
     var standard = full ? E.simulate(loanPrincipal, loanRate, [{ startMonth: 1, emi: E.standardEmi(loanPrincipal, loanRate, Math.round(loanYears * 12)) }], Math.max(1200, Math.round(loanYears * 12) + 24)) : null;
@@ -215,7 +275,7 @@
 
     var insight = $('#sud-insight');
     if (!full) {
-      insight.textContent = 'Your EMI plan is ready, but a full payoff and interest analysis needs Loan Amount, Interest Rate and Loan Tenure. Current EMI alone cannot determine the outstanding balance.';
+      insight.textContent = 'Your EMI plan is ready, but full payoff and interest analysis needs Loan Amount, Interest Rate and Loan Tenure.';
     } else {
       var deltaMonths = standard.months - result.months;
       if (deltaMonths >= 0) insight.textContent = 'Your EMI plan is estimated to repay the loan ' + deltaMonths + ' months earlier and save about ' + money(Math.abs(interestDelta)) + ' in interest.';
@@ -228,12 +288,12 @@
     $('#sud-legend').innerHTML = full ? '<span>Principal ' + money(loanPrincipal) + '</span><span>Interest ' + money(result.interest) + '</span>' : '<span>Complete loan details for breakdown</span>';
 
     if (full) drawChart(standard.rows, result.rows);
-    else $('#sud-chart').innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="#64748b" font-size="13">Enter all 3 loan details for the balance chart</text>';
+    else $('#sud-chart').innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="#64748b" font-size="13">Complete all 3 loan details for the balance chart</text>';
 
     $('#sud-schedule-body').innerHTML = '';
     $('#sud-monthly-details').open = false;
     state.lastResult = { result: result, standard: standard, schedule: schedule, currentEmi: currentEmi, mode: mode, currency: state.currency };
-    if (!keepPosition) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!keepPosition && !calculating) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function drawChart(standardRows, planRows) {
@@ -249,7 +309,7 @@
     var points = Math.max(standard.length, plan.length), step = points > 1 ? (width - pad * 2) / (points - 1) : 1;
     var max = Math.max.apply(null, standard.concat(plan).map(function (r) { return r.balance; })) || 1;
     function path(rows) { return rows.map(function (r, i) { var x = pad + i * step; var y = height - pad - (r.balance / max) * (height - pad * 2); return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); }).join(' '); }
-    svg.innerHTML = '<line x1="30" y1="180" x2="690" y2="180" stroke="#dce5f0"/><path d="' + path(standard) + '" fill="none" stroke="#9aaabd" stroke-width="3" stroke-linecap="round"/><path d="' + path(plan) + '" fill="none" stroke="#1557b0" stroke-width="3" stroke-linecap="round"/><text x="35" y="20" fill="#64748b" font-size="12">Outstanding balance</text><text x="510" y="202" fill="#64748b" font-size="12">Loan timeline</text><text x="520" y="25" fill="#64748b" font-size="12">Standard</text><line x1="475" y1="21" x2="510" y2="21" stroke="#9aaabd" stroke-width="3"/><text x="635" y="25" fill="#1557b0" font-size="12">Your plan</text><line x1="590" y1="21" x2="625" y2="21" stroke="#1557b0" stroke-width="3"/>';
+    svg.innerHTML = '<line x1="30" y1="180" x2="690" y2="180" stroke="#dce5f0"/><path d="' + path(standard) + '" fill="none" stroke="#9aaabd" stroke-width="3" stroke-linecap="round"/><path d="' + path(plan) + '" fill="none" stroke="#1557b0" stroke-width="3" stroke-linecap="round"/><text x="35" y="20" fill="#64748b" font-size="12">Outstanding balance</text><text x="520" y="25" fill="#64748b" font-size="12">Standard</text><line x1="475" y1="21" x2="510" y2="21" stroke="#9aaabd" stroke-width="3"/><text x="635" y="25" fill="#1557b0" font-size="12">Your plan</text><line x1="590" y1="21" x2="625" y2="21" stroke="#1557b0" stroke-width="3"/>';
   }
 
   function faqJump(id) {
@@ -262,6 +322,69 @@
     target.classList.add('sud-jump');
   }
 
+  function validateForCalculation() {
+    clearFieldErrors();
+    if (!state.currency) throw new Error('Select a currency first.');
+    if (state.currentSource === 'none') throw new Error('Enter either Loan Amount, Interest Rate and Loan Tenure, or enter your Current EMI.');
+    var currentEmi = refreshCurrentEmi();
+    if (!currentEmi) {
+      if (state.currentSource === 'loan') {
+        markInvalid($('#sud-loan')); markInvalid($('#sud-rate')); markInvalid($('#sud-tenure'));
+        throw new Error('Complete Loan Amount, Interest Rate and Loan Tenure.');
+      }
+      markInvalid(currentInput);
+      throw new Error('Enter your Current EMI.');
+    }
+    if (!state.method) throw new Error('Choose how your EMI will change.');
+    var schedule = collectSchedule(currentEmi);
+    if (state.currentSource !== 'loan') {
+      throw new Error('Current EMI is set, but full payoff and interest analysis also needs Loan Amount, Interest Rate and Loan Tenure.');
+    }
+    var principal = num($('#sud-loan').value), rate = num($('#sud-rate').value), months = Math.round(num($('#sud-tenure').value) * 12);
+    if (!principal || !months || rate < 0) throw new Error('Complete the 3 loan details for full analysis.');
+    var result = E.simulate(principal, rate, schedule, Math.max(1200, months + 24));
+    if (!result.valid) throw new Error(result.reason);
+    return { result: result, currentEmi: currentEmi, schedule: schedule, mode: state.currentSource };
+  }
+
+  function performCalculation(scrollToResult) {
+    if (calculating) return;
+    calculating = true;
+    try {
+      var data = validateForCalculation();
+      renderResults(data.result, data.currentEmi, data.schedule, data.mode, !scrollToResult);
+      setError('');
+    } catch (err) {
+      setError(err.message);
+      clearResults();
+    } finally {
+      calculating = false;
+    }
+  }
+
+  function maybeLiveCalculate() {
+    if (!state.currency || !state.method || state.currentSource === 'none') {
+      clearResults();
+      return;
+    }
+    var completeLoan = hasLoanDetails();
+    var currentEmi = refreshCurrentEmi();
+    var changeReady = false;
+    if (state.method === 'one-time') changeReady = num($('#sud-new-emi').value) > 0 && num($('#sud-change-month').value) >= 2;
+    if (state.method === 'periodic') changeReady = String($('#sud-periodic-change').value || '').trim() !== '' && Number($('#sud-periodic-change').value) !== 0;
+    if (state.method === 'custom') {
+      captureCustomRows();
+      changeReady = state.customEntries.length > 0 && state.customEntries.every(function (x) { return num(x.emi) > 0 && Math.floor(num(x.startMonth)) >= 2; });
+    }
+    if (completeLoan && currentEmi && changeReady) performCalculation(false);
+    else clearResults();
+  }
+
+  function scheduleLive() {
+    clearTimeout(liveTimer);
+    liveTimer = setTimeout(maybeLiveCalculate, 120);
+  }
+
   document.addEventListener('click', function (e) {
     var btn = e.target.closest('.sud-q');
     if (btn) { e.preventDefault(); faqJump(btn.dataset.faq); }
@@ -272,6 +395,7 @@
       state.method = btn.dataset.method;
       $$('.sud-method').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
       setDynamic();
+      setError('');
     });
   });
 
@@ -280,6 +404,7 @@
     if (state.customCount < 5) { state.customCount += 1; renderCustomRows(); }
   });
 
+  $('#sud-custom-rows').addEventListener('input', scheduleLive);
   $('#sud-custom-rows').addEventListener('click', function (e) {
     var btn = e.target.closest('[data-remove]');
     if (!btn) return;
@@ -288,31 +413,15 @@
     state.customEntries.splice(index, 1);
     state.customCount = Math.max(1, state.customCount - 1);
     renderCustomRows();
+    scheduleLive();
   });
 
   loanIds.forEach(function (id) { $(id).addEventListener('input', syncSourceFromLoanInput); });
   currentInput.addEventListener('input', syncSourceFromCurrentInput);
+  $$('.sud-dynamic input, .sud-dynamic select').forEach(function (el) { el.addEventListener('input', scheduleLive); el.addEventListener('change', scheduleLive); });
 
   $('#sud-calculate').addEventListener('click', function () {
-    try {
-      var mode = routeMode();
-      var currentEmi = refreshCurrentEmi();
-      if (!currentEmi) throw new Error('Enter either all 3 loan details or your Current EMI.');
-      if (mode === 'loan' && !hasLoanDetails()) throw new Error('Complete Loan Amount, Interest Rate and Loan Tenure.');
-      var schedule = collectSchedule(currentEmi);
-      if (mode === 'loan') {
-        var principal = num($('#sud-loan').value), rate = num($('#sud-rate').value), months = Math.round(num($('#sud-tenure').value) * 12);
-        var result = E.simulate(principal, rate, schedule, Math.max(1200, months + 24));
-        if (!result.valid) throw new Error(result.reason);
-        renderResults(result, currentEmi, schedule, mode, false);
-      } else {
-        renderResults({ valid: false }, currentEmi, schedule, mode, false);
-      }
-      $('#sud-error').hidden = true;
-    } catch (err) {
-      $('#sud-error').textContent = err.message;
-      $('#sud-error').hidden = false;
-    }
+    performCalculation(true);
   });
 
   $('#sud-monthly-details').addEventListener('toggle', function () {
@@ -337,6 +446,8 @@
   $('#sud-backtop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 
   initCurrency();
+  updateCurrencyPlaceholders();
   refreshCurrentEmi();
   setDynamic();
+  clearResults();
 }());
