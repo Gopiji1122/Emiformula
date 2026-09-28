@@ -88,29 +88,28 @@
 <div class="sud-section-title">
 <div>
 <h2 id="sud-loan-heading">1. Current Loan / EMI</h2>
-<p>Enter either all 3 loan details or only your Current EMI.</p>
+<p>Enter your loan amount, interest rate and tenure. Current EMI is calculated automatically.</p>
 </div>
 </div>
 
 <div class="sud-grid">
 <div class="sud-field">
-<label for="sud-loan">Loan Amount <button aria-label="Learn about Loan Amount" class="sud-q" data-faq="faq-loan-amount" type="button">?</button></label>
+<label for="sud-loan">Loan Amount <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about Loan Amount" class="sud-q" data-faq="faq-loan-amount" type="button">?</button></label>
 <div class="sud-input-wrap"><input id="sud-loan" inputmode="decimal" min="1" placeholder="Enter loan amount" step="1000" type="number"/></div>
 </div>
 <div class="sud-field">
-<label for="sud-rate">Interest Rate <button aria-label="Learn about Interest Rate" class="sud-q" data-faq="faq-interest-rate" type="button">?</button></label>
+<label for="sud-rate">Interest Rate <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about Interest Rate" class="sud-q" data-faq="faq-interest-rate" type="button">?</button></label>
 <div class="sud-input-wrap"><input id="sud-rate" inputmode="decimal" max="100" min="0" placeholder="Enter interest rate" step="0.01" type="number"/></div>
 </div>
 <div class="sud-field">
-<label for="sud-tenure">Loan Tenure <button aria-label="Learn about Loan Tenure" class="sud-q" data-faq="faq-loan-tenure" type="button">?</button></label>
+<label for="sud-tenure">Loan Tenure <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about Loan Tenure" class="sud-q" data-faq="faq-loan-tenure" type="button">?</button></label>
 <div class="sud-input-wrap sud-input-with-suffix"><input id="sud-tenure" inputmode="numeric" max="100" min="1" placeholder="Enter years" step="1" type="number"/><span class="sud-input-suffix" aria-hidden="true">Years</span></div>
 </div>
 </div>
 <div class="sud-current">
 <label for="sud-current"><strong style="font-size:.96rem">Current EMI <button aria-label="Learn about Current EMI" class="sud-q" data-faq="faq-current-emi" type="button">?</button></strong></label>
-<div class="sud-input-wrap"><input id="sud-current" inputmode="decimal" min="0.01" placeholder="Enter current EMI" step="0.01" type="number"/></div>
-<div class="sud-help" id="sud-current-help">If you enter loan details above, this field becomes calculated automatically. If you enter only Current EMI, it becomes the final EMI used by the calculator.</div>
-<div id="sud-current-display" style="margin-top:10px"><strong id="sud-current-value">—</strong><small>Calculated from your loan details.</small></div>
+<div class="sud-input-wrap"><input aria-readonly="true" id="sud-current" inputmode="decimal" readonly="readonly" step="0.01" type="number"/></div>
+<div class="sud-help" id="sud-current-help">Calculated automatically from your Loan Amount, Interest Rate and Loan Tenure.</div>
 </div>
 </section><section aria-labelledby="sud-method-heading" class="sud-card">
 <div class="sud-section-title">
@@ -123,15 +122,15 @@
 </div>
 <div class="sud-dynamic" id="sud-dynamic-one-time">
 <div class="sud-grid">
-<div class="sud-field"><label for="sud-new-emi">New EMI <button aria-label="Learn about New EMI" class="sud-q" data-faq="faq-new-emi" type="button">?</button></label><div class="sud-input-wrap"><input id="sud-new-emi" inputmode="decimal" min="0.01" placeholder="Enter new EMI" step="0.01" type="number"/></div></div>
-<div class="sud-field"><label for="sud-change-month">Starts From Month <button aria-label="Learn about the change month" class="sud-q" data-faq="faq-change-month" type="button">?</button></label><div class="sud-input-wrap"><input id="sud-change-month" inputmode="numeric" min="2" placeholder="Enter month" step="1" type="number"/></div></div>
+<div class="sud-field"><label for="sud-new-emi">New EMI <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about New EMI" class="sud-q" data-faq="faq-new-emi" type="button">?</button></label><div class="sud-input-wrap"><input id="sud-new-emi" inputmode="decimal" min="0.01" placeholder="Enter new EMI" step="0.01" type="number"/></div></div>
+<div class="sud-field"><label for="sud-change-month">Starts From Month <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about the change month" class="sud-q" data-faq="faq-change-month" type="button">?</button></label><div class="sud-input-wrap"><input id="sud-change-month" inputmode="numeric" min="2" placeholder="Enter month" step="1" type="number"/></div></div>
 </div>
 <p class="sud-help">The calculator automatically identifies Step-Up or Step-Down by comparing your new EMI with your Current EMI.</p>
 </div>
 <div class="sud-dynamic" hidden="" id="sud-dynamic-periodic">
 <div class="sud-grid">
-<div class="sud-field"><label for="sud-periodic-change">EMI Change % <button aria-label="Learn about periodic EMI change" class="sud-q" data-faq="faq-periodic" type="button">?</button></label><div class="sud-input-wrap"><input id="sud-periodic-change" inputmode="decimal" placeholder="Enter percentage" step="0.01" type="number"/></div><div class="sud-help">Use +10% to increase EMI or -10% to decrease it.</div></div>
-<div class="sud-field"><label for="sud-periodic-frequency">Frequency <button aria-label="Learn about EMI change frequency" class="sud-q" data-faq="faq-periodic" type="button">?</button></label><div class="sud-input-wrap"><select id="sud-periodic-frequency"><option value="">Select frequency</option><option value="yearly">Every Year</option><option value="quarterly">Every 3 Months</option><option value="monthly">Every Month</option></select></div></div>
+<div class="sud-field"><label for="sud-periodic-change">EMI Change % <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about periodic EMI change" class="sud-q" data-faq="faq-periodic" type="button">?</button></label><div class="sud-input-wrap"><input id="sud-periodic-change" inputmode="decimal" placeholder="Enter percentage" step="0.01" type="number"/></div><div class="sud-help">Use +10% to increase EMI or -10% to decrease it.</div></div>
+<div class="sud-field"><label for="sud-periodic-frequency">Frequency <span class="sud-required" aria-hidden="true">*</span> <button aria-label="Learn about EMI change frequency" class="sud-q" data-faq="faq-periodic" type="button">?</button></label><div class="sud-input-wrap"><select id="sud-periodic-frequency"><option value="">Select frequency</option><option value="yearly">Every Year</option><option value="quarterly">Every 3 Months</option><option value="monthly">Every Month</option></select></div></div>
 </div>
 </div>
 <div class="sud-dynamic" hidden="" id="sud-dynamic-custom">
@@ -142,13 +141,13 @@
 <div class="sud-calc-wrap"><button class="sud-calc-btn" id="sud-calculate" type="button">Calculate EMI Impact →</button></div>
 <p class="sud-error" hidden="" id="sud-error" role="alert"></p>
 </section></div></div><section aria-labelledby="sud-faq-heading" class="sud-card sud-faq">
-<div class="sud-section-title"><div><h2 id="sud-faq-heading">Frequently Asked Questions</h2><p>Click any ? beside an input or result to jump directly to its explanation.</p></div></div>
+<div class="sud-section-title"><div><h2 id="sud-faq-heading">Frequently Asked Questions</h2><p>Fields marked with * are required. Click any ? beside an input or result to jump directly to its explanation.</p></div></div>
 <div class="sud-faq-list">
 <details class="sud-faq-item" id="faq-loan-amount"><summary>What is Loan Amount?</summary><p>Loan Amount is the principal amount borrowed at the start of the loan. It is used with the interest rate and tenure to calculate the standard EMI and loan balance.</p></details>
 <details class="sud-faq-item" id="faq-interest-rate"><summary>What is Interest Rate?</summary><p>Interest Rate is the annual rate used to calculate interest on the outstanding loan balance. Enter the annual rate that applies to your loan.</p></details>
 <details class="sud-faq-item" id="faq-loan-tenure"><summary>What is Loan Tenure?</summary><p>Loan Tenure is the planned repayment period. This calculator converts years into monthly payment periods for the loan calculation.</p></details>
 <details class="sud-faq-item" id="faq-currency"><summary>Why is currency selectable?</summary><p>Currency changes how amounts are displayed and formatted. It does not change the underlying loan mathematics. The calculator keeps the calculation values currency-neutral and applies the selected currency only to the displayed amounts.</p></details>
-<details class="sud-faq-item" id="faq-current-emi"><summary>What is Current EMI?</summary><p>Current EMI is the regular payment you are making before changing your EMI. You can let the calculator derive it from loan amount, interest rate and tenure, or enter your known EMI directly.</p></details>
+<details class="sud-faq-item" id="faq-current-emi"><summary>What is Current EMI?</summary><p>Current EMI is the regular payment before your EMI change. It is calculated automatically from Loan Amount, Interest Rate and Loan Tenure.</p></details>
 <details class="sud-faq-item" id="faq-new-emi"><summary>What is New EMI?</summary><p>New EMI is the payment you plan to make after the selected change point. If it is higher than the Current EMI, the calculator treats it as a Step-Up. If it is lower, it treats it as a Step-Down.</p></details>
 <details class="sud-faq-item" id="faq-change-month"><summary>What does “Starts From Month” mean?</summary><p>It is the first payment month in which the new EMI applies. For example, Month 13 means the first 12 months use the Current EMI and the new EMI starts with payment 13.</p></details>
 <details class="sud-faq-item" id="faq-periodic"><summary>What is a Periodic EMI Change?</summary><p>A periodic change applies the entered percentage repeatedly at the selected frequency. Use a positive percentage to increase EMI and a negative percentage to decrease it.</p></details>
@@ -162,7 +161,6 @@
 <details class="sud-faq-item" id="faq-monthly-impact"><summary>What is Monthly EMI Impact?</summary><p>It is the difference between your selected EMI and the Current EMI. It shows how much more or less you plan to pay each month after the change.</p></details>
 <details class="sud-faq-item" id="faq-payoff"><summary>How is loan payoff time calculated?</summary><p>The calculator simulates each monthly payment against the outstanding balance. Interest is calculated from the balance for that month, and the selected EMI schedule is applied when each change becomes active.</p></details>
 <details class="sud-faq-item" id="faq-interest"><summary>How is interest saved calculated?</summary><p>The calculator compares the estimated total interest under the standard EMI plan with the estimated interest under your selected EMI schedule. A positive difference is shown as interest saved; a negative difference is shown as additional interest.</p></details>
-<details class="sud-faq-item" id="faq-limit"><summary>What can I calculate with only my Current EMI?</summary><p>With Current EMI alone, the calculator can show the EMI change amount, percentage change, Step-Up or Step-Down direction, new EMI and change timing. Loan payoff time, total interest, interest saved and total repayment require Loan Amount, Interest Rate and remaining Loan Tenure because those values determine the outstanding balance and interest calculation.</p></details>
 </div>
 </section>
 </div>
