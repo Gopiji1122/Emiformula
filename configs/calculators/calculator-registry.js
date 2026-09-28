@@ -18,6 +18,14 @@
       url: "/Emiformula/calculators/personal-loan-calculator.html",
       status: "active"
     },
+    "step-up-step-down-emi-calculator": {
+      id: "step-up-step-down-emi-calculator",
+      name: "Step-Up / Step-Down EMI Calculator",
+      category: "EMI Calculators",
+      description: "Compare one-time, periodic or custom EMI changes and their effect on payoff time, interest and repayment.",
+      url: "/Emiformula/calculators/step-up-step-down-emi-calculator.html",
+      status: "active"
+    },
     "compound-interest-calculator": {
       id: "compound-interest-calculator",
       name: "Compound Interest Calculator",
