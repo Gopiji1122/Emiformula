@@ -76,7 +76,7 @@
       var emi = E.standardEmi(principal, rate, Math.round(years * 12));
       currentInput.value = Math.round(emi * 100) / 100;
       if (display) display.textContent = money(emi) + ' / month';
-      $('#sud-current-help').textContent = 'Calculated automatically from your Loan Amount, Interest Rate and Loan Tenure.';
+      $('#sud-current-help').textContent = 'Calculated automatically from the loan amount, annual rate and repayment period.';
       return emi;
     }
     currentInput.value = '';

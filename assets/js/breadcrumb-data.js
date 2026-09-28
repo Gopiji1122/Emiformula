@@ -9,6 +9,10 @@
       { title: "EMI", url: "/Emiformula/categories/emi.html" },
       { title: "EMI Calculator" }
     ],
+    "/Emiformula/calculators/step-up-step-down-emi-calculator.html": [
+      { title: "EMI", url: "/Emiformula/categories/emi.html" },
+      { title: "Step-Up / Step-Down EMI Calculator" }
+    ],
     "/Emiformula/calculators/personal-loan-calculator.html": [
       { title: "Loan", url: "/Emiformula/categories/loan.html" },
       { title: "Personal Loan Calculator" }
