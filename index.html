@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EMIFORMULA | EMI, Loan & Financial Calculators</title>
-  <meta name="description" content="EMIFORMULA offers practical EMI, loan and financial calculators with simple guides for borrowing, repayment and long-term financial planning.">
+  <meta name="description" content="Calculate EMI, loan interest, repayment cost and financial scenarios with transparent assumptions and detailed results from EMIFORMULA.">
   <link rel="canonical" href="https://emiformula.com/">
 
   <link rel="stylesheet" href="assets/css/style.css">
@@ -30,33 +30,39 @@
 
   <main class="home-main">
     <div class="container">
-      <section class="home-hero" aria-labelledby="home-hero-title">
-        <div class="home-eyebrow">Calculate • Compare • Plan</div>
-        <h1 id="home-hero-title">Make loan and financial numbers easier to understand.</h1>
-        <p>Use focused calculators for EMI, loans and financial planning, then explore the relevant category or guide when you want more context.</p>
+
+      <section class="home-hero home-hero-new" aria-labelledby="home-hero-title">
+        <div class="home-eyebrow">Calculate • Compare • Understand</div>
+        <h1 id="home-hero-title">Understand the numbers behind your financial decisions.</h1>
+        <p>We build financial calculators that help you calculate, compare and explore loans, EMI, interest, repayment and what-if scenarios.</p>
         <div class="home-hero-actions">
-          <a class="home-hero-button primary" href="calculators/emi-calculator.html">Start with an EMI Calculator</a>
-          <a class="home-hero-button secondary" href="guides/compound-interest-guide.html">Read a Guide</a>
+          <a class="home-hero-button primary" href="calculators/emi-calculator.html">Explore Calculators</a>
+          <a class="home-hero-button secondary" href="#how-we-calculate">How We Calculate</a>
+        </div>
+        <div class="home-trust-line">
+          <span>Independent calculator platform</span>
+          <span>Transparent assumptions</span>
+          <span>No lender recommendations</span>
         </div>
       </section>
 
       <section aria-labelledby="tools-title">
         <div class="home-section-head">
           <div>
-            <p class="home-kicker">EMIFORMULA tools</p>
-            <h2 id="tools-title">Choose a calculator by category</h2>
+            <p class="home-kicker">Our calculators</p>
+            <h2 id="tools-title">Calculate what matters</h2>
           </div>
-          <p>Each category groups related calculators, while practical guides are available where they add useful context.</p>
+          <p>We build tools around the financial questions you actually need to answer.</p>
         </div>
 
-        <div class="home-tool-grid">
+        <div class="home-tool-grid home-tool-grid-new">
           <article class="home-tool-card home-tool-emi">
             <div class="home-tool-top">
               <span class="home-tool-icon" aria-hidden="true">₹</span>
               <span class="home-tool-label">EMI</span>
             </div>
             <h3>Plan your monthly loan payment</h3>
-            <p>Estimate EMI, total interest, repayment, balance over time and savings from extra payments.</p>
+            <p>Calculate EMI, total interest, total repayment and the effect of changing your loan assumptions.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/emi-calculator.html">Open EMI Calculator <span aria-hidden="true">→</span></a>
               <a class="home-action-primary" href="calculators/step-up-step-down-emi-calculator.html">Step-Up / Step-Down EMI <span aria-hidden="true">→</span></a>
@@ -70,21 +76,20 @@
               <span class="home-tool-label">LOAN</span>
             </div>
             <h3>See the wider cost of borrowing</h3>
-            <p>Explore amount received, EMI, interest, fees, repayment cost, tenure changes and extra payments.</p>
+            <p>Explore EMI, interest, repayment, fees and repayment scenarios instead of looking at the monthly payment alone.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/personal-loan-calculator.html">Open Personal Loan Calculator <span aria-hidden="true">→</span></a>
               <a class="home-action-secondary" href="guides/personal-loan-guide.html">Read Personal Loan Guide</a>
             </div>
           </article>
 
-
           <article class="home-tool-card home-tool-loan">
             <div class="home-tool-top">
               <span class="home-tool-icon" aria-hidden="true">⇄</span>
               <span class="home-tool-label">LOAN SWITCH</span>
             </div>
-            <h3>Check the cost of switching your loan</h3>
-            <p>Compare your current loan with a new offer, switching costs, interest impact and the estimated recovery point.</p>
+            <h3>Compare the cost of switching</h3>
+            <p>Compare your current loan with a proposed replacement and account for switching costs when the calculator supports them.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/balance-transfer-calculator.html">Open Balance Transfer Calculator <span aria-hidden="true">→</span></a>
               <a class="home-action-secondary" href="guides/balance-transfer-guide.html">Read Balance Transfer Guide</a>
@@ -96,8 +101,8 @@
               <span class="home-tool-icon" aria-hidden="true">⌁</span>
               <span class="home-tool-label">FINANCIAL</span>
             </div>
-            <h3>Explore long-term compound growth</h3>
-            <p>Model contributions, return assumptions, compounding frequency, inflation and future value.</p>
+            <h3>Explore growth through compounding</h3>
+            <p>Model starting amounts, contributions, rates, compounding frequency and the resulting future value.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/compound-interest-calculator.html">Open Compound Interest Calculator <span aria-hidden="true">→</span></a>
               <a class="home-action-secondary" href="guides/compound-interest-guide.html">Read Compound Interest Guide</a>
@@ -106,20 +111,213 @@
         </div>
       </section>
 
-      <section class="home-feature-strip" aria-label="Why use EMIFORMULA">
-        <div class="home-feature"><strong>Interactive calculations</strong><span>Use sliders for quick changes and manual inputs when you need exact values.</span></div>
-        <div class="home-feature"><strong>Results you can explore</strong><span>See totals, comparisons, charts, repayment details and growth over time.</span></div>
-        <div class="home-feature"><strong>Learn after calculating</strong><span>Matching guides explain the important numbers in straightforward language.</span></div>
+      <section class="home-loan-example" aria-labelledby="loan-example-title">
+        <div class="home-section-head">
+          <div>
+            <p class="home-kicker">A real calculation example</p>
+            <h2 id="loan-example-title">What does a ₹15 lakh loan actually cost?</h2>
+          </div>
+          <p>Here is a simple fixed-rate example using the same kind of calculation our loan tools perform.</p>
+        </div>
+
+        <div class="home-example-grid">
+          <div class="home-example-inputs">
+            <div class="home-example-number">
+              <span>Loan amount</span>
+              <strong>₹15,00,000</strong>
+            </div>
+            <div class="home-example-number">
+              <span>Annual interest rate</span>
+              <strong>11.5%</strong>
+            </div>
+            <div class="home-example-number">
+              <span>Loan tenure</span>
+              <strong>3 years</strong>
+            </div>
+          </div>
+
+          <div class="home-example-result">
+            <span class="home-result-label">Estimated monthly EMI</span>
+            <strong>₹49,464</strong>
+            <p>36 monthly payments under a standard reducing-balance calculation.</p>
+          </div>
+        </div>
+
+        <div class="home-example-stats">
+          <div><span>Loan amount</span><strong>₹15,00,000</strong></div>
+          <div><span>Total interest</span><strong>₹2,80,704</strong></div>
+          <div><span>Total repayment</span><strong>₹17,80,704</strong></div>
+        </div>
+
+        <div class="home-example-note">
+          <strong>What does this tell us?</strong>
+          <p>You borrow ₹15 lakh, but the scheduled payments add up to about ₹17.81 lakh. The difference is approximately ₹2.81 lakh in interest under these assumptions. That is why we show more than your EMI.</p>
+          <small>Figures are rounded. This example assumes a fixed 11.5% annual rate, monthly payments and a standard reducing-balance loan. Fees, taxes, insurance and lender-specific charges are not included.</small>
+        </div>
       </section>
 
-      <section class="home-info-band" aria-labelledby="home-info-title">
-        <div>
-          <p class="home-kicker">Simple by design</p>
-          <h2 id="home-info-title">Calculate first. Understand the result. Then compare scenarios.</h2>
-          <p>EMIFORMULA is built around focused tools rather than a single oversized calculator. Change one assumption at a time and see how the result changes.</p>
+      <section class="home-breakdown-section" aria-labelledby="breakdown-title">
+        <div class="home-section-head">
+          <div>
+            <p class="home-kicker">Beyond the EMI</p>
+            <h2 id="breakdown-title">See where your money goes</h2>
+          </div>
+          <p>A monthly payment is only one part of a loan. We show the other numbers that help explain the cost.</p>
         </div>
-        <a class="home-info-link" href="pages/about.html">Learn about EMIFORMULA <span aria-hidden="true">→</span></a>
+
+        <div class="home-breakdown-grid">
+          <article><strong>Principal</strong><p>The amount you borrow.</p></article>
+          <article><strong>Interest</strong><p>The borrowing cost calculated over the repayment period.</p></article>
+          <article><strong>Total repayment</strong><p>The combined amount of the scheduled payments.</p></article>
+          <article><strong>Outstanding balance</strong><p>The amount that remains as payments are made.</p></article>
+          <article><strong>Payoff time</strong><p>How long the selected repayment plan takes to clear the balance.</p></article>
+        </div>
       </section>
+
+      <section class="home-scenario-section" aria-labelledby="scenario-title">
+        <div class="home-scenario-copy">
+          <p class="home-kicker">Change the numbers</p>
+          <h2 id="scenario-title">What happens when your assumptions change?</h2>
+          <p>Financial decisions rarely come with one fixed setup. Change a relevant input and compare the resulting payment, interest, total cost, balance or payoff time.</p>
+          <ul>
+            <li>Loan amount</li>
+            <li>Interest rate</li>
+            <li>Loan tenure</li>
+            <li>Down payment</li>
+            <li>Extra monthly payment</li>
+            <li>One-time prepayment</li>
+            <li>Annual additional payment</li>
+            <li>Fees and other supported costs</li>
+          </ul>
+        </div>
+        <div class="home-scenario-card">
+          <span>We help you ask</span>
+          <strong>“What if I change this?”</strong>
+          <p>Compare the original calculation with the scenario you are considering instead of relying on a single number.</p>
+        </div>
+      </section>
+
+      <section class="home-prepayment-section" aria-labelledby="prepayment-title">
+        <div>
+          <p class="home-kicker">Prepayment & early payoff</p>
+          <h2 id="prepayment-title">Paying extra can change the repayment path</h2>
+          <p>When you put additional money toward a loan, the amount and timing can affect the remaining balance and future interest. Our planned prepayment tools will let you test monthly extras, annual payments and one-time lump sums.</p>
+        </div>
+        <div class="home-prepayment-points">
+          <span>Interest saved</span>
+          <span>Time saved</span>
+          <span>New payoff date</span>
+          <span>Remaining balance</span>
+        </div>
+      </section>
+
+      <section class="home-question-section" aria-labelledby="question-title">
+        <div class="home-section-head">
+          <div>
+            <p class="home-kicker">Built around real questions</p>
+            <h2 id="question-title">What are you trying to figure out?</h2>
+          </div>
+          <p>We are building calculators around decisions people face before, during and after borrowing.</p>
+        </div>
+
+        <div class="home-question-grid">
+          <a href="calculators/emi-calculator.html"><strong>What will my EMI be?</strong><span>Calculate the scheduled monthly payment and total interest.</span></a>
+          <a href="calculators/personal-loan-calculator.html"><strong>What will this loan really cost?</strong><span>Look beyond EMI at interest, repayment and supported fees.</span></a>
+          <a href="calculators/balance-transfer-calculator.html"><strong>Does switching my loan change the cost?</strong><span>Compare the current loan with a replacement and its switching costs.</span></a>
+          <a href="#future-calculators"><strong>What if I pay the loan early?</strong><span>Explore our planned prepayment and payoff tools.</span></a>
+          <a href="#future-calculators"><strong>Which loan should I compare?</strong><span>Our planned comparison tools will put two borrowing options side by side.</span></a>
+          <a href="#future-calculators"><strong>Should I rent or buy?</strong><span>Explore the assumptions behind the two choices with our planned calculator.</span></a>
+        </div>
+      </section>
+
+      <section class="home-how-section" id="how-we-calculate" aria-labelledby="how-title">
+        <div class="home-section-head">
+          <div>
+            <p class="home-kicker">Our calculation approach</p>
+            <h2 id="how-title">We show the path from your inputs to the result</h2>
+          </div>
+          <p>We want you to understand the calculation rather than treat the result as a number that appeared by magic.</p>
+        </div>
+
+        <div class="home-method-grid">
+          <article><span>01</span><strong>Inputs</strong><p>We define what each field means and use the values you provide.</p></article>
+          <article><span>02</span><strong>Formula</strong><p>We apply the mathematical method used by the calculator.</p></article>
+          <article><span>03</span><strong>Schedule</strong><p>Where applicable, we build the repayment or growth schedule from the result.</p></article>
+          <article><span>04</span><strong>Result</strong><p>We show the important totals, comparisons and scenario effects.</p></article>
+          <article><span>05</span><strong>Assumptions</strong><p>We identify important assumptions and limitations instead of hiding them.</p></article>
+        </div>
+      </section>
+
+      <section class="home-amortization-section" aria-labelledby="amortization-title">
+        <div>
+          <p class="home-kicker">Repayment schedule</p>
+          <h2 id="amortization-title">Follow the balance throughout the loan</h2>
+          <p>For supported loan calculators, an amortization schedule can show how each payment is divided between principal and interest and how the outstanding balance changes.</p>
+        </div>
+        <div class="home-amortization-card">
+          <div><span>Payment 1</span><strong>₹49,464</strong></div>
+          <div><span>Principal</span><strong>₹35,089</strong></div>
+          <div><span>Interest</span><strong>₹14,375</strong></div>
+          <div><span>Balance after payment 1</span><strong>₹14,64,911</strong></div>
+          <small>Example based on the ₹15 lakh, 11.5%, 3-year loan above. Values are rounded.</small>
+        </div>
+      </section>
+
+      <section class="home-future-section" id="future-calculators" aria-labelledby="future-title">
+        <div class="home-section-head">
+          <div>
+            <p class="home-kicker">What's coming</p>
+            <h2 id="future-title">We're building tools around real financial decisions</h2>
+          </div>
+          <p>Many of these tools will share calculation engines while answering different questions.</p>
+        </div>
+
+        <div class="home-future-grid">
+          <article><h3>Home & Mortgage</h3><p>Home Loan / Mortgage, Prepayment, Payoff, Refinance Break-Even, Affordability, Down Payment, Amortization and 15-Year vs 30-Year Mortgage.</p></article>
+          <article><h3>Loans & Debt</h3><p>Loan Comparison, Prepayment, Foreclosure / Early Payoff, Affordability, Tenure and Debt Consolidation.</p></article>
+          <article><h3>Vehicle Finance</h3><p>Car Loan, Extra Payments, Prepayment, Lease vs Buy and Negative Equity.</p></article>
+          <article><h3>Financial Growth</h3><p>Daily Compound Interest, Recurring Investment, Step-Up Investment, Lump Sum vs Recurring, Inflation and Rent vs Buy.</p></article>
+        </div>
+      </section>
+
+      <section class="home-guides-section" aria-labelledby="guides-title">
+        <div class="home-section-head">
+          <div>
+            <p class="home-kicker">Learn after calculating</p>
+            <h2 id="guides-title">Understand the financial idea behind the number</h2>
+          </div>
+          <p>Our guides explain the concepts used by our calculators in practical language.</p>
+        </div>
+        <div class="home-guides-grid">
+          <a href="guides/emi-guide.html"><strong>EMI Guide</strong><span>Understand EMI, principal, interest and repayment schedules.</span></a>
+          <a href="guides/personal-loan-guide.html"><strong>Personal Loan Guide</strong><span>Understand repayment, borrowing cost and supported fee scenarios.</span></a>
+          <a href="guides/balance-transfer-guide.html"><strong>Balance Transfer Guide</strong><span>Understand switching costs, interest differences and break-even calculations.</span></a>
+          <a href="guides/compound-interest-guide.html"><strong>Compound Interest Guide</strong><span>Understand how compounding affects growth over time.</span></a>
+        </div>
+      </section>
+
+      <section class="home-trust-section" aria-labelledby="trust-title">
+        <div class="home-trust-copy">
+          <p class="home-kicker">Our approach</p>
+          <h2 id="trust-title">We calculate. You decide.</h2>
+          <p>We don't use our calculators to recommend a lender or push you toward a particular financial product. We provide calculations based on the inputs and assumptions shown by each tool.</p>
+          <p>Actual loan products can differ because of lender policies, fees, taxes, rate changes, payment timing and contractual terms. For important financial decisions, check the actual terms provided by the relevant lender or financial institution.</p>
+        </div>
+        <div class="home-trust-list">
+          <div><strong>Transparent</strong><span>See important inputs and assumptions.</span></div>
+          <div><strong>Scenario-based</strong><span>Change relevant numbers and compare outcomes.</span></div>
+          <div><strong>Detailed</strong><span>Go beyond EMI to interest, repayment and balance.</span></div>
+          <div><strong>Independent</strong><span>We are a calculator platform, not a lender marketplace.</span></div>
+        </div>
+      </section>
+
+      <section class="home-final-cta" aria-labelledby="final-cta-title">
+        <p class="home-kicker">Start with your numbers</p>
+        <h2 id="final-cta-title">Calculate. Compare. Understand.</h2>
+        <p>Choose a calculator and explore the numbers behind your financial decision.</p>
+        <a class="home-hero-button primary" href="calculators/emi-calculator.html">Explore EMIFORMULA Calculators <span aria-hidden="true">→</span></a>
+      </section>
+
     </div>
   </main>
 
