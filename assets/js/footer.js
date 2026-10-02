@@ -20,7 +20,7 @@
     root.querySelectorAll("a[data-site-path]").forEach(function (link) {
       var path = link.getAttribute("href") || "/";
       if (/^\/Emiformula(?:\/|$)/i.test(path)) {
-        path = path.replace(/^\/Emiformula/i, "") || "/";
+        path = path.replace(/^\/i, "") || "/";
       }
       if (!path.startsWith("/")) path = "/" + path;
       link.setAttribute("href", siteRoot + path);

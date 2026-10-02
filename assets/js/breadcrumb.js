@@ -136,7 +136,7 @@
       document.createElement("a");
 
     homeLink.href =
-      "/Emiformula/";
+      "/";
 
     homeLink.textContent =
       "Home";

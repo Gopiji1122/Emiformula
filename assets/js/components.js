@@ -163,7 +163,7 @@
     var list = placeholder.querySelector(".breadcrumb-list");
 
     if (breadcrumbData.length && list) {
-      list.innerHTML = '<li class="breadcrumb-item"><a href="/Emiformula/">Home</a></li>';
+      list.innerHTML = '<li class="breadcrumb-item"><a href="/">Home</a></li>';
       breadcrumbData.forEach(function (item, index) {
         var sep = document.createElement("li");
         sep.className = "breadcrumb-separator";

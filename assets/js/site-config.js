@@ -4,7 +4,7 @@ window.EMIFORMULA_CONFIG = Object.freeze({
   pathPrefix: "/",
 
   domain:
-    "https://gopiji1122.github.io",
+    "https://emiformula.com",
 
   baseUrl:
     "https://emiformula.com",
