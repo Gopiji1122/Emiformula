@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loan Comparison Calculator | Compare Loan Cost & Payments</title>
+  <meta name="description" content="Compare two loans by payment, interest, fees, total repayment, total estimated cost, and payoff time.">
+  <link rel="canonical" href="https://emiformula.com/calculators/loan-comparison-calculator.html">
+  <link rel="stylesheet" href="../assets/css/loan-comparison.css">
+  <link rel="stylesheet" href="../assets/css/footer.css">
+</head>
+<body>
+  <main class="lc-page">
+    <header class="lc-hero">
+      <div class="lc-shell">
+        <p class="lc-eyebrow">Loan comparison</p>
+        <h1>Compare Two Loans Side by Side</h1>
+        <p class="lc-intro">Enter the numbers for Loan A and Loan B. We calculate the payment, interest, fees, total cost, and estimated payoff time using the same calculation method for both.</p>
+      </div>
+    </header>
+
+    <section class="lc-shell lc-main" aria-label="Loan comparison calculator">
+      <form id="loanComparisonForm" class="lc-form" novalidate>
+        <div class="lc-grid">
+          <section class="lc-card loan-card" data-loan="A">
+            <div class="lc-card-head">
+              <span class="lc-badge">Loan A</span>
+              <h2>First loan</h2>
+            </div>
+            <div class="lc-fields">
+              <label>Loan amount <span>*</span><input name="aAmount" type="number" min="0.01" step="0.01" value="1500000" inputmode="decimal" required></label>
+              <label>Annual interest rate (%) <span>*</span><input name="aRate" type="number" min="0" step="0.01" value="11.5" inputmode="decimal" required></label>
+              <label>Loan term (months) <span>*</span><input name="aTerm" type="number" min="1" step="1" value="36" inputmode="numeric" required></label>
+              <label>Payment frequency <span>*</span><select name="aFrequency"><option value="monthly" selected>Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select></label>
+              <details>
+                <summary>Add fees &amp; charges</summary>
+                <p class="lc-fee-note">Enter only charges that apply to this loan. Recurring charges are entered per payment.</p>
+                <div class="lc-fee-grid">
+                  <label>Processing / origination fee<input name="aProcessing" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Application fee<input name="aApplication" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Documentation fee<input name="aDocumentation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Legal fee<input name="aLegal" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Valuation / appraisal fee<input name="aValuation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Insurance cost<input name="aInsurance" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Broker / adviser fee<input name="aBroker" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Other upfront cost<input name="aOtherUpfront" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Prepayment / early repayment charge<input name="aPrepayment" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Other cost<input name="aOtherCost" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Other recurring fee per payment<input name="aOtherRecurring" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                </div>
+              </details>
+            </div>
+          </section>
+
+          <section class="lc-card loan-card" data-loan="B">
+            <div class="lc-card-head">
+              <span class="lc-badge lc-badge-alt">Loan B</span>
+              <h2>Second loan</h2>
+            </div>
+            <div class="lc-fields">
+              <label>Loan amount <span>*</span><input name="bAmount" type="number" min="0.01" step="0.01" value="1500000" inputmode="decimal" required></label>
+              <label>Annual interest rate (%) <span>*</span><input name="bRate" type="number" min="0" step="0.01" value="10" inputmode="decimal" required></label>
+              <label>Loan term (months) <span>*</span><input name="bTerm" type="number" min="1" step="1" value="60" inputmode="numeric" required></label>
+              <label>Payment frequency <span>*</span><select name="bFrequency"><option value="monthly" selected>Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select></label>
+              <details>
+                <summary>Add fees &amp; charges</summary>
+                <p class="lc-fee-note">Enter only charges that apply to this loan. Recurring charges are entered per payment.</p>
+                <div class="lc-fee-grid">
+                  <label>Processing / origination fee<input name="bProcessing" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Application fee<input name="bApplication" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Documentation fee<input name="bDocumentation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Legal fee<input name="bLegal" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Valuation / appraisal fee<input name="bValuation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Insurance cost<input name="bInsurance" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Broker / adviser fee<input name="bBroker" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Other upfront cost<input name="bOtherUpfront" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Prepayment / early repayment charge<input name="bPrepayment" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Other cost<input name="bOtherCost" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                  <label>Other recurring fee per payment<input name="bOtherRecurring" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+                </div>
+              </details>
+            </div>
+          </section>
+        </div>
+
+        <div id="formErrors" class="lc-errors" role="alert" hidden></div>
+        <button class="lc-primary" type="submit">Compare loans</button>
+      </form>
+
+      <section id="results" class="lc-results" aria-live="polite" hidden>
+        <div class="lc-section-title">
+          <p class="lc-eyebrow">Comparison</p>
+          <h2>What the numbers show</h2>
+          <p>These statements describe the calculated differences only. They do not account for lender-specific terms or personal circumstances.</p>
+        </div>
+
+        <div class="lc-result-grid">
+          <article class="lc-result-card"><span>Payment</span><strong id="paymentA">-</strong><small id="paymentB">-</small></article>
+          <article class="lc-result-card"><span>Total interest</span><strong id="interestA">-</strong><small id="interestB">-</small></article>
+          <article class="lc-result-card"><span>Total fees</span><strong id="feesA">-</strong><small id="feesB">-</small></article>
+          <article class="lc-result-card"><span>Total estimated cost</span><strong id="costA">-</strong><small id="costB">-</small></article>
+        </div>
+
+        <div class="lc-table-wrap">
+          <table>
+            <thead><tr><th>Metric</th><th>Loan A</th><th>Loan B</th></tr></thead>
+            <tbody>
+              <tr><th>Loan amount</th><td id="amountA">-</td><td id="amountB">-</td></tr>
+              <tr><th>Interest rate</th><td id="rateA">-</td><td id="rateB">-</td></tr>
+              <tr><th>Term</th><td id="termA">-</td><td id="termB">-</td></tr>
+              <tr><th>Scheduled payment</th><td id="scheduledA">-</td><td id="scheduledB">-</td></tr>
+              <tr><th>Total interest</th><td id="interestTableA">-</td><td id="interestTableB">-</td></tr>
+              <tr><th>Total fees</th><td id="feesTableA">-</td><td id="feesTableB">-</td></tr>
+              <tr><th>Total repayment</th><td id="repaymentA">-</td><td id="repaymentB">-</td></tr>
+              <tr><th>Total estimated cost</th><td id="costTableA">-</td><td id="costTableB">-</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="lc-summary" id="comparisonSummary"></div>
+      </section>
+
+      <section id="scenario" class="lc-scenario" aria-labelledby="scenarioTitle">
+        <div class="lc-section-title">
+          <p class="lc-eyebrow">Scenario simulator</p>
+          <h2 id="scenarioTitle">See what changes when you change the plan</h2>
+          <p>Test extra payments, a one-time prepayment, a different interest rate, or a different target term. The baseline comparison stays unchanged.</p>
+        </div>
+        <form id="scenarioForm" class="lc-card lc-scenario-form" novalidate>
+          <div class="lc-scenario-grid">
+            <label>Loan to simulate
+              <select id="scenarioLoan"><option value="A">Loan A</option><option value="B">Loan B</option></select>
+            </label>
+            <label>Extra payment per period
+              <input id="scenarioExtra" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+            </label>
+            <label>One-time prepayment
+              <input id="scenarioPrepay" type="number" min="0" step="0.01" value="0" inputmode="decimal">
+            </label>
+            <label>Prepayment period
+              <input id="scenarioPrepayPeriod" type="number" min="1" step="1" value="12" inputmode="numeric">
+            </label>
+            <label>Scenario interest rate (%)
+              <input id="scenarioRate" type="number" min="0" step="0.01" placeholder="Keep current rate" inputmode="decimal">
+            </label>
+            <label>Scenario target term (months)
+              <input id="scenarioTerm" type="number" min="1" step="1" placeholder="Keep current term" inputmode="numeric">
+            </label>
+          </div>
+          <button class="lc-primary lc-scenario-button" type="submit">Run scenario</button>
+          <div id="scenarioErrors" class="lc-errors" role="alert" hidden></div>
+        </form>
+        <div id="scenarioResults" class="lc-scenario-results" hidden></div>
+      </section>
+    </section>
+  </main>
+  <div data-component="footer"></div>
+  <script src="../assets/js/footer.js"></script>
+  <script src="../assets/js/loan-comparison-engine.js" defer></script>
+  <script src="../assets/js/loan-comparison-ui.js" defer></script>
+</body>
+</html>
