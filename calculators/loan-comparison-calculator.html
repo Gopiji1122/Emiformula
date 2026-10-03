@@ -1,162 +1,99 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+
+<html data-locale="en" lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Loan Comparison Calculator | Compare Loan Cost & Payments</title>
-  <meta name="description" content="Compare two loans by payment, interest, fees, total repayment, total estimated cost, and payoff time.">
-  <link rel="canonical" href="https://emiformula.com/calculators/loan-comparison-calculator.html">
-  <link rel="stylesheet" href="../assets/css/loan-comparison.css">
-  <link rel="stylesheet" href="../assets/css/footer.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Loan Comparison Calculator | Compare Two Loans | EMIFORMULA</title>
+<meta content="Compare two loans by payment, interest, fees, total estimated cost and payoff time with a transparent amortization model." name="description"/>
+<meta content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" name="robots"/>
+<link href="https://emiformula.com/calculators/loan-comparison-calculator.html" rel="canonical"/>
+<link href="https://emiformula.com/calculators/loan-comparison-calculator.html" hreflang="en" rel="alternate"/>
+<link href="https://emiformula.com/hi/calculators/loan-comparison-calculator.html" hreflang="hi" rel="alternate"/>
+<link href="https://emiformula.com/mr/calculators/loan-comparison-calculator.html" hreflang="mr" rel="alternate"/>
+<link href="https://emiformula.com/gu/calculators/loan-comparison-calculator.html" hreflang="gu" rel="alternate"/>
+<link href="https://emiformula.com/bn/calculators/loan-comparison-calculator.html" hreflang="bn" rel="alternate"/>
+<link href="https://emiformula.com/ta/calculators/loan-comparison-calculator.html" hreflang="ta" rel="alternate"/>
+<link href="https://emiformula.com/calculators/loan-comparison-calculator.html" hreflang="x-default" rel="alternate"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Loan Comparison Calculator","url":"https://emiformula.com/calculators/loan-comparison-calculator.html","applicationCategory":"FinanceApplication","operatingSystem":"Any","description":"Compare two loans by scheduled payment, interest, fees, estimated total cost and payoff time using an amortization model."}</script>
+<link href="../assets/css/style.css" rel="stylesheet"/>
+<link href="../assets/css/header.css" rel="stylesheet"/>
+<link href="../assets/css/search.css" rel="stylesheet"/>
+<link href="../assets/css/footer.css" rel="stylesheet"/>
+<link href="../assets/css/responsive.css" rel="stylesheet"/>
+<link href="../assets/css/layout.css" rel="stylesheet"/>
+<link href="../assets/css/components.css" rel="stylesheet"/>
+<link href="../assets/css/loan-comparison.css" rel="stylesheet"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"EMIFORMULA","item":"https://emiformula.com/"},{"@type":"ListItem","position":2,"name":"Calculators","item":"https://emiformula.com/calculators/"},{"@type":"ListItem","position":3,"name":"Loan Comparison Calculator","item":"https://emiformula.com/calculators/loan-comparison-calculator.html"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does the Loan Comparison Calculator compare two loans?","acceptedAnswer":{"@type":"Answer","text":"It calculates each loan using its amount, interest rate, term, payment frequency and entered fees, then compares scheduled payment, interest, fees, estimated total cost and payoff time."}},{"@type":"Question","name":"Are fees included in the estimated total cost?","acceptedAnswer":{"@type":"Answer","text":"Yes. Entered upfront fees and recurring fees are shown separately and included in estimated cash cost. A prepayment charge is treated as a stated cost, not as interest."}},{"@type":"Question","name":"Does the calculator recommend which loan to choose?","acceptedAnswer":{"@type":"Answer","text":"No. It reports numerical differences such as payment, interest, fees, total estimated cost and payoff time. The financial decision remains with you."}},{"@type":"Question","name":"What assumptions does the amortization use?","acceptedAnswer":{"@type":"Answer","text":"The calculator uses a standard amortization model based on the entered annual rate, term and payment frequency. Actual lender terms and contractual charges can differ."}}]}</script>
 </head>
 <body>
-  <main class="lc-page">
-    <header class="lc-hero">
-      <div class="lc-shell">
-        <p class="lc-eyebrow">Loan comparison</p>
-        <h1>Compare Two Loans Side by Side</h1>
-        <p class="lc-intro">Enter the numbers for Loan A and Loan B. We calculate the payment, interest, fees, total cost, and estimated payoff time using the same calculation method for both.</p>
-      </div>
-    </header>
-
-    <section class="lc-shell lc-main" aria-label="Loan comparison calculator">
-      <form id="loanComparisonForm" class="lc-form" novalidate>
-        <div class="lc-grid">
-          <section class="lc-card loan-card" data-loan="A">
-            <div class="lc-card-head">
-              <span class="lc-badge">Loan A</span>
-              <h2>First loan</h2>
-            </div>
-            <div class="lc-fields">
-              <label>Loan amount <span>*</span><input name="aAmount" type="number" min="0.01" step="0.01" value="1500000" inputmode="decimal" required></label>
-              <label>Annual interest rate (%) <span>*</span><input name="aRate" type="number" min="0" step="0.01" value="11.5" inputmode="decimal" required></label>
-              <label>Loan term (months) <span>*</span><input name="aTerm" type="number" min="1" step="1" value="36" inputmode="numeric" required></label>
-              <label>Payment frequency <span>*</span><select name="aFrequency"><option value="monthly" selected>Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select></label>
-              <details>
-                <summary>Add fees &amp; charges</summary>
-                <p class="lc-fee-note">Enter only charges that apply to this loan. Recurring charges are entered per payment.</p>
-                <div class="lc-fee-grid">
-                  <label>Processing / origination fee<input name="aProcessing" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Application fee<input name="aApplication" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Documentation fee<input name="aDocumentation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Legal fee<input name="aLegal" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Valuation / appraisal fee<input name="aValuation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Insurance cost<input name="aInsurance" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Broker / adviser fee<input name="aBroker" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Other upfront cost<input name="aOtherUpfront" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Prepayment / early repayment charge<input name="aPrepayment" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Other cost<input name="aOtherCost" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Other recurring fee per payment<input name="aOtherRecurring" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                </div>
-              </details>
-            </div>
-          </section>
-
-          <section class="lc-card loan-card" data-loan="B">
-            <div class="lc-card-head">
-              <span class="lc-badge lc-badge-alt">Loan B</span>
-              <h2>Second loan</h2>
-            </div>
-            <div class="lc-fields">
-              <label>Loan amount <span>*</span><input name="bAmount" type="number" min="0.01" step="0.01" value="1500000" inputmode="decimal" required></label>
-              <label>Annual interest rate (%) <span>*</span><input name="bRate" type="number" min="0" step="0.01" value="10" inputmode="decimal" required></label>
-              <label>Loan term (months) <span>*</span><input name="bTerm" type="number" min="1" step="1" value="60" inputmode="numeric" required></label>
-              <label>Payment frequency <span>*</span><select name="bFrequency"><option value="monthly" selected>Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select></label>
-              <details>
-                <summary>Add fees &amp; charges</summary>
-                <p class="lc-fee-note">Enter only charges that apply to this loan. Recurring charges are entered per payment.</p>
-                <div class="lc-fee-grid">
-                  <label>Processing / origination fee<input name="bProcessing" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Application fee<input name="bApplication" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Documentation fee<input name="bDocumentation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Legal fee<input name="bLegal" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Valuation / appraisal fee<input name="bValuation" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Insurance cost<input name="bInsurance" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Broker / adviser fee<input name="bBroker" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Other upfront cost<input name="bOtherUpfront" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Prepayment / early repayment charge<input name="bPrepayment" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Other cost<input name="bOtherCost" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                  <label>Other recurring fee per payment<input name="bOtherRecurring" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
-                </div>
-              </details>
-            </div>
-          </section>
-        </div>
-
-        <div id="formErrors" class="lc-errors" role="alert" hidden></div>
-        <button class="lc-primary" type="submit">Compare loans</button>
-      </form>
-
-      <section id="results" class="lc-results" aria-live="polite" hidden>
-        <div class="lc-section-title">
-          <p class="lc-eyebrow">Comparison</p>
-          <h2>What the numbers show</h2>
-          <p>These statements describe the calculated differences only. They do not account for lender-specific terms or personal circumstances.</p>
-        </div>
-
-        <div class="lc-result-grid">
-          <article class="lc-result-card"><span>Payment</span><strong id="paymentA">-</strong><small id="paymentB">-</small></article>
-          <article class="lc-result-card"><span>Total interest</span><strong id="interestA">-</strong><small id="interestB">-</small></article>
-          <article class="lc-result-card"><span>Total fees</span><strong id="feesA">-</strong><small id="feesB">-</small></article>
-          <article class="lc-result-card"><span>Total estimated cost</span><strong id="costA">-</strong><small id="costB">-</small></article>
-        </div>
-
-        <div class="lc-table-wrap">
-          <table>
-            <thead><tr><th>Metric</th><th>Loan A</th><th>Loan B</th></tr></thead>
-            <tbody>
-              <tr><th>Loan amount</th><td id="amountA">-</td><td id="amountB">-</td></tr>
-              <tr><th>Interest rate</th><td id="rateA">-</td><td id="rateB">-</td></tr>
-              <tr><th>Term</th><td id="termA">-</td><td id="termB">-</td></tr>
-              <tr><th>Scheduled payment</th><td id="scheduledA">-</td><td id="scheduledB">-</td></tr>
-              <tr><th>Total interest</th><td id="interestTableA">-</td><td id="interestTableB">-</td></tr>
-              <tr><th>Total fees</th><td id="feesTableA">-</td><td id="feesTableB">-</td></tr>
-              <tr><th>Total repayment</th><td id="repaymentA">-</td><td id="repaymentB">-</td></tr>
-              <tr><th>Total estimated cost</th><td id="costTableA">-</td><td id="costTableB">-</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="lc-summary" id="comparisonSummary"></div>
-      </section>
-
-      <section id="scenario" class="lc-scenario" aria-labelledby="scenarioTitle">
-        <div class="lc-section-title">
-          <p class="lc-eyebrow">Scenario simulator</p>
-          <h2 id="scenarioTitle">See what changes when you change the plan</h2>
-          <p>Test extra payments, a one-time prepayment, a different interest rate, or a different target term. The baseline comparison stays unchanged.</p>
-        </div>
-        <form id="scenarioForm" class="lc-card lc-scenario-form" novalidate>
-          <div class="lc-scenario-grid">
-            <label>Loan to simulate
-              <select id="scenarioLoan"><option value="A">Loan A</option><option value="B">Loan B</option></select>
-            </label>
-            <label>Extra payment per period
-              <input id="scenarioExtra" type="number" min="0" step="0.01" value="0" inputmode="decimal">
-            </label>
-            <label>One-time prepayment
-              <input id="scenarioPrepay" type="number" min="0" step="0.01" value="0" inputmode="decimal">
-            </label>
-            <label>Prepayment period
-              <input id="scenarioPrepayPeriod" type="number" min="1" step="1" value="12" inputmode="numeric">
-            </label>
-            <label>Scenario interest rate (%)
-              <input id="scenarioRate" type="number" min="0" step="0.01" placeholder="Keep current rate" inputmode="decimal">
-            </label>
-            <label>Scenario target term (months)
-              <input id="scenarioTerm" type="number" min="1" step="1" placeholder="Keep current term" inputmode="numeric">
-            </label>
-          </div>
-          <button class="lc-primary lc-scenario-button" type="submit">Run scenario</button>
-          <div id="scenarioErrors" class="lc-errors" role="alert" hidden></div>
-        </form>
-        <div id="scenarioResults" class="lc-scenario-results" hidden></div>
-      </section>
-    </section>
-  </main>
-  <div data-component="footer"></div>
-  <script src="../assets/js/footer.js"></script>
-  <script src="../assets/js/loan-comparison-engine.js" defer></script>
-  <script src="../assets/js/loan-comparison-ui.js" defer></script>
-</body>
-</html>
+<div data-component="header"></div>
+<main class="lc-page" id="loanComparisonCalculator">
+<header class="lc-hero"><div class="lc-shell"><p class="lc-eyebrow">EMIFORMULA · Loan Calculators</p><h1>Loan Comparison Calculator</h1><p>Compare two loans using the same calculation method. See payment, interest, fees, total estimated cost, payoff time and the underlying amortization schedule without being told what you should choose.</p><details class="lc-language-switcher">
+<summary><span>Language</span>: English</summary>
+<div class="lc-language-menu" role="list"><span aria-current="page" class="lc-language-current">English</span><a href="../hi/calculators/loan-comparison-calculator.html" lang="hi">हिन्दी</a><a href="../mr/calculators/loan-comparison-calculator.html" lang="mr">मराठी</a><a href="../gu/calculators/loan-comparison-calculator.html" lang="gu">ગુજરાતી</a><a href="../bn/calculators/loan-comparison-calculator.html" lang="bn">বাংলা</a><a href="../ta/calculators/loan-comparison-calculator.html" lang="ta">தமிழ்</a></div>
+</details></div></header>
+<section class="lc-shell lc-main">
+<form class="lc-form" id="loanComparisonForm" novalidate="">
+<div class="lc-grid">
+<section class="lc-card"><div class="lc-card-head"><span class="lc-badge">Loan A</span><h2>First loan</h2></div><div class="lc-fields">
+<label>Loan type<select name="aType"><option>Personal Loan</option><option>Home Loan / Mortgage</option><option>Car / Auto Loan</option><option>Student / Education Loan</option><option>Business Loan</option><option>Other Loan</option></select></label>
+<label>Loan amount <span>*</span><input inputmode="decimal" min="0.01" name="aAmount" required="" step="0.01" type="number" value="1500000"/></label>
+<label>Annual interest rate (%) <span>*</span><input inputmode="decimal" min="0" name="aRate" required="" step="0.01" type="number" value="11.5"/></label>
+<label>Loan term (months) <span>*</span><input inputmode="numeric" min="1" name="aTerm" required="" step="1" type="number" value="36"/></label>
+<label>Payment frequency <span>*</span><select name="aFrequency"><option value="monthly">Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select></label>
+<details><summary>Advanced fees &amp; charges</summary><p class="lc-note">Enter applicable charges. Recurring cost is entered per payment. A prepayment charge is treated as a stated cost in this estimate.</p><div class="lc-fee-grid">
+<label>Processing / origination<input min="0" name="aProcessing" step="0.01" type="number" value="0"/></label><label>Application<input min="0" name="aApplication" step="0.01" type="number" value="0"/></label><label>Documentation<input min="0" name="aDocumentation" step="0.01" type="number" value="0"/></label><label>Legal<input min="0" name="aLegal" step="0.01" type="number" value="0"/></label><label>Valuation / appraisal<input min="0" name="aValuation" step="0.01" type="number" value="0"/></label><label>Insurance<input min="0" name="aInsurance" step="0.01" type="number" value="0"/></label><label>Broker / adviser<input min="0" name="aBroker" step="0.01" type="number" value="0"/></label><label>Other upfront<input min="0" name="aOtherUpfront" step="0.01" type="number" value="0"/></label><label>Prepayment / early repayment<input min="0" name="aPrepayment" step="0.01" type="number" value="0"/></label><label>Other cost<input min="0" name="aOtherCost" step="0.01" type="number" value="0"/></label><label>Other recurring per payment<input min="0" name="aOtherRecurring" step="0.01" type="number" value="0"/></label>
+</div></details></div></section>
+<section class="lc-card"><div class="lc-card-head"><span class="lc-badge lc-badge-alt">Loan B</span><h2>Second loan</h2></div><div class="lc-fields">
+<label>Loan type<select name="bType"><option>Personal Loan</option><option>Home Loan / Mortgage</option><option>Car / Auto Loan</option><option>Student / Education Loan</option><option>Business Loan</option><option>Other Loan</option></select></label>
+<label>Loan amount <span>*</span><input inputmode="decimal" min="0.01" name="bAmount" required="" step="0.01" type="number" value="1500000"/></label>
+<label>Annual interest rate (%) <span>*</span><input inputmode="decimal" min="0" name="bRate" required="" step="0.01" type="number" value="10"/></label>
+<label>Loan term (months) <span>*</span><input inputmode="numeric" min="1" name="bTerm" required="" step="1" type="number" value="60"/></label>
+<label>Payment frequency <span>*</span><select name="bFrequency"><option value="monthly">Monthly</option><option value="biweekly">Every 2 weeks</option><option value="weekly">Weekly</option></select></label>
+<details><summary>Advanced fees &amp; charges</summary><p class="lc-note">Enter applicable charges. Recurring cost is entered per payment. A prepayment charge is treated as a stated cost in this estimate.</p><div class="lc-fee-grid">
+<label>Processing / origination<input min="0" name="bProcessing" step="0.01" type="number" value="0"/></label><label>Application<input min="0" name="bApplication" step="0.01" type="number" value="0"/></label><label>Documentation<input min="0" name="bDocumentation" step="0.01" type="number" value="0"/></label><label>Legal<input min="0" name="bLegal" step="0.01" type="number" value="0"/></label><label>Valuation / appraisal<input min="0" name="bValuation" step="0.01" type="number" value="0"/></label><label>Insurance<input min="0" name="bInsurance" step="0.01" type="number" value="0"/></label><label>Broker / adviser<input min="0" name="bBroker" step="0.01" type="number" value="0"/></label><label>Other upfront<input min="0" name="bOtherUpfront" step="0.01" type="number" value="0"/></label><label>Prepayment / early repayment<input min="0" name="bPrepayment" step="0.01" type="number" value="0"/></label><label>Other cost<input min="0" name="bOtherCost" step="0.01" type="number" value="0"/></label><label>Other recurring per payment<input min="0" name="bOtherRecurring" step="0.01" type="number" value="0"/></label>
+</div></details></div></section>
+</div>
+<div aria-live="assertive" class="lc-errors" hidden="" id="formErrors" role="alert"></div><button class="lc-primary" type="submit">Compare loans</button>
+</form>
+<section aria-live="polite" class="lc-results" hidden="" id="results"><div class="lc-section-title"><p class="lc-eyebrow">Comparison results</p><h2>What the numbers show</h2><p>The comparison describes calculated differences only. It does not account for lender-specific terms, taxes, insurance conditions or personal circumstances.</p></div>
+<div class="lc-result-grid"><article><span>Scheduled payment</span><div class="lc-metric-loan"><small>Loan A</small><strong id="paymentA">-</strong></div><div class="lc-metric-loan"><small>Loan B</small><strong id="paymentB">-</strong></div></article><article><span>Total interest</span><div class="lc-metric-loan"><small>Loan A</small><strong id="interestA">-</strong></div><div class="lc-metric-loan"><small>Loan B</small><strong id="interestB">-</strong></div></article><article><span>Total fees</span><div class="lc-metric-loan"><small>Loan A</small><strong id="feesA">-</strong></div><div class="lc-metric-loan"><small>Loan B</small><strong id="feesB">-</strong></div></article><article><span>Total estimated cost</span><div class="lc-metric-loan"><small>Loan A</small><strong id="costA">-</strong></div><div class="lc-metric-loan"><small>Loan B</small><strong id="costB">-</strong></div></article></div>
+<div class="lc-visual-two"><section class="lc-visual-card"><p class="lc-eyebrow">Cost structure</p><h3>Interest and fees</h3><div id="costBars"></div></section><section class="lc-visual-card"><p class="lc-eyebrow">Payoff time</p><h3>Calculated timeline</h3><div id="timelineCompare"></div></section></div>
+<div class="lc-summary" id="comparisonSummary"></div>
+<div class="lc-table-wrap"><table><thead><tr><th>Metric</th><th>Loan A</th><th>Loan B</th></tr></thead><tbody><tr><th>Loan amount</th><td id="amountA">-</td><td id="amountB">-</td></tr><tr><th>Interest rate</th><td id="rateA">-</td><td id="rateB">-</td></tr><tr><th>Calculated term</th><td id="termA">-</td><td id="termB">-</td></tr><tr><th>Scheduled payment</th><td id="scheduledA">-</td><td id="scheduledB">-</td></tr><tr><th>Total interest</th><td id="interestTableA">-</td><td id="interestTableB">-</td></tr><tr><th>Total fees</th><td id="feesTableA">-</td><td id="feesTableB">-</td></tr><tr><th>Total repayment</th><td id="repaymentA">-</td><td id="repaymentB">-</td></tr><tr><th>Total estimated cost</th><td id="costTableA">-</td><td id="costTableB">-</td></tr></tbody></table></div>
+<section class="lc-visual-card lc-cumulative-card"><p class="lc-eyebrow">Cumulative cost</p><h3>Estimated cash cost over time</h3><div aria-label="Cumulative estimated cost comparison" class="lc-chart" id="cumulativeCostChart" role="img"></div></section>
+<details class="lc-amortization lc-collapsible"><summary>Amortization schedule comparison</summary><div class="lc-collapsible-body"><p class="lc-note">Rows are aligned by payment period. When one loan ends earlier, its later columns remain blank rather than inventing payments.</p><div class="lc-table-wrap" id="scheduleComparison"></div><details><summary>Show Loan A schedule only</summary><div class="lc-table-wrap" id="scheduleA"></div></details><details><summary>Show Loan B schedule only</summary><div class="lc-table-wrap" id="scheduleB"></div></details></div></details>
+<details class="lc-visual-card lc-collapsible lc-fee-card"><summary>Fee comparison</summary><div class="lc-collapsible-body"><p class="lc-eyebrow">Fee breakdown</p><h3>Where the fees come from</h3><div id="feeBreakdown"></div></div></details>
+<section class="lc-export" hidden="" id="exportSection"><p class="lc-eyebrow">Export</p><h3>Take the calculation with you</h3><div class="lc-export-actions"><button aria-label="Export the comparison and amortization data as CSV" class="lc-secondary" id="exportCsv" type="button">Export CSV</button><button aria-label="Export the comparison data as JSON" class="lc-secondary" id="exportJson" type="button">Export JSON</button><button aria-label="Print the calculator report or save it as PDF" class="lc-secondary" id="exportPdf" type="button">Print / Save PDF</button></div></section>
+</section>
+<section aria-labelledby="methodology-heading" class="lc-methodology lc-card">
+<div class="lc-card-head"><span class="lc-badge">Method</span><h2 id="methodology-heading">How this comparison is calculated</h2></div>
+<div class="lc-method-grid">
+<div><h3>Payment</h3><p>Each loan uses a standard amortization formula based on the entered principal, annual interest rate, number of payments and payment frequency. A zero-interest loan divides principal across its scheduled payments.</p></div>
+<div><h3>Interest and principal</h3><p>Each payment is split into interest and principal. Interest is calculated from the opening balance for that payment period, and the remaining balance is reduced by the principal portion.</p></div>
+<div><h3>Fees</h3><p>Upfront charges and recurring charges are kept separate from interest. Entered prepayment charges are treated as fees rather than interest.</p></div>
+<div><h3>Estimated total cost</h3><p>Total estimated cash cost combines scheduled principal and interest payments with entered fees. It is an estimate based only on the assumptions entered here.</p></div>
+</div></section>
+<section aria-labelledby="assumptions-heading" class="lc-methodology lc-card">
+<div class="lc-card-head"><span class="lc-badge lc-badge-alt">Assumptions</span><h2 id="assumptions-heading">Important limitations</h2></div>
+<ul class="lc-note-list"><li>This tool does not model lender-specific amortization rules, taxes, changing insurance premiums, or contractual conditions unless you enter them as applicable costs.</li><li>Actual loan offers can include charges or rate structures that differ from the assumptions entered here.</li><li>Comparison results describe calculated numerical differences. They are not a recommendation to choose either loan.</li></ul>
+</section>
+<section aria-labelledby="faq-heading" class="lc-methodology lc-card">
+<div class="lc-card-head"><span class="lc-badge">FAQ</span><h2 id="faq-heading">Loan comparison questions</h2></div>
+<div class="lc-faq"><details><summary>How does the Loan Comparison Calculator compare two loans?</summary><p>It calculates each loan using its amount, interest rate, term, payment frequency and entered fees, then compares scheduled payment, interest, fees, estimated total cost and payoff time.</p></details><details><summary>Are fees included in the estimated total cost?</summary><p>Yes. Entered upfront fees and recurring fees are shown separately and included in estimated cash cost. A prepayment charge is treated as a stated cost, not as interest.</p></details><details><summary>Does the calculator recommend which loan to choose?</summary><p>No. It reports numerical differences such as payment, interest, fees, total estimated cost and payoff time. The financial decision remains with you.</p></details><details><summary>What assumptions does the amortization use?</summary><p>The calculator uses a standard amortization model based on the entered annual rate, term and payment frequency. Actual lender terms and contractual charges can differ.</p></details></div>
+</section>
+</section>
+</main>
+<div data-component="footer"></div>
+<script src="../assets/js/site-config.js"></script>
+<script src="../assets/js/site.js"></script>
+<script src="../assets/js/search-data.js"></script>
+<script src="../assets/js/search.js"></script>
+<script src="../assets/js/footer.js"></script>
+<script src="../assets/js/components.js"></script>
+<script src="../assets/js/navigation.js"></script>
+<script src="../configs/calculators/calculator-registry.js"></script>
+<script defer="" src="../assets/js/loan-comparison-engine.js"></script><script defer="" src="../assets/js/loan-comparison-ui.js"></script><script defer="" src="../assets/js/loan-comparison-export.js"></script>
+</body></html>
