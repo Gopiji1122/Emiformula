@@ -13,8 +13,10 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
   }
   function csvRows(comparison) {
+    var currency = ui().getCurrency ? ui().getCurrency() : { code:"INR", symbol:"₹", name:"Indian Rupee" };
     var rows = [
       ["EMIFORMULA Loan Comparison"],
+      ["Currency", currency.code, currency.symbol, currency.name],
       [],
       ["Metric", "Loan A", "Loan B"],
       ["Loan amount", comparison.loanA.input.amount, comparison.loanB.input.amount],
@@ -46,7 +48,7 @@
   function exportJson() {
     var api = ui(), comparison = api && api.getComparison();
     if (!comparison) return;
-    download("emiformula-loan-comparison.json", JSON.stringify({ exportedAt: new Date().toISOString(), comparison: comparison }, null, 2), "application/json;charset=utf-8");
+    download("emiformula-loan-comparison.json", JSON.stringify({ exportedAt: new Date().toISOString(), currency: (ui().getCurrency ? ui().getCurrency() : { code:"INR", symbol:"₹", name:"Indian Rupee" }), comparison: comparison }, null, 2), "application/json;charset=utf-8");
   }
   function exportCsv() {
     var api = ui(), comparison = api && api.getComparison();

@@ -317,12 +317,48 @@
     return text;
   }
 
-  var state = { comparison: null };
+  var CURRENCIES = {
+    INR: { symbol:"₹", name:"Indian Rupee", locale:"en-IN" },
+    USD: { symbol:"$", name:"US Dollar", locale:"en-US" },
+    GBP: { symbol:"£", name:"British Pound", locale:"en-GB" },
+    EUR: { symbol:"€", name:"Euro", locale:"en-IE" },
+    CAD: { symbol:"CA$", name:"Canadian Dollar", locale:"en-CA" },
+    AUD: { symbol:"A$", name:"Australian Dollar", locale:"en-AU" },
+    AED: { symbol:"د.إ", name:"UAE Dirham", locale:"en-AE" },
+    SGD: { symbol:"S$", name:"Singapore Dollar", locale:"en-SG" }
+  };
+  var currencyCode = locale === "en" ? "INR" : "INR";
+  var state = { comparison: null, currency: currencyCode };
+  function currencyInfo() { return CURRENCIES[state.currency] || CURRENCIES.INR; }
+  function currencyText(value) {
+    var info = currencyInfo();
+    return new Intl.NumberFormat(info.locale, { style:"currency", currency:state.currency, currencyDisplay:"symbol", minimumFractionDigits:2, maximumFractionDigits:2 }).format(Number(value) || 0);
+  }
+  function updateCurrencyUI() {
+    var info = currencyInfo();
+    var selector = id("currencySelector");
+    if (selector && selector.value !== state.currency) selector.value = state.currency;
+    document.querySelectorAll("[data-currency-symbol]").forEach(function (el) { el.textContent = info.symbol; });
+    document.querySelectorAll("[data-currency-name]").forEach(function (el) { el.textContent = info.name + " (" + state.currency + ")"; });
+  }
+  function setupCurrencyControl() {
+    var selector = id("currencySelector");
+    var fixed = id("fixedCurrency");
+    if (selector) {
+      selector.value = state.currency;
+      selector.addEventListener("change", function () {
+        state.currency = CURRENCIES[this.value] ? this.value : "INR";
+        updateCurrencyUI();
+        if (state.comparison) render(state.comparison);
+      });
+    }
+    if (fixed) updateCurrencyUI();
+  }
   function id(name) { return document.getElementById(name); }
   function field(name) { return document.querySelector('[name="' + name + '"]'); }
   function value(name) { var el = field(name); return el ? el.value : ""; }
   function number(name) { var n = Number(value(name)); return Number.isFinite(n) ? n : 0; }
-  function money(v) { return new Intl.NumberFormat(({hi:"hi-IN",mr:"mr-IN",gu:"gu-IN",bn:"bn-IN",ta:"ta-IN"}[locale] || undefined), { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(v) || 0); }
+  function money(v) { return currencyText(v); }
   function percent(v) { return (Number(v) || 0).toFixed(2) + "%"; }
   function duration(months) {
     var m = Math.max(0, Math.round(Number(months) || 0)), y = Math.floor(m / 12), r = m % 12;
@@ -389,6 +425,6 @@
     id('comparisonSummary').innerHTML='<h3>'+ T.summaryHeading || 'What the numbers show' +'</h3>'+lines.map(function(x){return '<p>'+esc(x)+'</p>';}).join('')+'<p class="lc-disclaimer">'+T.disclaimer+'</p>';
     id('scheduleComparison').innerHTML=renderComparisonSchedule(a,b);id('scheduleA').innerHTML=renderScheduleTable(a.schedule,T.scheduleA);id('scheduleB').innerHTML=renderScheduleTable(b.schedule,T.scheduleB);renderFeeBreakdown(a,b);renderCumulativeChart(a,b);id('results').hidden=false;var exports=id('exportSection');if(exports)exports.hidden=false;
   }
-  document.addEventListener('DOMContentLoaded',function(){var form=id('loanComparisonForm');if(!form||!window.EMIFORMULA_LOAN_COMPARISON)return;form.addEventListener('submit',function(event){event.preventDefault();var result=window.EMIFORMULA_LOAN_COMPARISON.compareLoans(loan('a'),loan('b'));if(!result.ok){showError(result.errors||['Please check the loan inputs.']);id('results').hidden=true;return;}showError([]);render(result);id('results').scrollIntoView({behavior:'auto',block:'start'});});});
-  window.EMIFORMULA_LOAN_COMPARISON_UI={getComparison:function(){return state.comparison;},getLoanInputs:function(prefix){return loan(prefix);}};
+  document.addEventListener('DOMContentLoaded',function(){setupCurrencyControl();var form=id('loanComparisonForm');if(!form||!window.EMIFORMULA_LOAN_COMPARISON)return;form.addEventListener('submit',function(event){event.preventDefault();var result=window.EMIFORMULA_LOAN_COMPARISON.compareLoans(loan('a'),loan('b'));if(!result.ok){showError(result.errors||['Please check the loan inputs.']);id('results').hidden=true;return;}showError([]);render(result);id('results').scrollIntoView({behavior:'auto',block:'start'});});});
+  window.EMIFORMULA_LOAN_COMPARISON_UI={getComparison:function(){return state.comparison;},getLoanInputs:function(prefix){return loan(prefix);},getCurrency:function(){return {code:state.currency,symbol:currencyInfo().symbol,name:currencyInfo().name};}};
 })();
