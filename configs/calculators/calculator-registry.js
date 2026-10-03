@@ -7,7 +7,7 @@
       name: "EMI Calculator",
       category: "EMI Calculators",
       description: "Calculate monthly EMI, total interest, total payment and loan repayment details.",
-      url: "/Emiformula/calculators/emi-calculator.html",
+      url: "/calculators/emi-calculator.html",
       status: "active"
     },
     "personal-loan-calculator": {
@@ -15,7 +15,7 @@
       name: "Personal Loan Calculator",
       category: "Loan Calculators",
       description: "Calculate personal loan cost, net amount received, interest, repayment and rate or tenure impact.",
-      url: "/Emiformula/calculators/personal-loan-calculator.html",
+      url: "/calculators/personal-loan-calculator.html",
       status: "active"
     },
     "step-up-step-down-emi-calculator": {
@@ -23,7 +23,7 @@
       name: "Step-Up / Step-Down EMI Calculator",
       category: "EMI Calculators",
       description: "Compare one-time, periodic or custom EMI changes and their effect on payoff time, interest and repayment.",
-      url: "/Emiformula/calculators/step-up-step-down-emi-calculator.html",
+      url: "/calculators/step-up-step-down-emi-calculator.html",
       status: "active"
     },
     "compound-interest-calculator": {
@@ -31,7 +31,7 @@
       name: "Compound Interest Calculator",
       category: "Financial Calculators",
       description: "Calculate future value, contributions, compound interest and investment growth.",
-      url: "/Emiformula/calculators/compound-interest-calculator.html",
+      url: "/calculators/compound-interest-calculator.html",
       status: "active"
     },
     "loan-comparison-calculator": {
@@ -48,7 +48,7 @@
       name: "Balance Transfer Break-Even Calculator",
       category: "Loan Calculators",
       description: "Compare a current loan with a new offer, switching costs, interest impact and break-even analysis.",
-      url: "/Emiformula/calculators/balance-transfer-calculator.html"
+      url: "/calculators/balance-transfer-calculator.html"
     },
   };
 
