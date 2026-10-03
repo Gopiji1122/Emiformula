@@ -17,6 +17,10 @@
       { title: "Loan", url: "/categories/loan.html" },
       { title: "Personal Loan Calculator" }
     ],
+    "/calculators/loan-comparison-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "Loan Comparison Calculator" }
+    ],
     "/calculators/compound-interest-calculator.html": [
       { title: "Financial", url: "/categories/financial.html" },
       { title: "Compound Interest Calculator" }
