@@ -479,7 +479,25 @@
     lines.push(result.lowerInterestLoan==='tie'?T.bothInterest:tr('interestLower',{loan:result.lowerInterestLoan,value:money(Math.abs(d.interest))}));
     lines.push(result.lowerFeesLoan==='tie'?T.bothFees:tr('feesLower',{loan:result.lowerFeesLoan,value:money(Math.abs(d.fees))}));
     lines.push(result.shorterTermLoan==='tie'?T.bothTerm:tr('termLower',{loan:result.shorterTermLoan,value:duration(Math.abs(d.termMonths))}));
-    id('comparisonSummary').innerHTML='<h3>'+T.summaryHeading+'</h3>'+lines.map(function(x){return '<p>'+esc(x)+'</p>';}).join('')+'<p class="lc-disclaimer">'+T.disclaimer+'</p>';
+    var summary = id('comparisonSummary');
+    if (summary) {
+      summary.innerHTML = "";
+      var summaryHeading = document.createElement("h3");
+      summaryHeading.textContent = T.summaryHeading;
+      summary.appendChild(summaryHeading);
+
+      lines.forEach(function (line) {
+        var item = document.createElement("div");
+        item.className = "lc-summary-item";
+        item.textContent = line;
+        summary.appendChild(item);
+      });
+
+      var disclaimer = document.createElement("p");
+      disclaimer.className = "lc-disclaimer";
+      disclaimer.textContent = T.disclaimer;
+      summary.appendChild(disclaimer);
+    }
     id('scheduleComparison').innerHTML=renderComparisonSchedule(a,b);id('scheduleA').innerHTML=renderScheduleTable(a.schedule,T.scheduleA);id('scheduleB').innerHTML=renderScheduleTable(b.schedule,T.scheduleB);renderFeeBreakdown(a,b);renderCumulativeChart(a,b);id('results').hidden=false;var exports=id('exportSection');if(exports)exports.hidden=false;
   }
   document.addEventListener('DOMContentLoaded',function(){setupCurrencyControl();var form=id('loanComparisonForm');if(!form||!window.EMIFORMULA_LOAN_COMPARISON)return;form.addEventListener('submit',function(event){event.preventDefault();var result=window.EMIFORMULA_LOAN_COMPARISON.compareLoans(loan('a'),loan('b'));if(!result.ok){showError(result.errors||['Please check the loan inputs.']);id('results').hidden=true;return;}showError([]);render(result);id('results').scrollIntoView({behavior:'auto',block:'start'});});});
