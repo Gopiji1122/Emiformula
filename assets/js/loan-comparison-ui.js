@@ -327,7 +327,64 @@
     AED: { symbol:"د.إ", name:"UAE Dirham", locale:"en-AE" },
     SGD: { symbol:"S$", name:"Singapore Dollar", locale:"en-SG" }
   };
-  var currencyCode = locale === "en" ? "INR" : "INR";
+  function getAutoDefaultCurrency() {
+    if (locale !== "en") return "INR";
+
+    var lang = ((navigator.languages && navigator.languages[0]) || navigator.language || "").toLowerCase();
+    var tz = ((Intl.DateTimeFormat().resolvedOptions().timeZone) || "").toLowerCase();
+
+    var localeMap = [
+      [/^en-us(?:-|$)/, "USD"],
+      [/^en-gb(?:-|$)/, "GBP"],
+      [/^en-au(?:-|$)/, "AUD"],
+      [/^en-ca(?:-|$)/, "CAD"],
+      [/^en-sg(?:-|$)/, "SGD"],
+      [/^en-ae(?:-|$)/, "AED"],
+      [/^en-in(?:-|$)/, "INR"],
+      [/^en-ie(?:-|$)/, "EUR"],
+      [/^(de|fr|it|es|pt|nl|el|fi|et|lv|lt|sk|sl|mt)-/, "EUR"],
+      [/^ja-/, "JPY"],
+      [/^ko-/, "KRW"],
+      [/^zh-(cn|sg)/, "CNY"],
+      [/^zh-tw/, "TWD"],
+      [/^th-/, "THB"],
+      [/^id-/, "IDR"],
+      [/^ms-/, "MYR"],
+      [/^fil-/, "PHP"],
+      [/^tr-/, "TRY"],
+      [/^pl-/, "PLN"],
+      [/^cs-/, "CZK"],
+      [/^da-/, "DKK"],
+      [/^sv-/, "SEK"],
+      [/^no-/, "NOK"],
+      [/^hu-/, "HUF"],
+      [/^ro-/, "RON"],
+      [/^bg-/, "BGN"],
+      [/^uk-/, "UAH"],
+      [/^vi-/, "VND"],
+      [/^he-/, "ILS"],
+      [/^ar-ae(?:-|$)/, "AED"],
+      [/^ar-sa(?:-|$)/, "SAR"],
+      [/^en-za(?:-|$)/, "ZAR"]
+    ];
+
+    for (var i = 0; i < localeMap.length; i++) {
+      if (localeMap[i][0].test(lang) && CURRENCIES[localeMap[i][1]]) return localeMap[i][1];
+    }
+
+    if (tz === "asia/kolkata" || tz === "asia/calcutta") return "INR";
+    if (tz === "europe/london") return "GBP";
+    if (tz.indexOf("australia/") === 0 && CURRENCIES.AUD) return "AUD";
+    if (tz.indexOf("canada/") === 0 && CURRENCIES.CAD) return "CAD";
+    if (tz.indexOf("europe/") === 0 && CURRENCIES.EUR) return "EUR";
+    if (tz === "asia/dubai" && CURRENCIES.AED) return "AED";
+    if (tz === "asia/singapore" && CURRENCIES.SGD) return "SGD";
+    if (tz.indexOf("america/") === 0 && CURRENCIES.USD) return "USD";
+
+    return "INR";
+  }
+
+  var currencyCode = getAutoDefaultCurrency();
   var state = { comparison: null, currency: currencyCode };
   function currencyInfo() { return CURRENCIES[state.currency] || CURRENCIES.INR; }
   function currencyText(value) {
