@@ -45,3 +45,47 @@
   .gl-main{display:block}
   #result{margin-top:18px}
 }
+
+
+/* Refined desktop layout: constrained copy, clear input hierarchy, balanced calculator workspace. */
+.gl-hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,430px);gap:28px 48px;align-items:center}
+.gl-hero-copy{min-width:0;max-width:620px}
+.gl-hero-copy .gl-lead{max-width:48ch;line-height:1.65}
+.gl-hero-copy .gl-language{margin-top:18px}
+.gl-rate{width:100%;box-sizing:border-box;max-width:none;margin:0;padding:22px;background:rgba(255,255,255,.94);box-shadow:0 12px 34px rgba(93,70,16,.07)}
+.gl-purity-field label{display:block;font-weight:750;font-size:.92rem;margin-bottom:7px}
+.gl-purity-field select{width:100%;min-height:48px;box-sizing:border-box;border:1px solid #d8d0bf;border-radius:10px;background:#fff;padding:12px 13px;font:inherit;color:var(--gold-ink)}
+.gl-rate-divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold-line),transparent);margin:18px 0}
+.gl-rate .gl-rate-row{grid-template-columns:minmax(0,1fr) auto;gap:12px}
+.gl-rate-unit{font-size:1rem;color:#b42318;padding-bottom:13px}
+.gl-note{max-width:42ch}
+.gl-main{width:min(1080px,calc(100% - 40px))}
+.gl-mode button{min-height:76px}
+.gl-content{max-width:900px;margin-left:auto;margin-right:auto}
+.gl-content>h2,.gl-faq>h2{letter-spacing:-.02em}
+.gl-content details{padding:18px 4px}
+.gl-content details[open]{padding-left:14px;padding-right:14px;background:linear-gradient(90deg,rgba(255,248,232,.75),rgba(255,255,255,0));border-radius:10px}
+.gl-content details p{max-width:78ch;padding-right:18px}
+@media(min-width:1200px){.gl-shell{width:min(1160px,calc(100% - 80px))}.gl-hero-inner{grid-template-columns:minmax(0,1fr) minmax(340px,440px);gap:56px}.gl-hero h1{max-width:12ch;font-size:clamp(2.6rem,3.4vw,3.45rem)}.gl-lead{font-size:1.04rem}}
+@media(max-width:900px){.gl-hero-inner{display:flex;flex-direction:column;align-items:stretch;gap:22px}.gl-hero-copy{max-width:none}.gl-hero-copy .gl-lead{max-width:65ch}.gl-rate{margin:0}.gl-main{width:min(100% - 22px,1080px)}}
+@media(max-width:520px){.gl-rate{padding:16px}.gl-rate .gl-rate-row{grid-template-columns:minmax(0,1fr) auto}.gl-rate-unit{padding-bottom:13px}.gl-hero h1{font-size:clamp(1.9rem,8vw,2.4rem)}.gl-content details{padding:15px 2px}}
+
+
+/* Keep the Gold Loan Guide and FAQs side by side on desktop; stack them on smaller screens. */
+.gl-education-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start;width:100%;}
+.gl-guide,.gl-faq{min-width:0;width:100%;}
+.gl-guide>h2,.gl-faq>h2{margin-top:0;padding-bottom:12px;border-bottom:1px solid var(--gold-line);}
+.gl-guide details,.gl-faq details{padding:15px 8px;border-top:1px solid #eee5d2;}
+.gl-guide details:last-child,.gl-faq details:last-child{border-bottom:1px solid #eee5d2;}
+.gl-guide details[open],.gl-faq details[open]{padding:15px 12px;background:linear-gradient(90deg,rgba(255,248,232,.72),rgba(255,255,255,0));border-radius:10px;}
+.gl-guide details p,.gl-faq details p{max-width:68ch;padding-right:0;}
+@media(min-width:901px){
+  .gl-content{max-width:1160px;width:100%;margin:34px auto 0;grid-column:1/-1;}
+  .gl-education-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;}
+  .gl-guide,.gl-faq{align-self:start;}
+  .gl-faq{margin-top:0;}
+}
+@media(max-width:900px){
+  .gl-education-grid{grid-template-columns:minmax(0,1fr);gap:22px;}
+  .gl-guide>h2,.gl-faq>h2{margin-top:0;}
+}
