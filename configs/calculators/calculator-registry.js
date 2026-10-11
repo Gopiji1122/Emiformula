@@ -43,6 +43,15 @@
       alternates: { en: "/calculators/loan-comparison-calculator.html", hi: "/hi/calculators/loan-comparison-calculator.html", mr: "/mr/calculators/loan-comparison-calculator.html", gu: "/gu/calculators/loan-comparison-calculator.html", bn: "/bn/calculators/loan-comparison-calculator.html", ta: "/ta/calculators/loan-comparison-calculator.html" },
       status: "active"
     },
+    "gold-loan-calculator": {
+      id: "gold-loan-calculator",
+      name: "Gold Loan Calculator",
+      category: "Loan Calculators",
+      description: "Estimate gold loan amount or gold required using gold weight, purity, gold price and LTV assumptions.",
+      url: "/calculators/gold-loan-calculator.html",
+      alternates: { en: "/calculators/gold-loan-calculator.html", hi: "/hi/calculators/gold-loan-calculator.html", mr: "/mr/calculators/gold-loan-calculator.html", gu: "/gu/calculators/gold-loan-calculator.html", bn: "/bn/calculators/gold-loan-calculator.html", ta: "/ta/calculators/gold-loan-calculator.html" },
+      status: "active"
+    },
     balanceTransfer: {
       id: "balance-transfer",
       name: "Balance Transfer Break-Even Calculator",
