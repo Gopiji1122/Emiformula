@@ -21,23 +21,31 @@
       { title: "Loan", url: "/categories/loan.html" },
       { title: "Loan Comparison Calculator" }
     ],
-    "/calculators/compound-interest-calculator.html": [
-      { title: "Financial", url: "/categories/financial.html" },
-      { title: "Compound Interest Calculator" }
-    ],
-    "/guides/emi-guide.html": [
-      { title: "EMI", url: "/categories/emi.html" },
-      { title: "EMI Guide" }
-    ],
-    "/guides/personal-loan-guide.html": [
+    "/calculators/gold-loan-calculator.html": [
       { title: "Loan", url: "/categories/loan.html" },
-      { title: "Personal Loan Guide" }
+      { title: "Gold Loan Calculator" }
     ],
-    "/guides/compound-interest-guide.html": [
-      { title: "Financial", url: "/categories/financial.html" },
-      { title: "Compound Interest Guide" }
-    ]
-  };
+    "/hi/calculators/gold-loan-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "गोल्ड लोन कैलकुलेटर" }
+    ],
+    "/mr/calculators/gold-loan-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "गोल्ड लोन कॅल्क्युलेटर" }
+    ],
+    "/gu/calculators/gold-loan-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "ગોલ્ડ લોન કેલ્ક્યુલેટર" }
+    ],
+    "/bn/calculators/gold-loan-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "গোল্ড লোন ক্যালকুলেটর" }
+    ],
+    "/ta/calculators/gold-loan-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "தங்கக் கடன் கால்குலேட்டர்" }
+    ],
+};
 
   window.EMIFORMULA_BREADCRUMBS = map[path] || [];
 })();

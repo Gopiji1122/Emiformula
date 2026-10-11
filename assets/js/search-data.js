@@ -14,6 +14,12 @@ window.EMIFORMULA_SEARCH_INDEX = [
   {title:"লোন তুলনা ক্যালকুলেটর",description:"পেমেন্ট, সুদ, ফি, আনুমানিক মোট খরচ এবং পরিশোধের সময়ের ভিত্তিতে দুটি লোন তুলনা করুন।",category:"Loan Calculators",url:"/bn/calculators/loan-comparison-calculator.html"},
   {title:"கடன் ஒப்பீட்டு கால்குலேட்டர்",description:"கட்டணம், வட்டி, கட்டணங்கள், மதிப்பிடப்பட்ட மொத்த செலவு மற்றும் திருப்பிச் செலுத்தும் காலத்தை வைத்து இரண்டு கடன்களை ஒப்பிடுங்கள்.",category:"Loan Calculators",url:"/ta/calculators/loan-comparison-calculator.html"},
   
+  {title:"Gold Loan Calculator",description:"Estimate how much loan you may get against gold or how much gold you may need for a desired loan amount.",category:"Loan Calculators",url:"/calculators/gold-loan-calculator.html"},
+  {title:"गोल्ड लोन कैलकुलेटर",description:"सोने के बदले अनुमानित लोन या किसी तय लोन के लिए जरूरी सोने का वजन जानें।",category:"Loan Calculators",url:"/hi/calculators/gold-loan-calculator.html"},
+  {title:"गोल्ड लोन कॅल्क्युलेटर",description:"सोन्यावर अंदाजे किती कर्ज मिळू शकते किंवा किती सोने लागेल ते जाणून घ्या.",category:"Loan Calculators",url:"/mr/calculators/gold-loan-calculator.html"},
+  {title:"ગોલ્ડ લોન કેલ્ક્યુલેટર",description:"સોનાના આધારે અંદાજિત લોન અથવા જરૂરી લોન માટે જરૂરી સોનાનું વજન જાણો.",category:"Loan Calculators",url:"/gu/calculators/gold-loan-calculator.html"},
+  {title:"গোল্ড লোন ক্যালকুলেটর",description:"সোনার বিপরীতে আনুমানিক ঋণ বা প্রয়োজনীয় ঋণের জন্য কত সোনা লাগবে তা হিসাব করুন।",category:"Loan Calculators",url:"/bn/calculators/gold-loan-calculator.html"},
+  {title:"தங்கக் கடன் கால்குலேட்டர்",description:"தங்கத்தின் அடிப்படையில் கிடைக்கக்கூடிய கடன் அல்லது தேவையான கடனுக்கான தங்க எடையை கணக்கிடுங்கள்.",category:"Loan Calculators",url:"/ta/calculators/gold-loan-calculator.html"},
   {title:"Balance Transfer Break-Even Calculator",description:"Compare a current loan with a new offer, including switching costs, interest impact and the recovery point.",category:"Loan Calculators",url:"/calculators/balance-transfer-calculator.html"},
 {title:"Personal Loan Calculator",description:"Calculate personal loan EMI, amount received after fees, total interest, total borrowing cost ratio and repayment comparisons.",category:"Loan Calculators",url:"/calculators/personal-loan-calculator.html"},
   {title:"Personal Loan Guide",description:"Understand personal loan interest, EMI, tenure, repayment and borrowing costs.",category:"Loan Guides",url:"/guides/personal-loan-guide.html"},
