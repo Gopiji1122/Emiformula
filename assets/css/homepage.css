@@ -982,3 +982,12 @@
 @media (prefers-reduced-motion: reduce) {
   .home-back-to-top { transition: none; }
 }
+
+
+/* Gold Loan Calculator: restrained gold accent, matching existing tool cards */
+.home-tool-gold-loan::before { background: linear-gradient(90deg, #b8860b, #e6c86e); }
+.home-tool-gold-loan .home-tool-icon { color: #8a6508; background: #fbf4d8; border: 1px solid #ead99a; font-size: 1rem; letter-spacing: -.04em; }
+.home-tool-gold-loan .home-action-primary { background: #9a7410; }
+.home-tool-gold-loan .home-action-primary:hover { background: #7f5e08; }
+.home-tool-gold-loan { border-color: #eadfb7; }
+@media (prefers-reduced-motion: reduce) { .home-tool-gold-loan { animation: none !important; } }
