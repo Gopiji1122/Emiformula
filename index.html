@@ -58,7 +58,7 @@
         <div class="home-tool-grid home-tool-grid-new">
           <article class="home-tool-card home-tool-emi">
             <div class="home-tool-top">
-              <span class="home-tool-icon" aria-hidden="true">₹</span>
+              <span class="home-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 8h5a2.5 2.5 0 0 1 0 5H8m0-5v10m0-10 8 0m-8 5h8"/></svg></span>
               <span class="home-tool-label">EMI</span>
             </div>
             <h3>Plan your monthly loan payment</h3>
@@ -72,7 +72,7 @@
 
           <article class="home-tool-card home-tool-loan">
             <div class="home-tool-top">
-              <span class="home-tool-icon" aria-hidden="true">↗</span>
+              <span class="home-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-7"/><path d="M14 6h5v5"/></svg></span>
               <span class="home-tool-label">LOAN</span>
             </div>
             <h3>See the wider cost of borrowing</h3>
@@ -85,7 +85,7 @@
 
           <article class="home-tool-card home-tool-gold-loan">
             <div class="home-tool-top">
-              <span class="home-tool-icon" aria-hidden="true">Au</span>
+              <span class="home-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 8 3-4h10l3 4-3 12H7L4 8Z"/><path d="M4 8h16M7 4l5 4 5-4M9 13h6"/></svg></span>
               <span class="home-tool-label">GOLD LOAN</span>
             </div>
             <h3>Estimate how much you may borrow against gold</h3>
@@ -97,7 +97,7 @@
 
           <article class="home-tool-card home-tool-loan">
             <div class="home-tool-top">
-              <span class="home-tool-icon" aria-hidden="true">⇄</span>
+              <span class="home-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h15l-3-3m3 3-3 3M20 16H5l3 3m-3-3 3-3"/></svg></span>
               <span class="home-tool-label">LOAN COMPARISON</span>
             </div>
             <h3>Compare two loans side by side</h3>
@@ -110,7 +110,7 @@
 
           <article class="home-tool-card home-tool-loan">
             <div class="home-tool-top">
-              <span class="home-tool-icon" aria-hidden="true">⇄</span>
+              <span class="home-tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h15l-3-3m3 3-3 3M20 16H5l3 3m-3-3 3-3"/></svg></span>
               <span class="home-tool-label">LOAN SWITCH</span>
             </div>
             <h3>Compare the cost of switching</h3>
@@ -148,38 +148,42 @@
         </div>
 
         <div class="home-example-grid">
-          <div class="home-example-inputs">
+          <div class="home-example-inputs home-example-controls">
             <div class="home-example-number">
-              <span>Loan amount</span>
-              <strong>₹15,00,000</strong>
+              <label for="home-loan-amount">Loan amount</label>
+              <output id="home-loan-amount-value" for="home-loan-amount">₹15,00,000</output>
+              <input id="home-loan-amount" type="range" min="100000" max="10000000" step="50000" value="1500000" aria-label="Loan amount">
             </div>
             <div class="home-example-number">
-              <span>Annual interest rate</span>
-              <strong>11.5%</strong>
+              <label for="home-interest-rate">Annual interest rate</label>
+              <output id="home-interest-rate-value" for="home-interest-rate">11.5%</output>
+              <input id="home-interest-rate" type="range" min="1" max="24" step="0.25" value="11.5" aria-label="Annual interest rate">
             </div>
             <div class="home-example-number">
-              <span>Loan tenure</span>
-              <strong>3 years</strong>
+              <label for="home-loan-tenure">Loan tenure</label>
+              <output id="home-loan-tenure-value" for="home-loan-tenure">3 years</output>
+              <input id="home-loan-tenure" type="range" min="1" max="30" step="1" value="3" aria-label="Loan tenure in years">
             </div>
           </div>
 
-          <div class="home-example-result">
+          <div class="home-example-result" aria-live="polite">
             <span class="home-result-label">Estimated monthly EMI</span>
-            <strong>₹49,464</strong>
-            <p>36 monthly payments under a standard reducing-balance calculation.</p>
+            <strong id="home-emi-value">₹49,464</strong>
+            <p id="home-emi-description">36 monthly payments under a standard reducing-balance calculation.</p>
+            <a class="home-action-primary" href="calculators/emi-calculator.html">Open full EMI Calculator <span aria-hidden="true">→</span></a>
           </div>
         </div>
 
         <div class="home-example-stats">
-          <div><span>Loan amount</span><strong>₹15,00,000</strong></div>
-          <div><span>Total interest</span><strong>₹2,80,704</strong></div>
-          <div><span>Total repayment</span><strong>₹17,80,704</strong></div>
+          <div><span>Loan amount</span><strong id="home-total-principal">₹15,00,000</strong></div>
+          <div><span>Total interest</span><strong id="home-total-interest">₹2,80,704</strong></div>
+          <div><span>Total repayment</span><strong id="home-total-repayment">₹17,80,704</strong></div>
         </div>
 
         <div class="home-example-note">
           <strong>What does this tell us?</strong>
-          <p>You borrow ₹15 lakh, but the scheduled payments add up to about ₹17.81 lakh. The difference is approximately ₹2.81 lakh in interest under these assumptions. That is why we show more than your EMI.</p>
-          <small>Figures are rounded. This example assumes a fixed 11.5% annual rate, monthly payments and a standard reducing-balance loan. Fees, taxes, insurance and lender-specific charges are not included.</small>
+          <p id="home-example-explanation">Change the amount, rate or tenure to see how the estimated borrowing cost changes. That is why we show more than your EMI.</p>
+          <small>Estimates assume a fixed annual rate, monthly payments and a standard reducing-balance loan. Fees, taxes, insurance and lender-specific charges are not included.</small>
         </div>
       </section></div>
       </details>
@@ -237,7 +241,7 @@
         <div>
           <p class="home-kicker">Prepayment & early payoff</p>
           <h2 id="prepayment-title">Paying extra can change the repayment path</h2>
-          <p>When you put additional money toward a loan, the amount and timing can affect the remaining balance and future interest. Our planned prepayment tools will let you test monthly extras, annual payments and one-time lump sums.</p>
+          <p>When you put additional money toward a loan, the amount and timing can affect the remaining balance and future interest. You can already test extra monthly payments and a one-time prepayment in the EMI Calculator. Open the calculator to compare how extra payments may change interest and payoff time.</p>
         </div>
         <div class="home-prepayment-points">
           <span>Interest saved</span>
@@ -263,7 +267,7 @@
           <a href="calculators/emi-calculator.html"><strong>What will my EMI be?</strong><span>Calculate the scheduled monthly payment and total interest.</span></a>
           <a href="calculators/personal-loan-calculator.html"><strong>What will this loan really cost?</strong><span>Look beyond EMI at interest, repayment and supported fees.</span></a>
           <a href="calculators/balance-transfer-calculator.html"><strong>Does switching my loan change the cost?</strong><span>Compare the current loan with a replacement and its switching costs.</span></a>
-          <a href="#future-calculators"><strong>What if I pay the loan early?</strong><span>Explore our planned prepayment and payoff tools.</span></a>
+          <a href="#future-calculators"><strong>What if I pay the loan early?</strong><span>Use the extra-payment and prepayment fields in the EMI Calculator.</span></a>
           <a href="#future-calculators"><strong>Which loan should I compare?</strong><span>Our loan comparison tools will put two borrowing options side by side.</span></a>
           <a href="#future-calculators"><strong>Should I rent or buy?</strong><span>Explore the assumptions behind the two choices and compare the costs that matter.</span></a>
         </div>
@@ -405,6 +409,7 @@
       updateVisibility();
     })();
   </script>
+  <script src="assets/js/homepage-calculator.js"></script>
   <script src="assets/js/site-config.js"></script>
   <script src="assets/js/search-data.js"></script>
   <script src="assets/js/navigation.js"></script>
