@@ -82,3 +82,5 @@
  .calc-export-toolbar::before,.calc-export-toolbar::after,.calc-export-primary{animation:none!important}
  .calc-export-button{transition:none!important}
 }
+
+.calc-export-actions [data-share-calculation], .calc-export-actions [data-share-whatsapp] { white-space:nowrap; }

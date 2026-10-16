@@ -991,3 +991,14 @@
 .home-tool-gold-loan .home-action-primary:hover { background: #7f5e08; }
 .home-tool-gold-loan { border-color: #eadfb7; }
 @media (prefers-reduced-motion: reduce) { .home-tool-gold-loan { animation: none !important; } }
+
+
+/* Interactive homepage EMI example */
+.home-example-controls .home-example-number { display:flex; flex-direction:column; gap:.45rem; }
+.home-example-controls label { color:var(--text-secondary); font-size:.78rem; font-weight:750; }
+.home-example-controls output { display:block; font-size:clamp(1rem,2vw,1.3rem); font-weight:850; color:var(--text-primary); }
+.home-example-controls input[type="range"] { width:100%; accent-color:#2563eb; cursor:pointer; margin:.35rem 0 0; }
+.home-example-controls input[type="range"]:focus-visible { outline:3px solid #93c5fd; outline-offset:4px; border-radius:6px; }
+.home-example-result .home-action-primary { align-self:flex-start; margin-top:1rem; }
+.home-tool-icon svg { width:1.35rem; height:1.35rem; display:block; }
+@media(max-width:600px) { .home-example-controls .home-example-number { padding:.9rem; } .home-example-controls output { font-size:1rem; } }
