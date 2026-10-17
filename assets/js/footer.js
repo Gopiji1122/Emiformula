@@ -81,9 +81,10 @@
     });
   }
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    loadFooter
-  );
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadFooter, { once: true });
+  } else {
+    loadFooter();
+  }
 
 })();

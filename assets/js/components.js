@@ -337,20 +337,10 @@
      START
      ------------------------------------------------------- */
 
-  if (
-    document.readyState ===
-    "loading"
-  ) {
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      loadComponents
-    );
-
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadComponents, { once: true });
   } else {
-
     loadComponents();
-
   }
 
 

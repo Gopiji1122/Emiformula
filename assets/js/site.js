@@ -261,9 +261,10 @@
     );
   }
 
-  document.addEventListener(
-    "DOMContentLoaded",
-    loadHeader
-  );
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadHeader, { once: true });
+  } else {
+    loadHeader();
+  }
 
 })();
