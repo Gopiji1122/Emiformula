@@ -1,5 +1,12 @@
 /* EMIFORMULA — SEARCH INDEX */
 window.EMIFORMULA_SEARCH_INDEX = [
+  {title:"PPF Calculator & Savings Planner",description:"Estimate Public Provident Fund growth, deposits, interest and maturity scenarios.",category:"Financial Calculators",url:"/calculators/ppf-calculator.html"},
+  {title:"PPF कैलकुलेटर और बचत प्लानर",description:"PPF में जमा रकम, ब्याज और आगे चलकर मिलने वाली अनुमानित राशि का हिसाब लगाएँ।",category:"Financial Calculators",url:"/hi/calculators/ppf-calculator.html"},
+  {title:"PPF कॅल्क्युलेटर आणि बचत नियोजन",description:"PPF मधील जमा, व्याज आणि पुढे मिळू शकणाऱ्या अंदाजे रकमेचा हिशेब करा.",category:"Financial Calculators",url:"/mr/calculators/ppf-calculator.html"},
+  {title:"PPF કેલ્ક્યુલેટર અને બચત પ્લાનર",description:"PPFમાં જમા રકમ, વ્યાજ અને આગળ મળનારી અંદાજિત રકમનો હિસાબ કરો.",category:"Financial Calculators",url:"/gu/calculators/ppf-calculator.html"},
+  {title:"PPF ক্যালকুলেটর ও সঞ্চয় পরিকল্পনা",description:"PPF জমা, সুদ এবং মেয়াদ শেষে সম্ভাব্য টাকার হিসাব করুন।",category:"Financial Calculators",url:"/bn/calculators/ppf-calculator.html"},
+  {title:"PPF கால்குலேட்டர் மற்றும் சேமிப்பு திட்டம்",description:"PPF வைப்பு, வட்டி மற்றும் கால முடிவில் கிடைக்கக்கூடிய தொகையை கணக்கிடுங்கள்.",category:"Financial Calculators",url:"/ta/calculators/ppf-calculator.html"},
+
   {title:"EMIFORMULA",description:"EMI, loan and financial calculation tools for everyday planning.",category:"Website",url:"/"},
   {title:"EMI",description:"Explore EMI calculators and educational content for monthly loan payments and repayment.",category:"Categories",url:"/categories/emi.html"},
   {title:"Loan",description:"Explore loan calculators and guides for borrowing cost, interest and repayment.",category:"Categories",url:"/categories/loan.html"},
