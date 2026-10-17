@@ -64,5 +64,9 @@ function init(){
  $("compound-reset").addEventListener("click",function(){var d=C.defaults;Object.keys({principal:1,monthlyContribution:1,annualRate:1,years:1,annualStepUp:1,inflation:1}).forEach(function(k){$("compound-"+({"principal":"principal","monthlyContribution":"monthly","annualRate":"rate",years:"years",annualStepUp:"stepup",inflation:"inflation"}[k])).value=d[k];});document.querySelectorAll("[data-frequency]").forEach(function(x){x.classList.toggle("is-active",Number(x.dataset.frequency)===d.frequency);});update();});
  update();
 }
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init, { once: true });
+} else {
+  init();
+}
 })();

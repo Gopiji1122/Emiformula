@@ -18,6 +18,17 @@
   var lastResult = null;
   var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Fail visibly instead of leaving the initial "Calculating…" placeholder on screen.
+  if (!window.EMIFORMULA_BALANCE_TRANSFER || typeof window.EMIFORMULA_BALANCE_TRANSFER.calculate !== 'function') {
+    var loadError = $('bt-verdict');
+    if (loadError) {
+      loadError.className = 'bt-verdict bt-neutral';
+      loadError.innerHTML = '<strong>Calculator could not load</strong><span>Refresh the page or open it through the website server.</span>';
+    }
+    return;
+  }
+  if (!el.balance || !el.oldRate || !el.oldMonths || !el.newRate || !el.newMonths || !el.verdict) return;
+
   function money(value) {
     var n = Number(value) || 0;
     return (n < 0 ? '-₹' : '₹') + Math.round(Math.abs(n)).toLocaleString('en-IN');
