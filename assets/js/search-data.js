@@ -1,5 +1,12 @@
 /* EMIFORMULA — SEARCH INDEX */
 window.EMIFORMULA_SEARCH_INDEX = [
+  {title:"SHG / Bachat Gat Financial Calculator",description:"Estimate member-loan interest, irregular repayments, group savings and indicative CCL planning.",category:"Financial Calculators",url:"/calculators/shg-loan-calculator.html"},
+  {title:"स्वयं सहायता समूह ऋण और बचत कैलकुलेटर",description:"सदस्य ऋण, घटता ब्याज, समूह बचत और बैंक लिंकेज का अनुमान लगाएँ।",category:"Financial Calculators",url:"/hi/calculators/shg-loan-calculator.html"},
+  {title:"बचत गट कर्ज आणि बचत कॅल्क्युलेटर",description:"सदस्य कर्ज, घटते व्याज, बचत आणि बँक लिंकेजचा अंदाज काढा.",category:"Financial Calculators",url:"/mr/calculators/shg-loan-calculator.html"},
+  {title:"SHG લોન અને બચત કેલ્ક્યુલેટર",description:"સભ્ય લોન, ઘટતું વ્યાજ, જૂથ બચત અને બેંક લિંકેજનો અંદાજ.",category:"Financial Calculators",url:"/gu/calculators/shg-loan-calculator.html"},
+  {title:"SHG ঋণ ও সঞ্চয় ক্যালকুলেটর",description:"সদস্য ঋণ, কমতে থাকা সুদ, গোষ্ঠীর সঞ্চয় ও ব্যাংক লিঙ্কেজ হিসাব করুন।",category:"Financial Calculators",url:"/bn/calculators/shg-loan-calculator.html"},
+  {title:"SHG கடன் மற்றும் சேமிப்பு கால்குலேட்டர்",description:"உறுப்பினர் கடன், குறையும் வட்டி, குழு சேமிப்பு மற்றும் வங்கி இணைப்பை கணக்கிடுங்கள்.",category:"Financial Calculators",url:"/ta/calculators/shg-loan-calculator.html"},
+
   {title:"PPF Calculator & Savings Planner",description:"Estimate Public Provident Fund growth, deposits, interest and maturity scenarios.",category:"Financial Calculators",url:"/calculators/ppf-calculator.html"},
   {title:"PPF कैलकुलेटर और बचत प्लानर",description:"PPF में जमा रकम, ब्याज और आगे चलकर मिलने वाली अनुमानित राशि का हिसाब लगाएँ।",category:"Financial Calculators",url:"/hi/calculators/ppf-calculator.html"},
   {title:"PPF कॅल्क्युलेटर आणि बचत नियोजन",description:"PPF मधील जमा, व्याज आणि पुढे मिळू शकणाऱ्या अंदाजे रकमेचा हिशेब करा.",category:"Financial Calculators",url:"/mr/calculators/ppf-calculator.html"},
