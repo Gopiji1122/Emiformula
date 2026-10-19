@@ -37,9 +37,13 @@
       var opening = balance;
       var interest = monthly === 0 ? 0 : opening * monthly;
       var scheduledPrincipal = Math.max(0, baseEmi - interest);
-      var extraPayment = extra;
+      var scheduledPrincipalPaid = Math.min(balance, scheduledPrincipal);
+      var remainingAfterScheduled = Math.max(0, balance - scheduledPrincipalPaid);
+      var extraPayment = Math.min(remainingAfterScheduled, extra);
+      var remainingAfterExtra = Math.max(0, remainingAfterScheduled - extraPayment);
       var prepay = month === prepaymentMonth ? prepayment : 0;
-      var principalPaid = Math.min(balance, scheduledPrincipal + extraPayment + prepay);
+      var prepaymentPaid = Math.min(remainingAfterExtra, prepay);
+      var principalPaid = scheduledPrincipalPaid + extraPayment + prepaymentPaid;
       var payment = interest + principalPaid;
       balance = Math.max(0, balance - principalPaid);
 
@@ -49,8 +53,8 @@
         payment: payment,
         principal: principalPaid,
         interest: interest,
-        extraPayment: Math.max(0, principalPaid - scheduledPrincipal),
-        prepayment: Math.min(prepay, Math.max(0, principalPaid - scheduledPrincipal - extraPayment)),
+        extraPayment: extraPayment,
+        prepayment: prepaymentPaid,
         closingBalance: balance
       });
       totalInterest += interest;
