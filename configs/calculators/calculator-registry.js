@@ -43,6 +43,15 @@
       alternates: { en: "/calculators/loan-comparison-calculator.html", hi: "/hi/calculators/loan-comparison-calculator.html", mr: "/mr/calculators/loan-comparison-calculator.html", gu: "/gu/calculators/loan-comparison-calculator.html", bn: "/bn/calculators/loan-comparison-calculator.html", ta: "/ta/calculators/loan-comparison-calculator.html" },
       status: "active"
     },
+    "shg-loan-calculator": {
+      id: "shg-loan-calculator",
+      name: "SHG / Bachat Gat Financial Calculator",
+      category: "Financial Calculators",
+      description: "Estimate SHG member-loan schedules, savings, irregular repayments, group corpus and indicative bank-linkage planning.",
+      url: "/calculators/shg-loan-calculator.html",
+      alternates: { en: "/calculators/shg-loan-calculator.html", hi: "/hi/calculators/shg-loan-calculator.html", mr: "/mr/calculators/shg-loan-calculator.html", gu: "/gu/calculators/shg-loan-calculator.html", bn: "/bn/calculators/shg-loan-calculator.html", ta: "/ta/calculators/shg-loan-calculator.html" },
+      status: "active"
+    },
     "gold-loan-calculator": {
       id: "gold-loan-calculator",
       name: "Gold Loan Calculator",
