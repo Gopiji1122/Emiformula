@@ -143,7 +143,8 @@
     var rate = n(options.rate);
     var months = Math.max(1, Math.round(n(options.months)));
     var feePercent = Math.max(0, n(options.feePercent));
-    var rates = [rate - 2, rate - 1, rate, rate + 1, rate + 2].map(function (r) { return Math.max(0, r); });
+    if (!(amount > 0)) return [];
+    var rates = [rate - 2, rate - 1, rate, rate + 1, rate + 2].map(function (r) { return Math.round(Math.max(0, r) * 100) / 100; }).filter(function (r, i, a) { return a.indexOf(r) === i; });
     return rates.map(function (r) {
       var result = schedule({ principal: amount, annualRate: r, months: months });
       return {
@@ -160,6 +161,7 @@
     options = options || {};
     var amount = n(options.amount);
     var rate = n(options.rate);
+    if (!(amount > 0)) return [];
     var baseYears = Math.max(1, Math.round(n(options.years)));
     return [baseYears - 2, baseYears - 1, baseYears, baseYears + 1, baseYears + 2]
       .filter(function (y) { return y >= 1 && y <= 30; })

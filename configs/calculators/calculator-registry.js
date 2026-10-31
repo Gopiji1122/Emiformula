@@ -61,12 +61,13 @@
       alternates: { en: "/calculators/gold-loan-calculator.html", hi: "/hi/calculators/gold-loan-calculator.html", mr: "/mr/calculators/gold-loan-calculator.html", gu: "/gu/calculators/gold-loan-calculator.html", bn: "/bn/calculators/gold-loan-calculator.html", ta: "/ta/calculators/gold-loan-calculator.html" },
       status: "active"
     },
-    balanceTransfer: {
-      id: "balance-transfer",
+    "balance-transfer-calculator": {
+      id: "balance-transfer-calculator",
       name: "Balance Transfer Break-Even Calculator",
       category: "Loan Calculators",
       description: "Compare a current loan with a new offer, switching costs, interest impact and break-even analysis.",
-      url: "/calculators/balance-transfer-calculator.html"
+      url: "/calculators/balance-transfer-calculator.html",
+      status: "active"
     },
   };
 

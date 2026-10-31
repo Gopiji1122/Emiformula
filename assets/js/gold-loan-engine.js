@@ -29,7 +29,7 @@
       var pricePerGram=priceGram;
       var value=grams*pricePerGram;
       var max=this.maxLoanForValue(value);
-      return {grams:grams,pricePerGram:pricePerGram,goldValue:value,loan:max.loan,ltv:max.ltv,priceGram:priceGram,purity:purity,unit:data.unit};
+      return {grams:grams,pricePerGram:pricePerGram,goldValue:value,loan:max.loan,ltv:(value>0?max.loan/value:max.ltv),tierLtv:max.ltv,priceGram:priceGram,purity:purity,unit:data.unit};
     },
     reverse:function(data){
       var loan=Number(data.loan),priceGram=Number(data.priceGram),purity=Number(data.purity);

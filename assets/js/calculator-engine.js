@@ -158,7 +158,8 @@
             Math.max(
               0,
               scheduledPrincipal
-            )
+            ) -
+            actualPrepayment
           ),
         prepayment: actualPrepayment,
         closingBalance: balance
@@ -220,7 +221,8 @@
     if (
       principal <= 0 ||
       annualRate < 0 ||
-      months <= 0
+      months <= 0 ||
+      months > 1200
     ) {
       return null;
     }

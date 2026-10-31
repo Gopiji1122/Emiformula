@@ -66,7 +66,7 @@ function calculate(o){
  ];
 
  var rates=[Math.max(0,R-2),R,R+2].map(function(rate){
-   return {label:rate+"%",rate:rate,value:scenario(F,rate)};
+   var clean=Math.round(rate*100)/100;return {label:clean+"%",rate:clean,value:scenario(F,clean)};
  });
 
  return {

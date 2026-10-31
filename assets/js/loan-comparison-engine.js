@@ -201,7 +201,7 @@
         };
       }
 
-      principalPayment = Math.min(principalPayment, openingBalance);
+      principalPayment = (period === periods) ? openingBalance : Math.min(principalPayment, openingBalance);
       var actualPayment = interest + principalPayment;
       balance = Math.max(0, openingBalance - principalPayment);
       var recurringFee = fees.recurringPerPeriod;

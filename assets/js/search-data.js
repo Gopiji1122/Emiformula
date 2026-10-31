@@ -29,6 +29,12 @@ window.EMIFORMULA_SEARCH_INDEX = [
   {title:"கடன் ஒப்பீட்டு கால்குலேட்டர்",description:"கட்டணம், வட்டி, கட்டணங்கள், மதிப்பிடப்பட்ட மொத்த செலவு மற்றும் திருப்பிச் செலுத்தும் காலத்தை வைத்து இரண்டு கடன்களை ஒப்பிடுங்கள்.",category:"Loan Calculators",url:"/ta/calculators/loan-comparison-calculator.html"},
   
   {title:"Gold Loan Calculator",description:"Estimate how much loan you may get against gold or how much gold you may need for a desired loan amount.",category:"Loan Calculators",url:"/calculators/gold-loan-calculator.html"},
+  {title:"Gold Loan Guide",description:"Learn gold loan valuation, per-gram estimates, purity, LTV, EMI, interest and repayment methods.",category:"Loan Guides",url:"/guides/gold-loan-guide.html"},
+  {title:"गोल्ड लोन गाइड",description:"सोने का मूल्यांकन, प्रति ग्राम लोन, शुद्धता, LTV, EMI और ब्याज समझें।",category:"Loan Guides",url:"/hi/guides/gold-loan-guide.html"},
+  {title:"गोल्ड लोन मार्गदर्शक",description:"सोन्याचे मूल्यांकन, प्रति ग्रॅम कर्ज, शुद्धता, LTV, EMI आणि व्याज समजून घ्या.",category:"Loan Guides",url:"/mr/guides/gold-loan-guide.html"},
+  {title:"ગોલ્ડ લોન માર્ગદર્શિકા",description:"સોનાનું મૂલ્યાંકન, પ્રતિ ગ્રામ લોન, શુદ્ધતા, LTV, EMI અને વ્યાજ સમજો.",category:"Loan Guides",url:"/gu/guides/gold-loan-guide.html"},
+  {title:"গোল্ড লোন গাইড",description:"সোনার মূল্যায়ন, প্রতি গ্রামের ঋণ, বিশুদ্ধতা, LTV, EMI ও সুদ বুঝুন।",category:"Loan Guides",url:"/bn/guides/gold-loan-guide.html"},
+  {title:"தங்கக் கடன் வழிகாட்டி",description:"தங்க மதிப்பீடு, கிராமுக்கு கடன், தூய்மை, LTV, EMI மற்றும் வட்டியை அறியுங்கள்.",category:"Loan Guides",url:"/ta/guides/gold-loan-guide.html"},
   {title:"गोल्ड लोन कैलकुलेटर",description:"सोने के बदले अनुमानित लोन या किसी तय लोन के लिए जरूरी सोने का वजन जानें।",category:"Loan Calculators",url:"/hi/calculators/gold-loan-calculator.html"},
   {title:"गोल्ड लोन कॅल्क्युलेटर",description:"सोन्यावर अंदाजे किती कर्ज मिळू शकते किंवा किती सोने लागेल ते जाणून घ्या.",category:"Loan Calculators",url:"/mr/calculators/gold-loan-calculator.html"},
   {title:"ગોલ્ડ લોન કેલ્ક્યુલેટર",description:"સોનાના આધારે અંદાજિત લોન અથવા જરૂરી લોન માટે જરૂરી સોનાનું વજન જાણો.",category:"Loan Calculators",url:"/gu/calculators/gold-loan-calculator.html"},
@@ -40,7 +46,7 @@ window.EMIFORMULA_SEARCH_INDEX = [
     {title:"Balance Transfer Guide",description:"Understand balance transfer costs, break-even timing, savings and lender charges.",category:"Loan Guides",url:"/guides/balance-transfer-guide.html"},
 {title:"Compound Interest Calculator",description:"Calculate future value, contributions, compound growth and investment scenarios.",category:"Financial Calculators",url:"/calculators/compound-interest-calculator.html"},
   {title:"Compound Interest Guide",description:"Understand compound interest, regular contributions, time, inflation and long-term growth.",category:"Financial Guides",url:"/guides/compound-interest-guide.html"},
-  {title:"About EMIFORMULA",description:"Learn about Gopal Gorchhiya, the creator and purpose of EMIFORMULA.",category:"Information",url:"/pages/about.html"},
+  {title:"SHG Loan Guide",description:"Understand self-help group savings, member lending, repayment planning and bank linkage.",category:"Loan Guides",url:"/guides/shg-loan-guide.html"}, {title:"About EMIFORMULA",description:"Learn about Gopal Gorchhiya, the creator and purpose of EMIFORMULA.",category:"Information",url:"/pages/about.html"},
   {title:"Contact EMIFORMULA",description:"Find contact information for questions, feedback and website issues.",category:"Information",url:"/pages/contact.html"},
   {title:"Privacy Policy",description:"Read how EMIFORMULA handles information and privacy-related matters.",category:"Information",url:"/pages/privacy-policy.html"},
   {title:"Terms & Disclaimer",description:"Read the terms, limitations and financial disclaimer for EMIFORMULA.",category:"Information",url:"/pages/terms.html"}

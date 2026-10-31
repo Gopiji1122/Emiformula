@@ -16,14 +16,30 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/homepage.css">
 
-  <script src="assets/js/site-schema-data.js"></script>
-  <script src="assets/js/site-schema.js"></script>
-  <script src="assets/js/schema.js"></script>
+  <script defer src="assets/js/site-schema-data.js"></script>
+  <script defer src="assets/js/site-schema.js"></script>
+  <script defer src="assets/js/schema.js"></script>
   <link rel="icon" href="assets/images/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
   <link rel="manifest" href="assets/images/site.webmanifest">
+<link rel="stylesheet" href="assets/css/premium.css"><meta property="og:title" content="EMIFORMULA | EMI, Loan & Financial Calculators">
+<meta property="og:description" content="Calculate EMI, loan interest, repayment cost and financial scenarios with transparent assumptions and detailed results from EMIFORMULA.">
+<meta property="og:url" content="https://emiformula.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EMIFORMULA">
+<meta property="og:locale" content="en_IN">
+<meta property="og:image" content="https://emiformula.com/assets/images/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EMIFORMULA financial calculators">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EMIFORMULA | EMI, Loan & Financial Calculators">
+<meta name="twitter:description" content="Calculate EMI, loan interest, repayment cost and financial scenarios with transparent assumptions and detailed results from EMIFORMULA.">
+<meta name="twitter:image" content="https://emiformula.com/assets/images/og-default.png">
+<meta name="theme-color" content="#2563eb">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "EMIFORMULA", "url": "https://emiformula.com/", "inLanguage": "en-IN", "publisher": {"@type": "Organization", "name": "EMIFORMULA", "url": "https://emiformula.com/", "logo": "https://emiformula.com/assets/images/android-chrome-512x512.png"}}, {"@type": "Organization", "name": "EMIFORMULA", "url": "https://emiformula.com/", "logo": "https://emiformula.com/assets/images/android-chrome-512x512.png"}]}</script>
 </head>
 <body>
   <div data-component="header"></div>
@@ -92,10 +108,23 @@
             <p>Estimate gold value and a potential loan amount using your gold weight, purity and current price per gram.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/gold-loan-calculator.html">Open Gold Loan Calculator <span aria-hidden="true">→</span></a>
+              <a class="home-action-secondary" href="guides/gold-loan-guide.html">Read Gold Loan Guide</a>
             </div>
           </article>
 
           <article class="home-tool-card home-tool-loan">
+            <div class="home-tool-top">
+              <span class="home-tool-icon" aria-hidden="true">◉</span>
+              <span class="home-tool-label">SHG / BACHAT GAT</span>
+            </div>
+            <h2>SHG Loan &amp; Savings Calculator</h2>
+            <p>Plan member-loan repayments, monthly savings and indicative bank-linkage figures with clear, step-by-step calculations.</p>
+            <div class="home-tool-actions">
+              <a class="home-action-primary" href="calculators/shg-loan-calculator.html">Open SHG Calculator <span aria-hidden="true">→</span></a>
+            <a class="home-action-secondary" href="guides/shg-loan-guide.html">Read SHG Loan Guide</a>
+            </div>
+          </article>
+              <article class="home-tool-card home-tool-loan">
             <div class="home-tool-top">
               <span class="home-tool-icon" aria-hidden="true">⇄</span>
               <span class="home-tool-label">LOAN COMPARISON</span>
@@ -134,29 +163,15 @@
             </div>
           </article>
 
-          <article class="home-tool-card home-tool-financial home-tool-ppf">
+          <article class="home-tool-card home-tool-financial">
             <div class="home-tool-top">
               <span class="home-tool-icon" aria-hidden="true">₹</span>
-              <span class="home-tool-label">SAVINGS</span>
+              <span class="home-tool-label">FINANCIAL</span>
             </div>
-            <h3>Plan your Public Provident Fund (PPF)</h3>
-            <p>Estimate future PPF balance, deposits and interest. Compare deposit timing and explore long-term maturity scenarios.</p>
+            <h3>PPF Calculator &amp; Savings Planner</h3>
+            <p>Estimate yearly deposits, projected interest and maturity value under your selected PPF assumptions.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/ppf-calculator.html">Open PPF Calculator <span aria-hidden="true">→</span></a>
-              <a class="home-action-secondary" href="categories/financial.html">Explore Financial Calculators</a>
-            </div>
-          </article>
-
-          <article class="home-tool-card home-tool-loan home-tool-shg">
-            <div class="home-tool-top">
-              <span class="home-tool-icon" aria-hidden="true">◉</span>
-              <span class="home-tool-label">SHG / BACHAT GAT</span>
-            </div>
-            <h3>SHG Loan &amp; Savings Calculator</h3>
-            <p>Plan member-loan repayments, monthly savings and indicative bank-linkage figures with clear, step-by-step calculations.</p>
-            <div class="home-tool-actions">
-              <a class="home-action-primary" href="calculators/shg-loan-calculator.html">Open SHG Calculator <span aria-hidden="true">→</span></a>
-              <a class="home-action-secondary" href="guides/shg-loan-guide.html">Read SHG Loan Guide</a>
             </div>
           </article>
         </div>
@@ -370,6 +385,7 @@
           <a href="guides/personal-loan-guide.html"><strong>Personal Loan Guide</strong> <span>Understand repayment, borrowing cost and supported fee scenarios.</span></a>
           <a href="guides/balance-transfer-guide.html"><strong>Balance Transfer Guide</strong> <span>Understand switching costs, interest differences and break-even calculations.</span></a>
           <a href="guides/compound-interest-guide.html"><strong>Compound Interest Guide</strong> <span>Understand how compounding affects growth over time.</span></a>
+          <a href="guides/gold-loan-guide.html"><strong>Gold Loan Guide</strong> <span>Understand gold valuation, per-gram estimates, LTV, EMI and interest.</span></a>
         </div>
       </section></div>
       </details>
@@ -431,12 +447,12 @@
       updateVisibility();
     })();
   </script>
-  <script src="assets/js/site-config.js"></script>
-  <script src="assets/js/search-data.js"></script>
-  <script src="assets/js/navigation.js"></script>
-  <script src="assets/js/search.js"></script>
-  <script src="assets/js/footer.js"></script>
-  <script src="assets/js/components.js"></script>
-  <script src="assets/js/site.js"></script>
-</body>
+  <script defer src="assets/js/site-config.js"></script>
+  <script defer src="assets/js/search-data.js"></script>
+  <script defer src="assets/js/navigation.js"></script>
+  <script defer src="assets/js/search.js"></script>
+  <script defer src="assets/js/footer.js"></script>
+  <script defer src="assets/js/components.js"></script>
+  <script defer src="assets/js/site.js"></script>
+<script defer src="assets/js/premium.js"></script></body>
 </html>
