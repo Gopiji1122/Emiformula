@@ -39,7 +39,7 @@
 
     /* scroll reveal */
     if (!reduce && "IntersectionObserver" in window) {
-      var sel = "main section, main article, main .card, .gl-card, .gl-result, [class*='-card'], main details";
+      var sel = "main section, main article > *, main .card, .gl-card, .gl-result, [class*='-card'], main details";
       var all = Array.prototype.slice.call(doc.querySelectorAll(sel));
       var targets = all.filter(function (el) {
         if (el.closest(".site-header,.site-footer,.header-panel,form [class*='-card']")) return false;
@@ -48,7 +48,7 @@
       });
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("ef-in"); io.unobserve(e.target); } });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
       var lastParent = null, idx = 0;
       targets.forEach(function (el) {
         idx = el.parentElement === lastParent ? idx + 1 : 0; lastParent = el.parentElement;
