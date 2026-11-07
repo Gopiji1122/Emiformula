@@ -1048,77 +1048,44 @@
       return;
     }
 
-    target =
-      toNumber(target);
-
-    duration =
-      duration || 650;
-
-    var start =
-      toNumber(
-        element.getAttribute(
-          "data-number-value"
-        )
-      );
-
-    if (!Number.isFinite(start)) {
-      start = 0;
+    target = toNumber(target);
+    var startAttr = element.getAttribute("data-number-value");
+    
+    // Immediate display on initial load or reduced motion to prevent showing incorrect numbers
+    if (startAttr === null || (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+      element.textContent = formatter ? formatter(target) : formatCurrency(target);
+      element.setAttribute("data-number-value", String(target));
+      return;
     }
 
-    var startTime =
-      null;
+    var start = toNumber(startAttr);
+    if (!Number.isFinite(start)) start = 0;
+    if (Math.abs(start - target) < 0.01) {
+      element.textContent = formatter ? formatter(target) : formatCurrency(target);
+      element.setAttribute("data-number-value", String(target));
+      return;
+    }
+
+    duration = 200; // Crisp, fast 200ms transition
+    var startTime = null;
 
     function frame(timestamp) {
-      if (!startTime) {
-        startTime =
-          timestamp;
-      }
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min(1, (timestamp - startTime) / duration);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var value = start + (target - start) * eased;
 
-      var progress =
-        Math.min(
-          1,
-          (
-            timestamp -
-            startTime
-          ) / duration
-        );
+      element.textContent = formatter ? formatter(value) : formatCurrency(value);
 
-      var eased =
-        1 -
-        Math.pow(
-          1 - progress,
-          3
-        );
-
-      var value =
-        start +
-        (
-          target -
-          start
-        ) * eased;
-
-      element.textContent =
-        formatter
-          ? formatter(value)
-          : formatCurrency(value);
-
-      if (
-        progress < 1
-      ) {
-        window.requestAnimationFrame(
-          frame
-        );
+      if (progress < 1) {
+        window.requestAnimationFrame(frame);
       } else {
-        element.setAttribute(
-          "data-number-value",
-          String(target)
-        );
+        element.textContent = formatter ? formatter(target) : formatCurrency(target);
+        element.setAttribute("data-number-value", String(target));
       }
     }
 
-    window.requestAnimationFrame(
-      frame
-    );
+    window.requestAnimationFrame(frame);
   }
 
 
@@ -1811,6 +1778,7 @@
     if (!savingsBox) {
       return;
     }
+    savingsBox.hidden = false;
 
     var interestSaved =
       Math.max(
@@ -2715,12 +2683,33 @@
         "finish the loan based on the selected inputs."
     },
 
-    "interest-saved": {
+        "interest-saved": {
       title: "Interest Saved",
       text:
         "This shows the estimated reduction in interest " +
         "when extra monthly payments or a prepayment " +
         "are included."
+    },
+
+    "total-cost": {
+      title: "Total Cost",
+      text:
+        "This combines the total scheduled loan repayment " +
+        "(principal plus interest) with the entered processing fee."
+    },
+
+    "payment-breakdown": {
+      title: "Payment Breakdown",
+      text:
+        "This chart compares the share of your total loan payment " +
+        "that goes toward repaying the principal versus total interest."
+    },
+
+    "loan-balance": {
+      title: "Loan Balance Over Time",
+      text:
+        "This graph shows how your remaining principal balance " +
+        "decreases month by month across the repayment schedule."
     }
   };
 

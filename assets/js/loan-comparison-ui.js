@@ -453,7 +453,7 @@
   function renderFeeBreakdown(a,b) {
     var names={processing:T.processing,application:T.application,documentation:T.documentation,legal:T.legal,valuation:T.valuation,insurance:T.insurance,broker:T.broker,otherUpfront:T.otherUpfront,prepayment:T.prepayment,otherCost:T.otherCost,recurringPerPeriod:T.recurringFees};
     var keys=Object.keys(names), html='<table><thead><tr><th>'+T.fee+'</th><th>'+T.loanA+'</th><th>'+T.loanB+'</th></tr></thead><tbody>';
-    keys.forEach(function(key){var av=key==='recurringPerPeriod'?(a.feeBreakdown.recurring||0):(a.feeBreakdown[key]||0), bv=key==='recurringPerPeriod'?(b.feeBreakdown.recurring||0):(b.feeBreakdown[key]||0); html+='<tr><th>'+esc(names[key])+'</th><td>'+money(av)+'</td><td>'+money(bv)+'</td></tr>';});
+    keys.forEach(function(key){var av=key==='recurringPerPeriod'?(a.feeBreakdown.recurring||0):((a.feeBreakdown.detailed&&a.feeBreakdown.detailed[key])||0), bv=key==='recurringPerPeriod'?(b.feeBreakdown.recurring||0):((b.feeBreakdown.detailed&&b.feeBreakdown.detailed[key])||0); html+='<tr><th>'+esc(names[key])+'</th><td>'+money(av)+'</td><td>'+money(bv)+'</td></tr>';});
     html+='<tr><th>'+T.totalFees+'</th><td><strong>'+money(a.totalFees)+'</strong></td><td><strong>'+money(b.totalFees)+'</strong></td></tr></tbody></table>';
     id('feeBreakdown').innerHTML=html;
   }
@@ -500,6 +500,6 @@
     }
     id('scheduleComparison').innerHTML=renderComparisonSchedule(a,b);id('scheduleA').innerHTML=renderScheduleTable(a.schedule,T.scheduleA);id('scheduleB').innerHTML=renderScheduleTable(b.schedule,T.scheduleB);renderFeeBreakdown(a,b);renderCumulativeChart(a,b);id('results').hidden=false;var exports=id('exportSection');if(exports)exports.hidden=false;
   }
-  document.addEventListener('DOMContentLoaded',function(){setupCurrencyControl();var form=id('loanComparisonForm');if(!form||!window.EMIFORMULA_LOAN_COMPARISON)return;form.addEventListener('submit',function(event){event.preventDefault();var result=window.EMIFORMULA_LOAN_COMPARISON.compareLoans(loan('a'),loan('b'));if(!result.ok){showError(result.errors||['Please check the loan inputs.']);id('results').hidden=true;return;}showError([]);render(result);id('results').scrollIntoView({behavior:'auto',block:'start'});});});
+  document.addEventListener('DOMContentLoaded',function(){setupCurrencyControl();var form=id('loanComparisonForm');if(!form||!window.EMIFORMULA_LOAN_COMPARISON)return;form.addEventListener('submit',function(event){event.preventDefault();var result=window.EMIFORMULA_LOAN_COMPARISON.compareLoans(loan('a'),loan('b'));if(!result.ok){showError(result.errors||['Please check the loan inputs.']);id('results').hidden=true;return;}showError([]);render(result);id('results').scrollIntoView({behavior:'auto',block:'start'});});var initialResult=window.EMIFORMULA_LOAN_COMPARISON.compareLoans(loan('a'),loan('b'));if(initialResult&&initialResult.ok){render(initialResult);}});
   window.EMIFORMULA_LOAN_COMPARISON_UI={getComparison:function(){return state.comparison;},getLoanInputs:function(prefix){return loan(prefix);},getCurrency:function(){return {code:state.currency,symbol:currencyInfo().symbol,name:currencyInfo().name};}};
 })();

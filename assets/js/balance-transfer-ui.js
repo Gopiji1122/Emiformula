@@ -57,11 +57,13 @@
   function updateRegulatoryNote() {
     var floating = el.floating.checked, individual = el.purpose.value === 'individual', year = Number(el.year.value);
     if (floating && individual && year >= 2026) {
-      el.regNote.textContent = 'The entered details may fall within RBI pre-payment-charge restrictions applicable from January 1, 2026. Confirm the actual charge in your lender documents before setting it to ₹0.';
+      el.regNote.textContent = 'Under the RBI (Pre-payment Charges on Loans) Directions, 2025 (effective January 1, 2026), regulated lenders cannot levy pre-payment charges on floating-rate loans granted for non-business purposes to individuals. Confirm your loan terms before setting the charge to ₹0.';
+    } else if (floating && !individual && year >= 2026) {
+      el.regNote.textContent = 'Under the RBI (Pre-payment Charges on Loans) Directions, 2025 (effective January 1, 2026), floating-rate business loans to individuals and MSEs have no pre-payment charges at commercial banks, Tier-4 UCBs, NBFC-ULs and AIFIs, and up to ₹50 lakh sanctioned limit at SFBs, RRBs, Tier-3 UCBs, Co-op Banks and NBFC-MLs. Verify your lender category and sanction letter.';
     } else if (floating && individual) {
       el.regNote.textContent = 'Floating-rate individual non-business loans may be subject to applicable RBI pre-payment-charge restrictions. Check the sanction/renewal date and lender documents.';
     } else {
-      el.regNote.textContent = 'Do not assume an RBI pre-payment-charge waiver for this combination of loan purpose and rate type. Use the actual charge shown by your lender.';
+      el.regNote.textContent = 'Fixed-rate loans and pre-2026 business loans may attract pre-payment charges as per the lender\'s policy. Use the actual charge shown in your lender statement.';
     }
   }
 

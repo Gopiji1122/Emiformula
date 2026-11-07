@@ -33,15 +33,23 @@ function update(){
    annualStepUp:num("compound-stepup"),
    inflation:num("compound-inflation")
  });
- setText("compound-principal-value",money(num("compound-principal")));
- setText("compound-monthly-value",money(num("compound-monthly")));
- setText("compound-rate-value",num("compound-rate")+"%");
- setText("compound-years-value",num("compound-years")+" years");
- setText("compound-stepup-value",num("compound-stepup")+"%");
- setText("compound-inflation-value",num("compound-inflation")+"%");
+ var cleanPrincipal=Math.min(100000000,Math.max(0,num("compound-principal")||0));
+ var cleanMonthly=Math.min(1000000,Math.max(0,num("compound-monthly")||0));
+ var cleanRate=Math.min(50,Math.max(0,num("compound-rate")||0));
+ var cleanYears=Math.min(50,Math.max(1,num("compound-years")||1));
+ var cleanStepup=Math.min(50,Math.max(0,num("compound-stepup")||0));
+ var cleanInflation=Math.min(20,Math.max(0,num("compound-inflation")||0));
+ setText("compound-principal-value",money(cleanPrincipal));
+ setText("compound-monthly-value",money(cleanMonthly));
+ setText("compound-rate-value",cleanRate+"%");
+ setText("compound-years-value",cleanYears+" years");
+ setText("compound-stepup-value",cleanStepup+"%");
+ setText("compound-inflation-value",cleanInflation+"%");
  setText("compound-future",money(result.futureValue));
  setText("compound-invested",money(result.totalContributed));
  setText("compound-interest",money(result.totalInterest));
+ setText("compound-real",money(result.realValue));
+ setText("compound-real-note",cleanInflation>0?"Buying power ("+cleanInflation+"% inflation)":"Buying power (0% inflation)");
  setText("compound-donut-total",money(result.futureValue));
  setText("compound-legend-invested",money(result.totalContributed));
  setText("compound-legend-interest",money(result.totalInterest));

@@ -53,6 +53,21 @@
       return;
     }
 
+    var currentPath = window.location.pathname || "/";
+    var homeLink = header.querySelector('.desktop-nav .nav-link');
+    if (homeLink) {
+      var isHome = currentPath === "/" || /\/index\.html$/i.test(currentPath);
+      homeLink.classList.toggle("nav-link-active", isHome);
+    }
+    var activeMenu = "";
+    if (/\/(calculators|categories)\//i.test(currentPath)) activeMenu = "calculators";
+    else if (/\/guides\//i.test(currentPath)) activeMenu = "guides";
+    else if (/\/pages\//i.test(currentPath)) activeMenu = "about";
+    if (activeMenu) {
+      var activeBtn = header.querySelector('[data-header-menu="' + activeMenu + '"]');
+      if (activeBtn) activeBtn.classList.add("nav-link-active");
+    }
+
     var menuToggle =
       header.querySelector("[data-menu-toggle]");
 

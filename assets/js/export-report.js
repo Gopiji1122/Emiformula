@@ -226,7 +226,7 @@
     var rows = result.schedule || [];
     var html = "<table><thead><tr><th>Month</th><th>Opening balance</th><th>Payment</th><th>Principal</th><th>Interest</th><th>Extra / prepayment</th><th>Closing balance</th></tr></thead><tbody>";
     rows.forEach(function (r) {
-      var extra = num(r.extraPayment);
+      var extra = num(r.extraPayment) + num(r.prepayment);
       html += "<tr><td>" + r.month + "</td><td>" + money(r.openingBalance) + "</td><td>" + money(r.payment) + "</td><td>" + money(r.principal) + "</td><td>" + money(r.interest) + "</td><td>" + money(extra) + "</td><td>" + money(r.closingBalance) + "</td></tr>";
     });
     return html + "</tbody></table>";
@@ -315,10 +315,10 @@
     var rows=result.timeline||[];
     if(!rows.length)return "<div class='empty-chart'>No break-even timeline available.</div>";
     var width=900,height=240,left=58,right=24,top=22,bottom=42,plotW=width-left-right,plotH=height-top-bottom;
-    var vals=rows.map(function(r){return num(r.cumulative);}), min=Math.min.apply(null,vals.concat([0])),max=Math.max.apply(null,vals.concat([0]));
+    var vals=rows.map(function(r){return num(r.economicPosition != null ? r.economicPosition : r.cumulative);}), min=Math.min.apply(null,vals.concat([0])),max=Math.max.apply(null,vals.concat([0]));
     if(max===min){max=min+1;}
     var y=function(v){return top+(max-v)/(max-min)*plotH;};
-    var pts=rows.map(function(r,i){var x=left+(rows.length===1?plotW/2:i*plotW/(rows.length-1));return x.toFixed(1)+","+y(num(r.cumulative)).toFixed(1);}).join(" ");
+    var pts=rows.map(function(r,i){var x=left+(rows.length===1?plotW/2:i*plotW/(rows.length-1));return x.toFixed(1)+","+y(num(r.economicPosition != null ? r.economicPosition : r.cumulative)).toFixed(1);}).join(" ");
     var zeroY=y(0).toFixed(1);
     return "<svg viewBox='0 0 "+width+" "+height+"' role='img' aria-label='Cumulative savings break-even timeline'><line x1='"+left+"' y1='"+zeroY+"' x2='"+(left+plotW)+"' y2='"+zeroY+"' stroke='#94a3b8' stroke-dasharray='5 4'/><polyline points='"+pts+"' fill='none' stroke='#16a34a' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/><text x='"+left+"' y='"+(height-12)+"' font-size='12' fill='#64748b'>Month "+rows[0].month+"</text><text x='"+(left+plotW)+"' y='"+(height-12)+"' text-anchor='end' font-size='12' fill='#64748b'>Month "+rows[rows.length-1].month+"</text><text x='"+(left-8)+"' y='"+(top+5)+"' text-anchor='end' font-size='12' fill='#64748b'>"+svgEsc(money(max))+"</text><text x='"+(left-8)+"' y='"+(top+plotH)+"' text-anchor='end' font-size='12' fill='#64748b'>"+svgEsc(money(min))+"</text></svg>";
   }
@@ -413,8 +413,8 @@
       download("emiformula-personal-loan-report.csv",pl.map(function(line){return line.map(csvCell).join(",");}).join("\r\n"),"text/csv;charset=utf-8"); setStatus("CSV exported."); return;
     }
     if (exportType() === "balance-transfer") {
-      var bt = [["EMIFORMULA Balance Transfer Calculator Report"],["Generated",new Date().toLocaleString("en-IN")],[],["Inputs"],["Outstanding balance",i.balance],["Current rate (%)",i.oldRate],["Current tenure (months)",i.oldMonths],["New rate (%)",i.newRate],["New tenure (months)",i.newMonths],["Old lender charge",i.foreclosure],["GST on old charge",i.foreclosureGST],["New lender processing",i.processing],["GST on processing",i.processingGST],["Other switching costs",i.other],[],["Results"],["Current EMI",r.currentEMI],["New EMI",r.newEMI],["Switching costs",r.switchingCosts],["Gross interest saving",r.grossInterestSaving],["Net saving",r.netSaving],["Break-even month",r.breakEvenMonth==null?"Not reached":r.breakEvenMonth],["Current interest",r.currentInterest],["New interest",r.newInterest],["Monthly EMI difference",r.monthlyEmiDifference],[],["Break-even timeline"],["Month","Cumulative benefit after switching costs"]];
-      (r.timeline||[]).forEach(function(row){bt.push([row.month,row.cumulative]);});
+      var bt = [["EMIFORMULA Balance Transfer Calculator Report"],["Generated",new Date().toLocaleString("en-IN")],[],["Inputs"],["Outstanding balance",i.balance],["Current rate (%)",i.oldRate],["Current tenure (months)",i.oldMonths],["New rate (%)",i.newRate],["New tenure (months)",i.newMonths],["Old lender charge",i.foreclosure],["GST on old charge",i.foreclosureGST],["New lender processing",i.processing],["GST on processing",i.processingGST],["Other switching costs",i.other],[],["Results"],["Current EMI",r.currentEMI],["New EMI",r.newEMI],["Switching costs",r.switchingCosts],["Gross interest saving",r.grossInterestSaving],["Net saving",r.netSaving],["Break-even month",r.breakEvenMonth==null?"Not reached":r.breakEvenMonth],["Current interest",r.currentInterest],["New interest",r.newInterest],["Monthly EMI difference",r.monthlyEmiDifference],[],["Break-even timeline"],["Month","Cumulative cash-flow difference","Total-cost economic position (incl. balance difference)"]];
+      (r.timeline||[]).forEach(function(row){bt.push([row.month,row.cumulative,row.economicPosition]);});
       download("emiformula-balance-transfer-report.csv",bt.map(function(line){return line.map(csvCell).join(",");}).join("\r\n"),"text/csv;charset=utf-8"); setStatus("CSV exported."); return;
     }
     if (exportType() === "compound-interest") {

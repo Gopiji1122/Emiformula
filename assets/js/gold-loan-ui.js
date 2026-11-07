@@ -57,7 +57,8 @@ $('calculatorForm').addEventListener('submit',function(e){
    $('r2').innerHTML='<span>'+TX.tola+'</span><strong>'+fmt(r.tola)+'</strong>';
    $('r3').innerHTML='<span>'+TX.ltv+'</span><strong>'+fmt(r.ltv*100)+'%</strong>';
   }
-  $('resultFoot').textContent=TX.foot;
+  var capNote=r.grams>1000?' (Note: Under RBI 2025 Directions, pledged gold ornaments are capped at 1,000 g / 1 kg per borrower, and gold coins at 50 g.)':'';
+  $('resultFoot').textContent=TX.foot+capNote;
   $('result').classList.remove('gl-hidden');
   $('result').scrollIntoView({behavior:'smooth',block:'nearest'});
  }catch(err){
@@ -65,6 +66,21 @@ $('calculatorForm').addEventListener('submit',function(e){
   $('error').classList.remove('gl-hidden');
  }
 });
+var purityEl=$('purity');
+var lastPurity=Number(purityEl&&purityEl.value)||0;
+if(purityEl){
+ purityEl.addEventListener('change',function(){
+  var nextPurity=Number(purityEl.value)||0;
+  var curPrice=Number(rate&&rate.value)||0;
+  if(lastPurity>0&&nextPurity>0&&lastPurity!==nextPurity&&curPrice>0){
+   rate.value=(Math.round(curPrice*(nextPurity/lastPurity)*100)/100).toFixed(2);
+   if(!$('result').classList.contains('gl-hidden')){
+    $('calculatorForm').dispatchEvent(new Event('submit',{cancelable:true}));
+   }
+  }
+  if(nextPurity>0)lastPurity=nextPurity;
+ });
+}
 function updateWeightHint(){
  if(!TX)return;
  $('weightHint').textContent=$('weightUnit').value==='tola'?TX.hintTola:TX.hintGrams;

@@ -78,88 +78,7 @@
   >
 
 
-  <!-- =====================================================
-       SEO CONFIGURATION
-  ====================================================== -->
-
-  <script defer src="../seo/seo-config.js"></script>
-
-  <script>
-
-    window.EMIFORMULA_PAGE_SEO = {
-
-      title:
-        "EMI Calculator | Calculate Monthly EMI & Interest | EMIFORMULA",
-
-      description:
-        "Calculate monthly EMI, total interest, total repayment and loan balance with the EMIFORMULA EMI Calculator.",
-
-      robots:
-        "index, follow",
-
-      ogType:
-        "website"
-
-    };
-
-  </script>
-
-  <script defer src="../seo/seo.js"></script>
-
-
-  <!-- =====================================================
-       CALCULATOR SCHEMA
-  ====================================================== -->
-<script>
-  window.EMIFORMULA_CALCULATOR_SCHEMA = {
-
-    "@context": "https://schema.org",
-
-    "@type": "WebApplication",
-
-    "name": "EMI Calculator",
-
-    "description":
-      "Calculate monthly EMI, total interest, total payment, loan payoff time and repayment details.",
-
-    "url":
-      "https://emiformula.com/calculators/emi-calculator.html",
-
-    "applicationCategory":
-      "FinanceApplication",
-
-    "applicationSubCategory":
-      "Loan Calculator",
-
-    "operatingSystem":
-      "Web",
-
-    "browserRequirements":
-      "Requires JavaScript enabled",
-
-    "inLanguage":
-      "en-IN",
-
-    "isAccessibleForFree":
-      true,
-
-    "featureList": [
-      "Loan EMI calculation",
-      "Total interest calculation",
-      "Total payment calculation",
-      "Loan payoff time",
-      "Processing fee calculation",
-      "Extra monthly payment calculation",
-      "One-time prepayment calculation",
-      "Loan balance chart",
-      "Amortization schedule"
-    ]
-
-  };
-</script>
-
-<script defer src="../assets/js/calculator-schema.js"></script>
-<script defer src="../assets/js/schema.js"></script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "EMI Calculator", "description": "Calculate monthly EMI, total interest, total payment, loan payoff time and repayment details.", "url": "https://emiformula.com/calculators/emi-calculator.html", "applicationCategory": "FinanceApplication", "applicationSubCategory": "Loan Calculator", "operatingSystem": "Web", "browserRequirements": "Requires JavaScript enabled", "inLanguage": "en-IN", "isAccessibleForFree": true, "featureList": ["Loan EMI calculation", "Total interest calculation", "Total payment calculation", "Loan payoff time", "Processing fee calculation", "Extra monthly payment calculation", "One-time prepayment calculation", "Loan balance chart", "Amortization schedule"]}</script>
 
 
   <link rel="icon" href="../assets/images/favicon.ico" sizes="any">
@@ -1101,12 +1020,27 @@
 
     
 
+
+            <div class="calc-export-toolbar" data-export-toolbar data-export-type="emi" aria-label="Export and share calculator results">
+              <div>
+                <strong>Export or share your EMI calculation</strong>
+                <span>Fixed desktop-style report on every device</span>
+              </div>
+              <div class="calc-export-actions">
+                <button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button>
+                <button type="button" class="calc-export-button" data-export-action="csv">CSV</button>
+                <button type="button" class="calc-export-button" data-export-action="json">JSON</button>
+                <button type="button" class="calc-export-button" data-share-calculation>Copy Link</button>
+                <button type="button" class="calc-export-button" data-share-whatsapp>WhatsApp</button>
+              </div>
+              <span class="calc-export-status" data-export-status hidden aria-live="polite"></span>
+            </div>
+
 <section class="ef-related" aria-labelledby="ef-related-title"><h2 id="ef-related-title">Related calculators &amp; guides</h2><div class="ef-related-grid"><a class="ef-rel-card" href="../guides/emi-guide.html"><span class="ef-kicker">Guide</span><strong>Understanding EMI: How Monthly Loan Payments Really Work</strong><span class="ef-rel-desc">Learn how EMI works, how principal and interest are split, how tenure and rates change your loan cost, and how to…</span><span class="ef-arrow" aria-hidden="true">→</span></a><a class="ef-rel-card" href="step-up-step-down-emi-calculator.html"><span class="ef-kicker">Calculator</span><strong>Step-Up / Step-Down EMI Calculator</strong><span class="ef-rel-desc">See how a one-time, periodic or custom EMI change can affect loan payoff time, total interest and repayment in…</span><span class="ef-arrow" aria-hidden="true">→</span></a><a class="ef-rel-card" href="personal-loan-calculator.html"><span class="ef-kicker">Calculator</span><strong>Personal Loan Calculator</strong><span class="ef-rel-desc">Calculate personal loan EMI, amount received after fees, total interest, total repayment, total borrowing cost…</span><span class="ef-arrow" aria-hidden="true">→</span></a><a class="ef-rel-card" href="loan-comparison-calculator.html"><span class="ef-kicker">Calculator</span><strong>Loan Comparison Calculator</strong><span class="ef-rel-desc">Compare two loans by payment, interest, fees, total estimated cost and payoff time with a transparent amortization…</span><span class="ef-arrow" aria-hidden="true">→</span></a></div></section>
 </main>
 
 
 
-<div class="calc-export-toolbar" data-export-toolbar data-export-type="emi" aria-label="Export calculator results"><div><strong>Export your EMI calculation</strong><span>Fixed desktop-style report on every device</span></div><div class="calc-export-actions"><button type="button" class="calc-export-button calc-export-primary" data-export-action="pdf">PDF Report</button><button type="button" class="calc-export-button" data-export-action="csv">CSV</button><button type="button" class="calc-export-button" data-export-action="json">JSON</button><button type="button" class="calc-export-button" data-share-calculation>Copy share link</button><button type="button" class="calc-export-button" data-share-whatsapp>WhatsApp</button></div><span class="calc-export-status" data-export-status hidden aria-live="polite"></span></div>
     <!-- ===================================================
          LEARNING CONTENT
     ==================================================== -->
@@ -1202,6 +1136,7 @@
 
   <script defer src="../assets/js/footer.js"></script>
 
+  <script defer src="../assets/js/breadcrumb-data.js"></script>
   <script defer src="../assets/js/components.js"></script>
 
   <script defer src="../assets/js/navigation.js"></script>

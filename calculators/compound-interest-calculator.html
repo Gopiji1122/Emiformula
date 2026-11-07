@@ -163,6 +163,7 @@
               <article class="compound-kpi"><span>Future value</span><strong id="compound-future">₹0</strong><small>Projected portfolio value</small></article>
               <article class="compound-kpi"><span>Total invested</span><strong id="compound-invested">₹0</strong><small>Your contributions</small></article>
               <article class="compound-kpi"><span>Interest earned</span><strong id="compound-interest">₹0</strong><small>Growth from compounding</small></article>
+              <article class="compound-kpi"><span>Inflation-adjusted value</span><strong id="compound-real">₹0</strong><small id="compound-real-note">Buying power (0% inflation)</small></article>
             </div>
 
             <section class="compound-card compound-growth-card">
@@ -246,12 +247,23 @@
 <script defer src="../assets/js/navigation.js"></script>
 <script defer src="../assets/js/search.js"></script>
 <script defer src="../assets/js/footer.js"></script>
-<script defer src="../assets/js/components.js"></script>
+<script defer src="../assets/js/breadcrumb-data.js"></script>
+  <script defer src="../assets/js/components.js"></script>
 <script defer src="../assets/js/site.js"></script>
 <script defer src="../assets/js/compound-interest-engine.js"></script>
 <script defer src="../configs/calculators/compound-interest-calculator.js"></script>
 <script defer src="../assets/js/compound-interest-ui.js"></script>
-<script defer src="../seo/compound-interest-schema.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Compound Interest Calculator",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "url": "https://emiformula.com/calculators/compound-interest-calculator.html",
+  "description": "Calculate future value, contributions, compound interest and investment growth."
+}
+</script>
   <script defer src="../assets/js/export-report.js"></script>
 <script defer src="../assets/js/premium.js"></script></body>
 </html>

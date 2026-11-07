@@ -1,0 +1,174 @@
+name: EMIFORMULA Quality & Regression CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  audit-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 1. Validate JavaScript Syntax
+        run: |
+          echo "Checking syntax across all JS files..."
+          find . -name "*.js" -not -path "*/.*" -exec node --check {} +
+          echo "All JS files compiled cleanly!"
+
+      - name: 2. Validate JSON-LD Schemas & HTML Integrity
+        run: |
+          python3 - << 'EOF'
+          import os, glob, re, json
+          from html.parser import HTMLParser
+
+          html_files = sorted(glob.glob("**/*.html", recursive=True))
+          errors = []
+
+          for hf in html_files:
+              txt = open(hf, encoding="utf-8").read()
+              # Validate JSON-LD
+              blocks = re.findall(r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', txt, re.S | re.I)
+              for idx, b in enumerate(blocks):
+                  try:
+                      json.loads(b)
+                  except Exception as e:
+                      errors.append(f"Invalid JSON-LD in {hf} block #{idx+1}: {e}")
+
+              if hf.startswith(("templates/", "components/")) or hf == "404.html":
+                  continue
+
+              # Check for single H1
+              h1s = re.findall(r'<h1\b[^>]*>(.*?)</h1>', txt, re.S | re.I)
+              if len(h1s) != 1:
+                  errors.append(f"{hf} has {len(h1s)} H1 tags (expected exactly 1)")
+
+              # Check canonical
+              if 'rel="canonical"' not in txt:
+                  errors.append(f"{hf} is missing <link rel='canonical'>")
+
+          if errors:
+              print("HTML & Schema Errors Found:")
+              for e in errors:
+                  print(" -", e)
+              exit(1)
+          print(f"All {len(html_files)} HTML files & JSON-LD blocks validated!")
+          EOF
+
+      - name: 3. Run Financial Engine Unit Tests
+        run: |
+          node - << 'EOF'
+          const fs = require('fs');
+          const vm = require('vm');
+          const path = require('path');
+
+          const sandbox = {
+            window: { location: { pathname: '/calculators/emi-calculator.html' } },
+            document: { readyState: 'complete', documentElement: { lang: 'en', dataset: { locale: 'en' } }, querySelectorAll: () => [], getElementById: () => null },
+            navigator: { language: 'en-IN', languages: ['en-IN'] },
+            Intl, Math, Date, Number, String, Object, Array
+          };
+          sandbox.window.window = sandbox.window;
+          sandbox.global = sandbox.window;
+
+          function load(rel) {
+            const code = fs.readFileSync(rel, 'utf8');
+            vm.runInNewContext(code, sandbox, { filename: rel });
+          }
+
+          load('configs/calculators/calculator-registry.js');
+          load('assets/js/calculator-engine.js');
+          load('assets/js/personal-loan-engine.js');
+          load('assets/js/compound-interest-engine.js');
+          load('assets/js/balance-transfer-engine.js');
+          load('assets/js/loan-comparison-engine.js');
+          load('assets/js/gold-loan-engine.js');
+          load('assets/js/step-up-step-down-engine.js');
+          load('assets/js/pmay-engine.js');
+
+          // EMI test
+          const emi = sandbox.window.EMIFORMULA_CALCULATOR.calculate({ principal: 500000, annualRate: 10, months: 60 });
+          if (Math.round(emi.baseEmi) !== 10624) throw new Error('EMI calculation failed');
+
+          // Personal Loan test
+          const pl = sandbox.window.EMIFORMULA_PERSONAL_LOAN.calculate({ amount: 500000, annualRate: 12, months: 60, processingFeePercent: 2 });
+          if (Math.round(pl.totalRepayment) !== 667333 || pl.netReceived !== 490000) throw new Error('Personal Loan test failed');
+
+          // Loan Comparison test
+          const lc = sandbox.window.EMIFORMULA_LOAN_COMPARISON.compareLoans(
+            { amount: 1500000, annualRate: 11.5, termMonths: 36, paymentFrequency: 'monthly' },
+            { amount: 1500000, annualRate: 10, termMonths: 60, paymentFrequency: 'monthly' }
+          );
+          if (!lc.ok || Math.round(lc.loanA.payment) !== 49464) throw new Error('Loan comparison test failed');
+
+                    // PMAY-Urban 2.0 test
+          const pmay = sandbox.window.EMIFORMULA_PMAY.calculate({
+            annualIncome: 500000,
+            propertyValue: 2800000,
+            loanAmount: 2000000,
+            annualRate: 8.5,
+            tenureYears: 20,
+            ownsPuccaHouse: false,
+            hasFemaleOwner: true,
+            carpetUnder120: true,
+            benefitMode: 'tenure'
+          });
+          if (!pmay.isEligible || pmay.actualSubsidyReleased !== 180000 || pmay.yearlyInstallment !== 36000 || pmay.npvSubsidy !== 150000) {
+            throw new Error('PMAY-Urban 2.0 test failed');
+          }
+
+          console.log('All financial calculator regression unit tests passed successfully!');
+          EOF
+
+      - name: 4. Check Internal Link Resolution
+        run: |
+          python3 - << 'EOF'
+          import os, glob, re
+          from html.parser import HTMLParser
+
+          html_files = sorted(glob.glob("**/*.html", recursive=True))
+          broken = []
+
+          class LinkExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.links = []
+              def handle_starttag(self, tag, attrs):
+                  d = dict(attrs)
+                  if tag == 'a' and 'href' in d:
+                      self.links.append(d['href'])
+
+          for hf in html_files:
+              p = LinkExtractor()
+              p.feed(open(hf, encoding="utf-8").read())
+              for href in p.links:
+                  if not href or href.startswith(('http://', 'https://', 'mailto:', 'tel:', 'javascript:', '#', 'data:')):
+                      continue
+                  clean = href.split('#')[0].split('?')[0]
+                  if not clean:
+                      continue
+                  target = clean.lstrip('/') if clean.startswith('/') else os.path.normpath(os.path.join(os.path.dirname(hf), clean))
+                  if not (os.path.exists(target) or os.path.exists(target + '.html') or os.path.exists(os.path.join(target, 'index.html'))):
+                      broken.append((hf, href))
+
+          if broken:
+              print("Broken internal links found:")
+              for b in broken:
+                  print(" -", b)
+              exit(1)
+          print("100% of internal links resolved successfully!")
+          EOF

@@ -69,6 +69,24 @@
       url: "/calculators/balance-transfer-calculator.html",
       status: "active"
     },
+        "ppf-calculator": {
+      id: "ppf-calculator",
+      name: "PPF Calculator & Savings Planner",
+      category: "Financial Calculators",
+      description: "Estimate Public Provident Fund balance, yearly deposits, interest, deposit timing impact and maturity scenarios.",
+      url: "/calculators/ppf-calculator.html",
+      alternates: { en: "/calculators/ppf-calculator.html", hi: "/hi/calculators/ppf-calculator.html", mr: "/mr/calculators/ppf-calculator.html", gu: "/gu/calculators/ppf-calculator.html", bn: "/bn/calculators/ppf-calculator.html", ta: "/ta/calculators/ppf-calculator.html" },
+      status: "active"
+    },
+    "pmay-subsidy-calculator": {
+      id: "pmay-subsidy-calculator",
+      name: "PMAY-Urban 2.0 Subsidy Calculator",
+      category: "Loan Calculators",
+      description: "Check PMAY-Urban 2.0 home loan eligibility, ₹1.80 lakh interest subsidy (5 yearly installments of ₹36,000), EMI savings, and tenure reduction.",
+      url: "/calculators/pmay-subsidy-calculator.html",
+      alternates: { en: "/calculators/pmay-subsidy-calculator.html", hi: "/hi/calculators/pmay-subsidy-calculator.html", mr: "/mr/calculators/pmay-subsidy-calculator.html", gu: "/gu/calculators/pmay-subsidy-calculator.html", bn: "/bn/calculators/pmay-subsidy-calculator.html", ta: "/ta/calculators/pmay-subsidy-calculator.html" },
+      status: "active"
+    }
   };
 
   window.EMIFORMULA_CALCULATOR_REGISTRY = Object.freeze(registry);

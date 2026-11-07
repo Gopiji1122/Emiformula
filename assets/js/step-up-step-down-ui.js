@@ -8,7 +8,7 @@
   var $$ = function (s, root) { return Array.prototype.slice.call((root || document).querySelectorAll(s)); };
   var num = E.normalizeNumber;
   var state = {
-    method: null,
+    method: 'periodic',
     customCount: 1,
     currentSource: 'loan',
     lastResult: null,
@@ -18,7 +18,6 @@
 
   var loanIds = ['#sud-loan', '#sud-rate', '#sud-tenure'];
   var currentInput = $('#sud-current');
-  var switchText = $('#sud-input-mode');
   var liveTimer = null;
   var calculating = false;
 
@@ -66,7 +65,6 @@
   }
 
   function refreshCurrentEmi() {
-    var display = $('#sud-current-value');
     var principal = num($('#sud-loan').value);
     var rate = num($('#sud-rate').value);
     var years = num($('#sud-tenure').value);
@@ -75,12 +73,10 @@
     if (principal > 0 && years > 0 && rate >= 0) {
       var emi = E.standardEmi(principal, rate, Math.round(years * 12));
       currentInput.value = Math.round(emi * 100) / 100;
-      if (display) display.textContent = money(emi) + ' / month';
       $('#sud-current-help').textContent = 'Calculated automatically from the loan amount, annual rate and repayment period.';
       return emi;
     }
     currentInput.value = '';
-    if (display) display.textContent = '—';
     $('#sud-current-help').textContent = 'Complete the 3 required loan details to calculate Current EMI.';
     return 0;
   }
@@ -181,7 +177,7 @@
         throw new Error('Select how often the EMI should change.');
       }
       var loanMonths = Math.round(num($('#sud-tenure').value) * 12);
-      return E.buildPeriodic(currentEmi, change, frequency, loanMonths);
+      return E.buildPeriodic(currentEmi, change, frequency, Math.max(1200, loanMonths + 24));
     }
     captureCustomRows();
     var entries = state.customEntries.map(function (entry) {
@@ -504,13 +500,15 @@
 
   window.addEventListener('afterprint', removePrintReport);
 
-  window.addEventListener('scroll', function () { $('#sud-backtop').classList.toggle('is-visible', window.scrollY > 500); }, { passive: true });
-  $('#sud-backtop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  if ($('#sud-backtop')) {
+    window.addEventListener('scroll', function () { $('#sud-backtop').classList.toggle('is-visible', window.scrollY > 500); }, { passive: true });
+    $('#sud-backtop').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  }
 
   applyDesktopModeClass();
   initCurrency();
   updateCurrencyPlaceholders();
   refreshCurrentEmi();
   setDynamic();
-  clearResults();
+  maybeLiveCalculate();
 }());

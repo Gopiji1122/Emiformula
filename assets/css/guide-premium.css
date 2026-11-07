@@ -93,3 +93,5 @@
 .gold-guide-side hr~a{background:none;padding:0;color:#f1d9a0;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .gold-guide-wrap .ef-related{grid-column:1/-1;width:100%;margin:1rem 0 0}
 @media(prefers-reduced-motion:reduce){.gold-guide-toc a,.gold-guide-cta,.gold-guide-side a{transition:none}}
+
+.gold-guide-wrap.guide-theme-pmay{--g-accent:#0f766e;--g-accent-deep:#115e59;--g-accent-soft:#f0fdfa;--g-accent-line:#99f6e4}

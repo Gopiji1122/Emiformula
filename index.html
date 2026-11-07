@@ -16,9 +16,6 @@
   <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/homepage.css">
 
-  <script defer src="assets/js/site-schema-data.js"></script>
-  <script defer src="assets/js/site-schema.js"></script>
-  <script defer src="assets/js/schema.js"></script>
   <link rel="icon" href="assets/images/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
@@ -99,6 +96,19 @@
             </div>
           </article>
 
+                    <article class="home-tool-card home-tool-loan">
+            <div class="home-tool-top">
+              <span class="home-tool-icon" aria-hidden="true">🏠</span>
+              <span class="home-tool-label">PMAY-URBAN 2.0 SUBSIDY</span>
+            </div>
+            <h3>Check ₹1.80 Lakh Home Loan Subsidy &amp; Savings</h3>
+            <p>Verify PMAY-U 2.0 eligibility (income up to ₹9L, property up to ₹35L) and see how 5 yearly credits of ₹36,000 cut your bank interest and loan tenure.</p>
+            <div class="home-tool-actions">
+              <a class="home-action-primary" href="calculators/pmay-subsidy-calculator.html">Open PMAY 2.0 Calculator <span aria-hidden="true">→</span></a>
+              <a class="home-action-secondary" href="guides/pmay-subsidy-guide.html">Read PMAY 2.0 Guide</a>
+            </div>
+          </article>
+
           <article class="home-tool-card home-tool-gold-loan">
             <div class="home-tool-top">
               <span class="home-tool-icon" aria-hidden="true">Au</span>
@@ -117,7 +127,7 @@
               <span class="home-tool-icon" aria-hidden="true">◉</span>
               <span class="home-tool-label">SHG / BACHAT GAT</span>
             </div>
-            <h2>SHG Loan &amp; Savings Calculator</h2>
+            <h3>SHG Loan &amp; Savings Calculator</h3>
             <p>Plan member-loan repayments, monthly savings and indicative bank-linkage figures with clear, step-by-step calculations.</p>
             <div class="home-tool-actions">
               <a class="home-action-primary" href="calculators/shg-loan-calculator.html">Open SHG Calculator <span aria-hidden="true">→</span></a>
@@ -304,8 +314,8 @@
           <a href="calculators/emi-calculator.html"><strong>What will my EMI be?</strong> <span>Calculate the scheduled monthly payment and total interest.</span></a>
           <a href="calculators/personal-loan-calculator.html"><strong>What will this loan really cost?</strong> <span>Look beyond EMI at interest, repayment and supported fees.</span></a>
           <a href="calculators/balance-transfer-calculator.html"><strong>Does switching my loan change the cost?</strong> <span>Compare the current loan with a replacement and its switching costs.</span></a>
-          <a href="#future-calculators"><strong>What if I pay the loan early?</strong> <span>Explore our planned prepayment and payoff tools.</span></a>
-          <a href="#future-calculators"><strong>Which loan should I compare?</strong> <span>Our loan comparison tools will put two borrowing options side by side.</span></a>
+          <a href="calculators/step-up-step-down-emi-calculator.html"><strong>What if I pay the loan early?</strong> <span>Model higher EMIs, step-up plans and early payoff scenarios.</span></a>
+          <a href="calculators/loan-comparison-calculator.html"><strong>Which loan should I compare?</strong> <span>Put two borrowing options side by side across EMI, fees and total cost.</span></a>
           <a href="#future-calculators"><strong>Should I rent or buy?</strong> <span>Explore the assumptions behind the two choices and compare the costs that matter.</span></a>
         </div>
       </section></div>
@@ -386,6 +396,8 @@
           <a href="guides/balance-transfer-guide.html"><strong>Balance Transfer Guide</strong> <span>Understand switching costs, interest differences and break-even calculations.</span></a>
           <a href="guides/compound-interest-guide.html"><strong>Compound Interest Guide</strong> <span>Understand how compounding affects growth over time.</span></a>
           <a href="guides/gold-loan-guide.html"><strong>Gold Loan Guide</strong> <span>Understand gold valuation, per-gram estimates, LTV, EMI and interest.</span></a>
+          <a href="guides/shg-loan-guide.html"><strong>SHG Loan Guide</strong> <span>Understand member loans, reducing interest, group savings and CCL planning.</span></a>
+          <a href="guides/pmay-subsidy-guide.html"><strong>PMAY-Urban 2.0 Subsidy Guide</strong> <span>Understand ₹1.80 lakh interest subsidy, 5 yearly installments, eligibility and online portal application.</span></a>
         </div>
       </section></div>
       </details>
@@ -417,36 +429,7 @@
 
     </div>
   </main>
-
-  <button class="home-back-to-top" type="button" aria-label="Back to top" title="Back to top" hidden>
-    <span aria-hidden="true">↑</span>
-  </button>
   <div data-component="footer"></div>
-
-  <script>
-    (function () {
-      var button = document.querySelector('.home-back-to-top');
-      if (!button) return;
-      var scheduled = false;
-      function updateVisibility() {
-        scheduled = false;
-        var doc = document.documentElement;
-        var scrollable = Math.max(1, doc.scrollHeight - window.innerHeight);
-        button.hidden = window.scrollY / scrollable < 0.30;
-      }
-      function onScroll() {
-        if (scheduled) return;
-        scheduled = true;
-        window.requestAnimationFrame(updateVisibility);
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
-      button.addEventListener('click', function () {
-        window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-      });
-      updateVisibility();
-    })();
-  </script>
   <script defer src="assets/js/site-config.js"></script>
   <script defer src="assets/js/search-data.js"></script>
   <script defer src="assets/js/navigation.js"></script>

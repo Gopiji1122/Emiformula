@@ -28,7 +28,8 @@
 
     function showError(message) { var el=$("loan-error"); if(el) el.textContent=message||""; }
 
-    function update() {
+    function monthsMax(y) { return Math.max(1, Math.min(cfg.limits.prepaymentMonth.max, Math.round(Number(y || 1) * 12))); }
+    function update(commitInputs) {
       var amount=clamp(get("loan-amount"),cfg.limits.amount.min,cfg.limits.amount.max);
       var rate=clamp(get("loan-rate"),cfg.limits.annualRate.min,cfg.limits.annualRate.max);
       var years=clamp(get("loan-years"),cfg.limits.years.min,cfg.limits.years.max);
@@ -36,8 +37,10 @@
       var insurance=clamp(get("loan-insurance"),cfg.limits.insurance.min,cfg.limits.insurance.max);
       var extra=clamp(get("loan-extra"),cfg.limits.extraMonthly.min,cfg.limits.extraMonthly.max);
       var prepayment=clamp(get("loan-prepayment"),cfg.limits.prepayment.min,cfg.limits.prepayment.max);
-      var prepayMonth=clamp(get("loan-prepayment-month"),cfg.limits.prepaymentMonth.min,cfg.limits.prepaymentMonth.max);
-      set("loan-amount",amount); set("loan-rate",rate); set("loan-years",years); set("loan-fee",fee); set("loan-insurance",insurance); set("loan-extra",extra); set("loan-prepayment",prepayment); set("loan-prepayment-month",prepayMonth);
+      var prepayMonth=clamp(get("loan-prepayment-month"),cfg.limits.prepaymentMonth.min,monthsMax(years));
+      if (commitInputs === true) {
+        set("loan-amount",amount); set("loan-rate",rate); set("loan-years",years); set("loan-fee",fee); set("loan-insurance",insurance); set("loan-extra",extra); set("loan-prepayment",prepayment); set("loan-prepayment-month",prepayMonth);
+      }
       syncRange("loan-amount","loan-amount-range"); syncRange("loan-rate","loan-rate-range"); syncRange("loan-years","loan-years-range"); syncRange("loan-fee","loan-fee-range"); syncRange("loan-extra","loan-extra-range"); syncRange("loan-prepayment","loan-prepayment-range");
 
       var result=engine.calculate({amount:amount,annualRate:rate,months:years*12,processingFeePercent:fee,insurance:insurance,extraMonthly:extra,prepayment:prepayment,prepaymentMonth:prepayMonth});
@@ -45,7 +48,7 @@
       showError("");
 
       $("loan-amount-value").textContent=money(result.amount); $("loan-rate-value").textContent=pct(result.annualRate); $("loan-years-value").textContent=years+" "+(years===1?"year":"years"); $("loan-fee-value").textContent=pct(result.processingFeePercent);
-      $("loan-emi").textContent=money(result.emi); $("loan-net").textContent=money(result.netReceived); $("loan-interest-kpi").textContent=money(result.totalInterest); $("loan-repayment").textContent=money(result.amount); $("loan-interest-result").textContent=money(result.totalInterest); $("loan-fee-result").textContent=money(result.processingFee); $("loan-insurance-result").textContent=money(result.insurance); $("loan-effective").textContent=pct(result.effectiveCostPercent); $("loan-cost").textContent=money(result.totalBorrowingCost); $("loan-outflow").textContent=money(result.totalOutflow);
+      $("loan-emi").textContent=money(result.emi); $("loan-net").textContent=money(result.netReceived); $("loan-interest-kpi").textContent=money(result.totalInterest); $("loan-repayment").textContent=money(result.totalRepayment); $("loan-interest-result").textContent=money(result.totalInterest); $("loan-fee-result").textContent=money(result.processingFee); $("loan-insurance-result").textContent=money(result.insurance); $("loan-effective").textContent=pct(result.effectiveCostPercent); $("loan-cost").textContent=money(result.totalBorrowingCost); $("loan-outflow").textContent=money(result.totalOutflow);
       $("loan-months").textContent=duration(result.actualMonths); $("loan-saved").textContent=result.monthsSaved+" months / "+money(result.interestSaved);
 
       var principalShare=Math.max(0,Math.min(100,result.principalShare)), interestShare=Math.max(0,Math.min(100,result.interestShare));
@@ -81,8 +84,8 @@
     [
       ["loan-amount-range","loan-amount"],["loan-rate-range","loan-rate"],["loan-years-range","loan-years"],["loan-fee-range","loan-fee"],["loan-extra-range","loan-extra"],["loan-prepayment-range","loan-prepayment"]
     ].forEach(function(pair){var r=$(pair[0]);if(r)r.addEventListener("input",function(){syncInput(pair[0],pair[1]);update();});});
-    ["loan-amount","loan-rate","loan-years","loan-fee","loan-insurance","loan-extra","loan-prepayment","loan-prepayment-month"].forEach(function(id){var el=$(id);if(el)el.addEventListener("input",update);});
-    $("loan-calculate").addEventListener("click",update); $("loan-reset").addEventListener("click",reset);
+    ["loan-amount","loan-rate","loan-years","loan-fee","loan-insurance","loan-extra","loan-prepayment","loan-prepayment-month"].forEach(function(id){var el=$(id);if(el){el.addEventListener("input",function(){update(false);});el.addEventListener("change",function(){update(true);});}});
+    $("loan-calculate").addEventListener("click",function(){update(true);}); $("loan-reset").addEventListener("click",reset);
     document.querySelectorAll("[data-loan-preset]").forEach(function(btn){btn.addEventListener("click",function(){set("loan-amount",btn.getAttribute("data-loan-preset"));document.querySelectorAll(".loan-preset").forEach(function(b){b.classList.remove("active")});btn.classList.add("active");update();});});
     update();
   });

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personal Loan Calculator | EMI &amp; Interest</title>
-<meta name="description" content="Calculate personal loan EMI, amount received after fees, total interest, total repayment, total borrowing cost ratio, rate comparison and tenure impact with EMIFORMULA.">
+<meta name="description" content="Calculate personal loan EMI, amount received after fees, interest, repayment and borrowing cost ratio with EMIFORMULA.">
 <link rel="canonical" href="https://emiformula.com/calculators/personal-loan-calculator.html">
 <link rel="stylesheet" href="../assets/css/style.css">
 <link rel="stylesheet" href="../assets/css/header.css">
@@ -14,30 +14,14 @@
 <link rel="stylesheet" href="../assets/css/layout.css">
 <link rel="stylesheet" href="../assets/css/components.css">
 <link rel="stylesheet" href="../assets/css/personal-loan-calculator.css"><link rel="stylesheet" href="../assets/css/export-report.css">
-<script defer src="../seo/seo-config.js"></script>
-<script>
-window.EMIFORMULA_PAGE_SEO={
- title:"Personal Loan Calculator | Loan Cost & Repayment Calculator | EMIFORMULA",
- description:"Calculate personal loan EMI, net amount received, total interest, total repayment and total borrowing cost ratio.",
- robots:"index, follow", ogType:"website"
-};
-window.EMIFORMULA_CALCULATOR_SCHEMA={
- "@context":"https://schema.org","@type":"WebApplication","name":"Personal Loan Calculator",
- "description":"Personal loan cost and repayment calculator with EMI, fees, total borrowing cost ratio, rate comparison and tenure analysis.",
- "url":"https://emiformula.com/calculators/personal-loan-calculator.html",
- "applicationCategory":"FinanceApplication","operatingSystem":"Web"
-};
-</script>
-<script defer src="../seo/seo.js"></script>
-<script defer src="../assets/js/calculator-schema.js"></script>
-<script defer src="../assets/js/schema.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Personal Loan Calculator", "description": "Personal loan cost and repayment calculator with EMI, fees, total borrowing cost ratio, rate comparison and tenure analysis.", "url": "https://emiformula.com/calculators/personal-loan-calculator.html", "applicationCategory": "FinanceApplication", "operatingSystem": "Web", "inLanguage": "en-IN", "isAccessibleForFree": true}</script>
   <link rel="icon" href="../assets/images/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png">
   <link rel="manifest" href="../assets/images/site.webmanifest">
 <link rel="stylesheet" href="../assets/css/premium.css"><meta property="og:title" content="Personal Loan Calculator | EMI &amp; Interest">
-<meta property="og:description" content="Calculate personal loan EMI, amount received after fees, total interest, total repayment, total borrowing cost ratio, rate comparison and tenure impact with EMIFORMULA.">
+<meta property="og:description" content="Calculate personal loan EMI, amount received after fees, interest, repayment and borrowing cost ratio with EMIFORMULA.">
 <meta property="og:url" content="https://emiformula.com/calculators/personal-loan-calculator.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="EMIFORMULA">
@@ -48,7 +32,7 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <meta property="og:image:alt" content="EMIFORMULA financial calculators">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Personal Loan Calculator | EMI &amp; Interest">
-<meta name="twitter:description" content="Calculate personal loan EMI, amount received after fees, total interest, total repayment, total borrowing cost ratio, rate comparison and tenure impact with EMIFORMULA.">
+<meta name="twitter:description" content="Calculate personal loan EMI, amount received after fees, interest, repayment and borrowing cost ratio with EMIFORMULA.">
 <meta name="twitter:image" content="https://emiformula.com/assets/images/og-default.png">
 <meta name="theme-color" content="#2563eb">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://emiformula.com/"}, {"@type": "ListItem", "position": 2, "name": "Personal Loan Calculator", "item": "https://emiformula.com/calculators/personal-loan-calculator.html"}]}</script>
@@ -71,14 +55,14 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-grid">
 <aside class="loan-card loan-input-card">
 <div class="loan-card-head"><div><h3>Loan setup</h3><span>Change any value — results update live</span></div></div><div class="loan-presets"><button type="button" class="loan-preset" data-loan-preset="200000">₹2L</button><button type="button" class="loan-preset active" data-loan-preset="500000">₹5L</button><button type="button" class="loan-preset" data-loan-preset="1000000">₹10L</button></div>
-<div class="loan-field"><div class="loan-label"><span>Loan amount</span><span class="loan-value" id="loan-amount-value">₹5,00,000</span></div><div class="loan-input"><span>₹</span><input id="loan-amount" type="number" min="10000" max="100000000" step="1000" value="500000" inputmode="numeric"></div><input id="loan-amount-range" class="loan-range" type="range" min="10000" max="100000000" step="5000" value="500000"><div class="loan-minmax"><span>₹10K</span><span>₹10Cr</span></div></div>
-<div class="loan-field"><div class="loan-label"><span>Interest rate</span><span class="loan-value" id="loan-rate-value">12.00%</span></div><div class="loan-input"><input id="loan-rate" type="number" min="0" max="40" step="0.01" value="12" inputmode="decimal"><span>% p.a.</span></div><input id="loan-rate-range" class="loan-range" type="range" min="0" max="40" step="0.01" value="12"><div class="loan-minmax"><span>0%</span><span>40%</span></div></div>
-<div class="loan-field"><div class="loan-label"><span>Tenure</span><span class="loan-value" id="loan-years-value">5 years</span></div><div class="loan-input"><input id="loan-years" type="number" min="1" max="20" step="1" value="5" inputmode="numeric"><span>years</span></div><input id="loan-years-range" class="loan-range" type="range" min="1" max="20" step="1" value="5"><div class="loan-minmax"><span>1 year</span><span>20 years</span></div></div>
-<div class="loan-field"><div class="loan-label"><span>Processing fee</span><span class="loan-value" id="loan-fee-value">2.00%</span></div><div class="loan-input"><input id="loan-fee" type="number" min="0" max="20" step="0.1" value="2" inputmode="decimal"><span>%</span></div><input id="loan-fee-range" class="loan-range" type="range" min="0" max="20" step="0.1" value="2"><div class="loan-minmax"><span>0%</span><span>20%</span></div></div>
+<div class="loan-field"><div class="loan-label"><label for="loan-amount">Loan amount</label><span class="loan-value" id="loan-amount-value">₹5,00,000</span></div><div class="loan-input"><span>₹</span><input id="loan-amount" type="number" min="10000" max="100000000" step="1000" value="500000" inputmode="numeric"></div><input id="loan-amount-range" class="loan-range" type="range" min="10000" max="100000000" step="5000" value="500000" aria-label="Loan amount slider"><div class="loan-minmax"><span>₹10K</span><span>₹10Cr</span></div></div>
+<div class="loan-field"><div class="loan-label"><label for="loan-rate">Interest rate</label><span class="loan-value" id="loan-rate-value">12.00%</span></div><div class="loan-input"><input id="loan-rate" type="number" min="0" max="40" step="0.01" value="12" inputmode="decimal"><span>% p.a.</span></div><input id="loan-rate-range" class="loan-range" type="range" min="0" max="40" step="0.01" value="12" aria-label="Interest rate slider"><div class="loan-minmax"><span>0%</span><span>40%</span></div></div>
+<div class="loan-field"><div class="loan-label"><label for="loan-years">Tenure</label><span class="loan-value" id="loan-years-value">5 years</span></div><div class="loan-input"><input id="loan-years" type="number" min="1" max="20" step="1" value="5" inputmode="numeric"><span>years</span></div><input id="loan-years-range" class="loan-range" type="range" min="1" max="20" step="1" value="5" aria-label="Tenure slider in years"><div class="loan-minmax"><span>1 year</span><span>20 years</span></div></div>
+<div class="loan-field"><div class="loan-label"><label for="loan-fee">Processing fee</label><span class="loan-value" id="loan-fee-value">2.00%</span></div><div class="loan-input"><input id="loan-fee" type="number" min="0" max="20" step="0.1" value="2" inputmode="decimal"><span>%</span></div><input id="loan-fee-range" class="loan-range" type="range" min="0" max="20" step="0.1" value="2" aria-label="Processing fee percentage slider"><div class="loan-minmax"><span>0%</span><span>20%</span></div></div>
 <details class="loan-advanced"><summary>Advanced repayment options</summary><div class="loan-advanced-body">
-<div class="loan-field"><div class="loan-label"><span>Insurance / other upfront cost</span></div><div class="loan-input"><span>₹</span><input id="loan-insurance" type="number" min="0" max="1000000" step="100" value="0" inputmode="numeric"></div></div>
-<div class="loan-field"><div class="loan-label"><span>Extra monthly payment</span></div><div class="loan-input"><span>₹</span><input id="loan-extra" type="number" min="0" max="1000000" step="500" value="0" inputmode="numeric"></div><input id="loan-extra-range" class="loan-range" type="range" min="0" max="100000" step="500" value="0"></div>
-<div class="loan-two"><div><div class="loan-label"><span>One-time prepayment</span></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div><input id="loan-prepayment-range" class="loan-range" type="range" min="0" max="10000000" step="1000" value="0"></div><div><div class="loan-label"><span>Prepayment month</span></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
+<div class="loan-field"><div class="loan-label"><label for="loan-insurance">Insurance / other upfront cost</label></div><div class="loan-input"><span>₹</span><input id="loan-insurance" type="number" min="0" max="1000000" step="100" value="0" inputmode="numeric"></div></div>
+<div class="loan-field"><div class="loan-label"><label for="loan-extra">Extra monthly payment</label></div><div class="loan-input"><span>₹</span><input id="loan-extra" type="number" min="0" max="1000000" step="500" value="0" inputmode="numeric"></div><input id="loan-extra-range" class="loan-range" type="range" min="0" max="1000000" step="500" value="0" aria-label="Extra monthly payment slider"></div>
+<div class="loan-two"><div><div class="loan-label"><label for="loan-prepayment">One-time prepayment</label></div><div class="loan-input"><span>₹</span><input id="loan-prepayment" type="number" min="0" max="10000000" step="1000" value="0" inputmode="numeric"></div><input id="loan-prepayment-range" class="loan-range" type="range" min="0" max="10000000" step="1000" value="0" aria-label="One-time prepayment slider"></div><div><div class="loan-label"><label for="loan-prepayment-month">Prepayment month</label></div><div class="loan-input"><input id="loan-prepayment-month" type="number" min="1" max="240" step="1" value="12" inputmode="numeric"><span>month</span></div></div></div>
 </div></details>
 <div class="loan-actions"><button class="loan-btn loan-btn-primary" id="loan-calculate" type="button">Calculate Loan Cost</button><button class="loan-btn loan-btn-secondary" id="loan-reset" type="button">Reset</button></div>
 <p id="loan-error" class="loan-error" aria-live="polite"></p><p class="loan-note">Processing fee and insurance/other upfront costs are treated as deductions from the sanctioned amount. Actual lender terms may differ.</p>
@@ -88,20 +72,20 @@ window.EMIFORMULA_CALCULATOR_SCHEMA={
 <div class="loan-kpis">
 <div class="loan-kpi"><small>Monthly EMI</small><strong id="loan-emi">₹11,122</strong></div>
 <div class="loan-kpi"><small>Amount you receive</small><strong id="loan-net">₹4,90,000</strong></div>
-<div class="loan-kpi"><small>Total interest</small><strong id="loan-interest-kpi">₹1,67,320</strong></div>
-<div class="loan-kpi"><small>Total borrowing cost ratio</small><strong id="loan-effective">35.00%</strong></div>
+<div class="loan-kpi"><small>Total interest</small><strong id="loan-interest-kpi">₹1,67,333</strong></div>
+<div class="loan-kpi"><small>Total borrowing cost ratio</small><strong id="loan-effective">36.19%</strong></div>
 </div>
 
 <div class="loan-card loan-main-result">
 <div class="loan-donut-box"><div class="loan-donut" id="loan-donut"><div class="loan-donut-center"><div><strong>Loan cost</strong><br><span>principal vs interest</span></div></div></div></div>
 <div class="loan-breakdown">
 <h3>Where your money goes</h3>
-<div class="loan-break-row"><i class="loan-dot"></i><span>Total EMI repayment</span><strong id="loan-repayment">₹6,67,320</strong></div><div class="loan-bar"><i id="loan-principal-bar"></i></div>
-<div class="loan-break-row"><i class="loan-dot gold"></i><span>Interest</span><strong id="loan-interest-result">₹1,67,320</strong></div><div class="loan-bar gold"><i id="loan-interest-bar"></i></div>
+<div class="loan-break-row"><i class="loan-dot"></i><span>Total EMI repayment</span><strong id="loan-repayment">₹6,67,333</strong></div><div class="loan-bar"><i id="loan-principal-bar"></i></div>
+<div class="loan-break-row"><i class="loan-dot gold"></i><span>Interest</span><strong id="loan-interest-result">₹1,67,333</strong></div><div class="loan-bar gold"><i id="loan-interest-bar"></i></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Processing fee</span><strong id="loan-fee-result">₹10,000</strong></div>
 <div class="loan-break-row"><i class="loan-dot gold"></i><span>Other upfront cost</span><strong id="loan-insurance-result">₹0</strong></div>
-<div class="loan-break-row"><i class="loan-dot gold"></i><span>Total borrowing cost</span><strong id="loan-cost">₹1,77,320</strong></div>
-<div class="loan-break-row"><i class="loan-dot"></i><span>Total cash outflow</span><strong id="loan-outflow">₹6,77,320</strong></div>
+<div class="loan-break-row"><i class="loan-dot gold"></i><span>Total borrowing cost</span><strong id="loan-cost">₹1,77,333</strong></div>
+<div class="loan-break-row"><i class="loan-dot"></i><span>Total cash outflow</span><strong id="loan-outflow">₹6,77,333</strong></div>
 </div></div>
 
 <div class="loan-card loan-timeline"><h3>Repayment timeline</h3><div class="loan-timeline-line"><div class="loan-timeline-fill" id="loan-timeline-fill"></div></div><div class="loan-timeline-meta"><span id="loan-timeline-start">Month 1</span><span id="loan-timeline-end">Payoff: 5y</span></div></div>
@@ -155,7 +139,8 @@ n = number of monthly payments</div><p class="loan-note">For a zero-interest sce
 <script defer src="../assets/js/navigation.js"></script>
 <script defer src="../assets/js/search.js"></script>
 <script defer src="../assets/js/footer.js"></script>
-<script defer src="../assets/js/components.js"></script>
+<script defer src="../assets/js/breadcrumb-data.js"></script>
+  <script defer src="../assets/js/components.js"></script>
 <script defer src="../assets/js/site.js"></script>
 <script defer src="../assets/js/personal-loan-engine.js"></script>
 <script defer src="../configs/calculators/personal-loan-calculator.js"></script>
