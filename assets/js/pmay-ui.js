@@ -521,14 +521,26 @@
   }
   if (el("pmayResetBtn")) {
     el("pmayResetBtn").addEventListener("click", function () {
-      var form = el("pmayForm");
-      if (form) form.reset();
+      // Form reset
+      if (el("pmayIncome")) el("pmayIncome").value = "500000";
+      if (el("pmayIncomeRange")) el("pmayIncomeRange").value = "500000";
+      if (el("pmayProperty")) el("pmayProperty").value = "2800000";
+      if (el("pmayPropertyRange")) el("pmayPropertyRange").value = "2800000";
+      if (el("pmayLoan")) el("pmayLoan").value = "2000000";
+      if (el("pmayLoanRange")) el("pmayLoanRange").value = "2000000";
+      if (el("pmayRate")) el("pmayRate").value = "8.5";
+      if (el("pmayRateRange")) el("pmayRateRange").value = "8.5";
+      if (el("pmayTenure")) el("pmayTenure").value = "20";
+      if (el("pmayTenureRange")) el("pmayTenureRange").value = "20";
+      if (el("pmayOwnHouse")) el("pmayOwnHouse").value = "no";
+      if (el("pmayFemaleOwner")) el("pmayFemaleOwner").value = "yes";
+      if (el("pmayCarpetArea")) el("pmayCarpetArea").value = "yes";
       currentMode = "tenure";
       if (modeTenureBtn && modeEmiBtn) {
         modeTenureBtn.setAttribute("aria-pressed", "true");
         modeEmiBtn.setAttribute("aria-pressed", "false");
       }
-      if (history.replaceState) history.replaceState(null, "", location.pathname);
+      try { if (history.replaceState) history.replaceState(null, "", location.pathname); } catch (e) {}
       if (el("pmayExportStatus")) el("pmayExportStatus").textContent = "";
       render();
     });

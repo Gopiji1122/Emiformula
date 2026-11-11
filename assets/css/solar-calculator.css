@@ -1,0 +1,603 @@
+/* ==========================================================================
+   EMIFORMULA — PM SURYA GHAR ROOFTOP SOLAR CALCULATOR STYLES
+   Sun-Gold & Clean-Energy Emerald Theme | Fully Responsive & Smooth Motion
+   ========================================================================== */
+
+:root {
+  --sol-gold: #d97706;
+  --sol-gold-deep: #b45309;
+  --sol-gold-light: #fef3c7;
+  --sol-sun: #f59e0b;
+  --sol-emerald: #059669;
+  --sol-emerald-deep: #047857;
+  --sol-emerald-soft: #ecfdf5;
+  --sol-emerald-border: #a7f3d0;
+  --sol-ink: #0f172a;
+  --sol-text: #1e293b;
+  --sol-muted: #475569;
+  --sol-border: #e2e8f0;
+  --sol-card: #ffffff;
+  --sol-bg: #fffdfa;
+  --sol-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.04), 0 12px 32px -8px rgba(217, 119, 6, 0.1);
+  --sol-radius: 18px;
+}
+
+.sol-page {
+  background: linear-gradient(180deg, #fffbeb 0%, #fefce8 18%, #ffffff 100%);
+  color: var(--sol-ink);
+  padding-bottom: 64px;
+}
+
+.sol-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.sol-hero {
+  background: radial-gradient(circle at 10% 0%, rgba(245, 158, 11, 0.18), transparent 40%),
+              linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
+  border-bottom: 1px solid #fde68a;
+  padding: 38px 0 30px;
+}
+
+.sol-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(300px, 400px);
+  gap: 28px 44px;
+  align-items: center;
+}
+
+.sol-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: #fef3c7;
+  color: var(--sol-gold-deep);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid #fde68a;
+}
+
+.sol-eyebrow::before {
+  content: "☀️";
+  font-size: 0.85rem;
+}
+
+.sol-hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(1.9rem, 3.6vw, 2.85rem);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--sol-ink);
+}
+
+.sol-lead {
+  margin: 0 0 18px;
+  color: var(--sol-muted);
+  font-size: 1.03rem;
+  line-height: 1.65;
+  max-width: 64ch;
+}
+
+/* Language Switcher */
+.sol-lang-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.sol-lang-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--sol-gold-deep);
+  margin-right: 4px;
+}
+
+.sol-lang-bar a,
+.sol-lang-current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.18s ease;
+}
+
+.sol-lang-bar a {
+  background: #ffffff;
+  color: var(--sol-muted);
+  border: 1px solid #fde68a;
+}
+
+.sol-lang-bar a:hover {
+  background: #fef3c7;
+  color: var(--sol-gold-deep);
+  transform: translateY(-1px);
+}
+
+.sol-lang-current {
+  background: var(--sol-gold);
+  color: #ffffff;
+  border: 1px solid var(--sol-gold-deep);
+  font-weight: 700;
+}
+
+/* Highlights Card in Hero */
+.sol-scheme-badge-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #fde68a;
+  border-radius: var(--sol-radius);
+  padding: 20px 22px;
+  box-shadow: var(--sol-shadow);
+}
+
+.sol-scheme-badge-title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sol-gold-deep);
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sol-scheme-pills {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sol-pill {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+}
+
+.sol-pill span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--sol-muted);
+}
+
+.sol-pill strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.98rem;
+  color: var(--sol-ink);
+}
+
+.sol-official-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--sol-gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Main Workspace Grid */
+.sol-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: 24px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.sol-card {
+  background: var(--sol-card);
+  border: 1px solid var(--sol-border);
+  border-radius: var(--sol-radius);
+  padding: clamp(18px, 3vw, 26px);
+  box-shadow: var(--sol-shadow);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.sol-card-title {
+  margin: 0 0 6px;
+  font-size: 1.22rem;
+  color: var(--sol-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.sol-card-sub {
+  margin: 0 0 20px;
+  font-size: 0.88rem;
+  color: var(--sol-muted);
+  line-height: 1.5;
+}
+
+/* Form Groups & Inputs */
+.sol-field-group {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.sol-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.sol-field-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--sol-text);
+  margin: 0;
+}
+
+.sol-field-hint {
+  font-size: 0.78rem;
+  color: var(--sol-muted);
+  margin: 4px 0 8px;
+}
+
+.sol-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sol-input-prefix,
+.sol-input-suffix {
+  position: absolute;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--sol-muted);
+  pointer-events: none;
+}
+
+.sol-input-prefix { left: 14px; }
+.sol-input-suffix { right: 14px; }
+
+.sol-input-number {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--sol-border);
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--sol-ink);
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sol-input-number.has-prefix { padding-left: 32px; }
+.sol-input-number.has-suffix { padding-right: 48px; }
+
+.sol-input-number:focus {
+  border-color: var(--sol-gold);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+.sol-range-slider {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: var(--sol-gold);
+  cursor: pointer;
+}
+
+/* Financing Mode Toggle */
+.sol-mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+}
+
+.sol-mode-btn {
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--sol-muted);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.sol-mode-btn.is-active {
+  background: #ffffff;
+  color: var(--sol-gold-deep);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+/* Buttons */
+.sol-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.sol-btn-calc {
+  flex: 1;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, var(--sol-gold) 0%, var(--sol-gold-deep) 100%);
+  color: #ffffff;
+  border: 0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.28);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.sol-btn-calc:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.38);
+}
+
+.sol-btn-reset {
+  padding: 13px 18px;
+  background: #ffffff;
+  color: var(--sol-muted);
+  border: 1px solid var(--sol-border);
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.sol-btn-reset:hover {
+  background: #f8fafc;
+  color: var(--sol-ink);
+}
+
+/* Output Cards */
+.sol-status-banner {
+  padding: 18px 20px;
+  border-radius: 14px;
+  margin-bottom: 22px;
+  background: var(--sol-emerald-soft);
+  border: 1px solid var(--sol-emerald-border);
+}
+
+.sol-status-title {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--sol-emerald-deep);
+}
+
+.sol-status-desc {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--sol-text);
+}
+
+/* KPI Highlights Grid */
+.sol-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.sol-kpi-box {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid var(--sol-border);
+}
+
+.sol-kpi-box.is-highlight {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
+.sol-kpi-box.is-hero-kpi {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #fffbeb 0%, #ecfdf5 100%);
+  border-color: #fde68a;
+  text-align: center;
+  padding: 18px;
+}
+
+.sol-kpi-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--sol-muted);
+  margin-bottom: 4px;
+}
+
+.sol-kpi-val {
+  font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+  font-weight: 800;
+  color: var(--sol-ink);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sol-kpi-box.is-highlight .sol-kpi-val {
+  color: var(--sol-gold-deep);
+}
+
+.sol-kpi-box.is-hero-kpi .sol-kpi-val {
+  color: var(--sol-emerald-deep);
+}
+
+.sol-kpi-sub {
+  font-size: 0.76rem;
+  color: var(--sol-muted);
+  margin-top: 4px;
+}
+
+/* Financial Comparison Table */
+.sol-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--sol-border);
+  border-radius: 14px;
+  background: #ffffff;
+  margin-bottom: 22px;
+}
+
+.sol-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sol-table th,
+.sol-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.sol-table th {
+  background: #f8fafc;
+  font-weight: 700;
+  color: var(--sol-muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.sol-table td {
+  text-align: right;
+  color: var(--sol-text);
+}
+
+.sol-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+
+.sol-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* Lifetime Savings Bar */
+.sol-roi-card {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid var(--sol-border);
+  margin-bottom: 22px;
+}
+
+.sol-roi-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: var(--sol-ink);
+  margin: 0 0 8px;
+}
+
+.sol-roi-desc {
+  font-size: 0.84rem;
+  color: var(--sol-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Export Bar */
+.sol-export-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.sol-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid var(--sol-border);
+  background: #ffffff;
+  color: var(--sol-text);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.sol-export-btn:hover {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: var(--sol-gold-deep);
+}
+
+/* FAQ & Educational Section */
+.sol-edu-section {
+  margin-top: 48px;
+}
+
+.sol-faq-item {
+  border: 1px solid var(--sol-border);
+  border-radius: 14px;
+  margin-bottom: 12px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.sol-faq-q {
+  padding: 16px 18px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--sol-ink);
+  cursor: pointer;
+  user-select: none;
+}
+
+.sol-faq-a {
+  padding: 0 18px 16px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--sol-muted);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 960px) {
+  .sol-hero-inner,
+  .sol-workspace {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sol-shell {
+    width: calc(100% - 24px);
+  }
+  .sol-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

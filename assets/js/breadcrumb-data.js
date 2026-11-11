@@ -5,6 +5,30 @@
   var path = window.location.pathname.replace(/\/+$/, "") || "/";
 
   var map = {
+    "/calculators/solar-rooftop-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "PM Surya Ghar Rooftop Solar Calculator" }
+    ],
+    "/hi/calculators/solar-rooftop-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "पीएम सूर्य घर सोलर कैलकुलेटर" }
+    ],
+    "/mr/calculators/solar-rooftop-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "पीएम सूर्य घर सोलर कॅल्क्युलेटर" }
+    ],
+    "/gu/calculators/solar-rooftop-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "પીએમ સૂર્ય ઘર સોલર કેલ્ક્યુલેટર" }
+    ],
+    "/bn/calculators/solar-rooftop-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "পিএম সূর্য ঘর সোলার ক্যালকুলেটর" }
+    ],
+    "/ta/calculators/solar-rooftop-calculator.html": [
+      { title: "Loan", url: "/categories/loan.html" },
+      { title: "PM சூர்யா கர் சோலார் கால்குலேட்டர்" }
+    ],
     "/calculators/emi-calculator.html": [
       { title: "EMI", url: "/categories/emi.html" },
       { title: "EMI Calculator" }

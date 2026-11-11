@@ -1,0 +1,141 @@
+/* EMIFORMULA — site-wide premium layer (loaded last on every page) */
+:root{--sp-font:"Plus Jakarta Sans",Inter,system-ui,sans-serif;--sp-ease:cubic-bezier(.22,.8,.24,1);
+  --sp-grad:linear-gradient(110deg,#2563eb,#7c3aed,#db2777,#c2410c,#2563eb);
+  --sp-grad2:linear-gradient(110deg,#0f766e,#2563eb,#0891b2,#0f766e)}
+html{font-size:17px}@media(min-width:1100px){html{font-size:18px}}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7}
+main p,main li{font-size:1.04rem}
+h1,h2,h3,h4,.site-logo-text,.footer-heading{font-family:var(--sp-font);letter-spacing:-.02em}
+main h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;line-height:1.1}
+main h2{font-size:clamp(1.65rem,3.2vw,2.3rem);font-weight:800;line-height:1.18}
+main h3{font-size:clamp(1.25rem,2.2vw,1.5rem);font-weight:700}
+html.ef-js main h1{animation:sp-rise .8s var(--sp-ease) both}
+@keyframes sp-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* header */
+.nav-link,.nav-button{font-size:1rem;font-weight:600}
+.mobile-nav-link,.mobile-nav-button{font-size:1.1rem;font-weight:600}
+.site-logo-mark{background:var(--sp-grad)!important;background-size:300% 100%!important;animation:sp-flow 8s linear infinite;color:#fff}
+.footer-links a{font-size:1rem}
+
+/* forms: larger, easier targets */
+main input:not([type=range]):not([type=checkbox]):not([type=radio]),main select{font-size:1.05rem;min-height:48px;border-radius:12px}
+main label{font-size:1rem;font-weight:600}
+
+/* colourful animated buttons */
+:where(main) :is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-export-btn,.pmay-btn-primary,.pmay-guide-btn,.shg-primary,.shg-link-button,.guide-primary-cta,.gold-guide-cta,.primary-cta,.compound-primary-cta,.compound-primary,.lc-primary,.loan-btn,.loan-btn-primary,.sud-calc-btn,.gl-action,.home-category-link,.btn,.hx-go,.sol-official-link,.pmay-official-link,button[type=submit]),
+:is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-export-btn,.pmay-btn-primary,.pmay-guide-btn,.shg-primary,.shg-link-button,.guide-primary-cta,.gold-guide-cta,.primary-cta,.compound-primary-cta,.compound-primary,.lc-primary,.loan-btn,.loan-btn-primary,.sud-calc-btn,.gl-action,.home-category-link,.hx-go,.hx-final .hx-solid){
+  background:var(--sp-grad)!important;background-size:300% 100%!important;color:#fff!important;border:0!important;
+  border-radius:14px!important;font-weight:700!important;font-size:1.02rem!important;min-height:48px;
+  padding:.7rem 1.4rem!important;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;text-decoration:none;
+  box-shadow:0 10px 24px -12px rgba(124,58,237,.65);animation:sp-flow 7s linear infinite;
+  transition:transform .25s var(--sp-ease),box-shadow .3s var(--sp-ease),filter .25s}
+:is(.pmay-btn-secondary,.loan-btn-secondary,.shg-link-secondary,.sol-btn-reset,.calc-help-button,.calc-help-button-light){
+  background:var(--sp-grad2)!important;background-size:300% 100%!important;color:#fff!important;border:0!important;
+  border-radius:14px!important;font-weight:700!important;min-height:44px;padding:.6rem 1.2rem!important;animation:sp-flow 9s linear infinite;
+  box-shadow:0 10px 24px -14px rgba(15,118,110,.7);transition:transform .25s var(--sp-ease),box-shadow .3s}
+@keyframes sp-flow{to{background-position:-300% 0}}
+@media(hover:hover){
+  :is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-export-btn,.pmay-btn-primary,.pmay-guide-btn,.shg-primary,.shg-link-button,.guide-primary-cta,.gold-guide-cta,.primary-cta,.compound-primary-cta,.compound-primary,.lc-primary,.loan-btn,.loan-btn-primary,.sud-calc-btn,.gl-action,.home-category-link,.hx-go,.btn,.pmay-btn-secondary,.loan-btn-secondary,.shg-link-secondary,.sol-btn-reset,.calc-help-button):hover{
+    transform:translateY(-2px) scale(1.03);box-shadow:0 16px 30px -12px rgba(37,99,235,.7);filter:saturate(1.15);animation-duration:2.5s}}
+:is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-btn-primary,.loan-btn-primary,.gl-action,.home-category-link,.hx-go):active{transform:scale(.97)}
+:is(.hx-go,.home-category-link):focus-visible,.gl-action:focus-visible{outline:3px solid #f2a33a;outline-offset:3px}
+.home-category-link{margin:.25rem .4rem .25rem 0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* =========================================================
+   E-E-A-T MATHEMATICAL & OFFICIAL GOVT VERIFICATION CARD
+   ========================================================= */
+.ef-eeat-box {
+  width: min(calc(100% - 2rem), var(--container-max, 1200px));
+  margin: 2.25rem auto 1.75rem;
+  padding: clamp(1.15rem, 2.5vw, 1.65rem);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 55%, #f0fdf4 100%);
+  border: 1px solid #cbd5e1;
+  border-left: 5px solid #2563eb;
+  box-shadow: 0 8px 24px -14px rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+.ef-eeat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+}
+.ef-eeat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--sp-font);
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1e40af;
+  background: #dbeafe;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+}
+.ef-eeat-date {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0f766e;
+  background: #ccfbf1;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+}
+.ef-eeat-body p {
+  margin: 0 0 0.55rem;
+  font-size: 0.94rem !important;
+  color: #1e293b;
+}
+.ef-eeat-body p:last-child {
+  margin-bottom: 0;
+}
+.ef-eeat-body a {
+  color: #1d4ed8;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ef-eeat-body a:hover {
+  color: #0f172a;
+}
+.ef-eeat-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.45);
+  font-size: 0.85rem;
+  color: #334155;
+}
+.ef-eeat-sources strong {
+  color: #0f172a;
+}
+.ef-eeat-src-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e3a8a !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem;
+  text-decoration: none !important;
+}
+.ef-eeat-src-link:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}

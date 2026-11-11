@@ -42,7 +42,7 @@
       var sel = "main section, main article > *, main .card, .gl-card, .gl-result, [class*='-card'], main details";
       var all = Array.prototype.slice.call(doc.querySelectorAll(sel));
       var targets = all.filter(function (el) {
-        if (el.closest(".site-header,.site-footer,.header-panel,form [class*='-card']")) return false;
+        if (el.closest(".site-header,.site-footer,.header-panel,[data-no-reveal],form [class*='-card']")) return false;
         for (var p = el.parentElement; p; p = p.parentElement) if (all.indexOf(p) > -1) return false; // top-most only
         return true;
       });

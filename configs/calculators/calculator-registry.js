@@ -86,6 +86,15 @@
       url: "/calculators/pmay-subsidy-calculator.html",
       alternates: { en: "/calculators/pmay-subsidy-calculator.html", hi: "/hi/calculators/pmay-subsidy-calculator.html", mr: "/mr/calculators/pmay-subsidy-calculator.html", gu: "/gu/calculators/pmay-subsidy-calculator.html", bn: "/bn/calculators/pmay-subsidy-calculator.html", ta: "/ta/calculators/pmay-subsidy-calculator.html" },
       status: "active"
+    },
+    "solar-rooftop-calculator": {
+      id: "solar-rooftop-calculator",
+      name: "PM Surya Ghar Solar Calculator",
+      category: "Loan Calculators",
+      description: "Calculate rooftop solar capacity, ₹78,000 Central Government subsidy, monthly electricity bill savings, and concessional 7% bank loan EMI.",
+      url: "/calculators/solar-rooftop-calculator.html",
+      alternates: { en: "/calculators/solar-rooftop-calculator.html", hi: "/hi/calculators/solar-rooftop-calculator.html", mr: "/mr/calculators/solar-rooftop-calculator.html", gu: "/gu/calculators/solar-rooftop-calculator.html", bn: "/bn/calculators/solar-rooftop-calculator.html", ta: "/ta/calculators/solar-rooftop-calculator.html" },
+      status: "active"
     }
   };
 
