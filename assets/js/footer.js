@@ -66,6 +66,7 @@
     var footerUrl = basePath + "/components/footer.html";
 
     placeholders.forEach(function (placeholder) {
+      if (placeholder.querySelector("[data-site-footer]")) { setupFooter(); return; }
       fetch(footerUrl, { cache: "no-cache" })
         .then(function (response) {
           if (!response.ok) throw new Error("Footer component could not be loaded.");

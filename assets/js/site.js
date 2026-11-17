@@ -235,6 +235,7 @@
 
     placeholders.forEach(
       function (placeholder) {
+        if (placeholder.querySelector("[data-site-header]")) { setupHeader(); return; }
         fetch(
           headerUrl,
           {

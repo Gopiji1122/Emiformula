@@ -300,7 +300,7 @@
           );
 
 
-        if (!componentName) {
+        if (!componentName || placeholder.children.length > 0) {
           return;
         }
 
