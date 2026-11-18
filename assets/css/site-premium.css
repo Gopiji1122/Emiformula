@@ -1,0 +1,379 @@
+/* EMIFORMULA — site-wide premium layer (loaded last on every page) */
+:root{--sp-font:"Plus Jakarta Sans",Inter,system-ui,sans-serif;--sp-ease:cubic-bezier(.22,.8,.24,1);
+  --sp-grad:linear-gradient(110deg,#2563eb,#7c3aed,#db2777,#c2410c,#2563eb);
+  --sp-grad2:linear-gradient(110deg,#0f766e,#2563eb,#0891b2,#0f766e)}
+html{font-size:17px}@media(min-width:1100px){html{font-size:18px}}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7}
+main p,main li{font-size:1.04rem}
+h1,h2,h3,h4,.site-logo-text,.footer-heading{font-family:var(--sp-font);letter-spacing:-.02em}
+main h1{font-size:clamp(1.55rem,4.2vw,2.65rem);font-weight:800;line-height:1.18;overflow-wrap:break-word;word-break:break-word}
+main h2{font-size:clamp(1.3rem,3vw,2.05rem);font-weight:800;line-height:1.22;overflow-wrap:break-word;word-break:break-word}
+main h3{font-size:clamp(1.25rem,2.2vw,1.5rem);font-weight:700}
+html.ef-js main h1{animation:sp-rise .8s var(--sp-ease) both}
+@keyframes sp-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* header */
+.nav-link,.nav-button{font-size:1rem;font-weight:600}
+.mobile-nav-link,.mobile-nav-button{font-size:1.1rem;font-weight:600}
+.site-logo-mark{background:var(--sp-grad)!important;background-size:300% 100%!important;animation:sp-flow 8s linear infinite;color:#fff}
+.footer-links a{font-size:1rem}
+
+/* forms: larger, easier targets */
+main input:not([type=range]):not([type=checkbox]):not([type=radio]),main select{font-size:1.05rem;min-height:48px;border-radius:12px}
+main label{font-size:1rem;font-weight:600}
+
+/* colourful animated buttons */
+:where(main) :is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-export-btn,.pmay-btn-primary,.pmay-guide-btn,.shg-primary,.shg-link-button,.guide-primary-cta,.gold-guide-cta,.primary-cta,.compound-primary-cta,.compound-primary,.lc-primary,.loan-btn,.loan-btn-primary,.sud-calc-btn,.gl-action,.home-category-link,.btn,.hx-go,.sol-official-link,.pmay-official-link,button[type=submit]),
+:is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-export-btn,.pmay-btn-primary,.pmay-guide-btn,.shg-primary,.shg-link-button,.guide-primary-cta,.gold-guide-cta,.primary-cta,.compound-primary-cta,.compound-primary,.lc-primary,.loan-btn,.loan-btn-primary,.sud-calc-btn,.gl-action,.home-category-link,.hx-go,.hx-final .hx-solid){
+  background:var(--sp-grad)!important;background-size:300% 100%!important;color:#fff!important;border:0!important;
+  border-radius:14px!important;font-weight:700!important;font-size:1.02rem!important;min-height:48px;
+  padding:.7rem 1.4rem!important;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;text-decoration:none;
+  box-shadow:0 10px 24px -12px rgba(124,58,237,.65);animation:sp-flow 7s linear infinite;
+  transition:transform .25s var(--sp-ease),box-shadow .3s var(--sp-ease),filter .25s}
+:is(.pmay-btn-secondary,.loan-btn-secondary,.shg-link-secondary,.sol-btn-reset,.calc-help-button,.calc-help-button-light){
+  background:var(--sp-grad2)!important;background-size:300% 100%!important;color:#fff!important;border:0!important;
+  border-radius:14px!important;font-weight:700!important;min-height:44px;padding:.6rem 1.2rem!important;animation:sp-flow 9s linear infinite;
+  box-shadow:0 10px 24px -14px rgba(15,118,110,.7);transition:transform .25s var(--sp-ease),box-shadow .3s}
+@keyframes sp-flow{to{background-position:-300% 0}}
+@media(hover:hover){
+  :is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-export-btn,.pmay-btn-primary,.pmay-guide-btn,.shg-primary,.shg-link-button,.guide-primary-cta,.gold-guide-cta,.primary-cta,.compound-primary-cta,.compound-primary,.lc-primary,.loan-btn,.loan-btn-primary,.sud-calc-btn,.gl-action,.home-category-link,.hx-go,.btn,.pmay-btn-secondary,.loan-btn-secondary,.shg-link-secondary,.sol-btn-reset,.calc-help-button):hover{
+    transform:translateY(-2px) scale(1.03);box-shadow:0 16px 30px -12px rgba(37,99,235,.7);filter:saturate(1.15);animation-duration:2.5s}}
+:is(.calc-export-button,.calc-export-primary,.sol-export-btn,.sol-btn-calc,.pmay-btn-primary,.loan-btn-primary,.gl-action,.home-category-link,.hx-go):active{transform:scale(.97)}
+:is(.hx-go,.home-category-link):focus-visible,.gl-action:focus-visible{outline:3px solid #f2a33a;outline-offset:3px}
+.home-category-link{margin:.25rem .4rem .25rem 0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* =========================================================
+   E-E-A-T MATHEMATICAL & OFFICIAL GOVT VERIFICATION CARD
+   ========================================================= */
+.ef-eeat-box {
+  width: min(calc(100% - 2rem), var(--container-max, 1200px));
+  margin: 2.25rem auto 1.75rem;
+  padding: clamp(1.15rem, 2.5vw, 1.65rem);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 55%, #f0fdf4 100%);
+  border: 1px solid #cbd5e1;
+  border-left: 5px solid #2563eb;
+  box-shadow: 0 8px 24px -14px rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+.ef-eeat-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+}
+.ef-eeat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--sp-font);
+  font-weight: 800;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1e40af;
+  background: #dbeafe;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+}
+.ef-eeat-date {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #0f766e;
+  background: #ccfbf1;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+}
+.ef-eeat-body p {
+  margin: 0 0 0.55rem;
+  font-size: 0.94rem !important;
+  color: #1e293b;
+}
+.ef-eeat-body p:last-child {
+  margin-bottom: 0;
+}
+.ef-eeat-body a {
+  color: #1d4ed8;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ef-eeat-body a:hover {
+  color: #0f172a;
+}
+.ef-eeat-sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  margin-top: 0.65rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed rgba(148, 163, 184, 0.45);
+  font-size: 0.85rem;
+  color: #334155;
+}
+.ef-eeat-sources strong {
+  color: #0f172a;
+}
+.ef-eeat-src-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #1e3a8a !important;
+  font-weight: 600 !important;
+  font-size: 0.82rem;
+  text-decoration: none !important;
+}
+.ef-eeat-src-link:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+/* =========================================================
+   ANIMATED PROFESSIONAL RETRACTABLE CURRENCY & LANGUAGE SELECTORS
+   ========================================================= */
+.ef-retract-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.85rem 0 1.15rem;
+}
+.ef-retract {
+  position: relative;
+  display: inline-block;
+  z-index: 40;
+}
+.ef-retract-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 42px;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+  font-family: var(--sp-font);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px -6px rgba(15, 23, 42, 0.14);
+  transition: border-color 0.22s var(--sp-ease), box-shadow 0.22s var(--sp-ease), transform 0.22s var(--sp-ease), background-color 0.22s;
+}
+.ef-retract-btn:hover {
+  border-color: #2563eb;
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px -8px rgba(37, 99, 235, 0.28);
+}
+.ef-retract.is-open .ef-retract-btn {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+.ef-retract-chev {
+  display: inline-block;
+  font-size: 0.78rem;
+  transition: transform 0.28s var(--sp-ease);
+}
+.ef-retract.is-open .ef-retract-chev {
+  transform: rotate(180deg);
+}
+.ef-retract-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 225px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(-8px) scale(0.97);
+  transform-origin: top left;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  box-shadow: 0 20px 44px -16px rgba(15, 23, 42, 0.28);
+  padding: 0 0.4rem;
+  transition: max-height 0.32s var(--sp-ease), opacity 0.24s var(--sp-ease), transform 0.28s var(--sp-ease), padding 0.25s;
+}
+.ef-retract.is-open .ef-retract-menu {
+  max-height: 360px;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  padding: 0.45rem 0.4rem;
+}
+.ef-retract-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #1e293b;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.16s, color 0.16s, padding-left 0.16s;
+}
+.ef-retract-opt:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding-left: 0.95rem;
+}
+.ef-retract-opt.is-active {
+  background: #dbeafe;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+.ef-retract-opt.is-active::after {
+  content: "✓";
+  font-weight: 800;
+  color: #2563eb;
+}
+
+
+/* =========================================================
+   GLOBAL MOBILE & DESKTOP RESPONSIVE ZERO-OVERFLOW GUARD
+   ========================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+/* Prevent CSS Grid & Flexbox items from expanding beyond screen width due to tables or formulas */
+main, main section, main article, main div, main form, main aside, main header, main details, main fieldset {
+  min-width: 0;
+  max-width: 100%;
+}
+/* Ensure retractable dropdown bar and wrapper never clip the animated popup menu */
+.ef-retract-bar, .ef-retract {
+  overflow: visible !important;
+}
+.ef-retract-btn {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.18) !important;
+  animation: none !important;
+  max-width: 100%;
+}
+.ef-retract-btn .ef-retract-label,
+.ef-retract-btn .ef-retract-chev {
+  color: #0f172a !important;
+}
+.ef-retract.is-open .ef-retract-btn {
+  background: #eff6ff !important;
+  border-color: #2563eb !important;
+  color: #1e3a8a !important;
+}
+.ef-retract-menu {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  z-index: 999 !important;
+  max-width: min(280px, calc(100vw - 2rem));
+}
+.ef-retract-opt {
+  color: #1e293b !important;
+  background: transparent !important;
+  animation: none !important;
+  box-shadow: none !important;
+  min-height: 40px !important;
+  padding: 0.5rem 0.75rem !important;
+  justify-content: space-between !important;
+}
+.ef-retract-opt:hover {
+  background: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+.ef-retract-opt.is-active {
+  background: #dbeafe !important;
+  color: #1e3a8a !important;
+}
+
+/* Ensure all buttons, links, and formulas wrap cleanly inside mobile cards */
+:where(main) :is(button, .btn, a[class*="btn"], a[class*="cta"], a[class*="link"], .guide-callout-accent a) {
+  max-width: 100%;
+  white-space: normal !important;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+.calc-formula, .cf-formula-box {
+  white-space: pre-wrap !important;
+  word-break: break-word;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .page-container, .hx-wrap, .fvr-shell, .shg-shell, .pmay-container, .sol-container {
+    width: calc(100% - 1.25rem) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .cf-hero, .ev-hero, .cf-card, .ev-card, .cf-content-section, .ev-content-section {
+    padding: 1.15rem 1rem !important;
+    border-radius: 14px !important;
+  }
+  .cf-grid, .ev-grid, .cf-mode-tabs, .cf-compare-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .cf-field-head, .ev-field-head, .fvr-field-head {
+    flex-wrap: wrap !important;
+    gap: 0.35rem !important;
+  }
+  .ev-suite-nav {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .ev-suite-tab {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    white-space: normal !important;
+  }
+  .cf-actions, .ev-actions, .cf-export-row, .ev-export-row, .fvr-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .cf-actions > *, .ev-actions > *, .cf-export-row > *, .ev-export-row > *, .fvr-actions > * {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .ef-retract-bar {
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .ef-retract {
+    position: static !important;
+  }
+  .ef-retract-bar {
+    position: relative !important;
+  }
+  .ef-retract-menu {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

@@ -1,0 +1,136 @@
+/* =========================================================
+   EMIFORMULA — PREMIUM LAYER
+   Minimal, quiet motion. Loaded last; only refines, never re-lays-out.
+   ========================================================= */
+:root{
+  --ef-ease:cubic-bezier(.22,.8,.24,1);
+  --ef-ring:0 0 0 3px color-mix(in srgb,var(--brand-primary,#2563eb) 28%,transparent);
+  --ef-shadow-1:0 1px 2px rgba(15,23,42,.05),0 1px 1px rgba(15,23,42,.03);
+  --ef-shadow-2:0 10px 30px -12px rgba(15,23,42,.18),0 2px 6px rgba(15,23,42,.05);
+}
+html{scroll-behavior:smooth;scroll-padding-top:5rem;-webkit-text-size-adjust:100%}
+body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::selection{background:color-mix(in srgb,var(--brand-primary,#2563eb) 22%,#fff);color:inherit}
+
+/* page entrance */
+html.ef-js body{animation:ef-fade .45s var(--ef-ease) both}
+@keyframes ef-fade{from{opacity:0}to{opacity:1}}
+
+/* scroll progress */
+.ef-progress{position:fixed;inset:0 0 auto 0;height:2px;z-index:9999;pointer-events:none;
+  background:linear-gradient(90deg,var(--brand-primary,#2563eb),#7c3aed);
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .12s linear;opacity:.9}
+
+/* glass header once scrolled */
+.site-header{transition:background-color .3s var(--ef-ease),box-shadow .3s var(--ef-ease),backdrop-filter .3s}
+.site-header.ef-scrolled{background-color:rgba(255,255,255,.82)!important;
+  -webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);
+  box-shadow:0 1px 0 rgba(15,23,42,.06),0 8px 24px -16px rgba(15,23,42,.25)}
+.site-logo-mark{transition:transform .35s var(--ef-ease)}
+.site-logo:hover .site-logo-mark{transform:rotate(-8deg) scale(1.06)}
+.nav-link,.nav-button{transition:color .2s,background-color .2s}
+.nav-chevron{display:inline-block;transition:transform .25s var(--ef-ease)}
+[aria-expanded="true"]>.nav-chevron{transform:rotate(180deg)}
+
+/* cards: soft depth + gentle lift */
+.gl-card,.gl-result,[class*="-card"]:not(.header-category-panel):not([class*="card-"]),.calculator-card{
+  transition:transform .35s var(--ef-ease),box-shadow .35s var(--ef-ease),border-color .25s}
+@media (hover:hover){
+  a[class*="-card"]:hover,[class*="calculator-card"]:hover,[class*="tool-card"]:hover,[class*="guide-card"]:hover{
+    transform:translateY(-3px);box-shadow:var(--ef-shadow-2);border-color:color-mix(in srgb,var(--brand-primary,#2563eb) 35%,var(--border,#e5e7eb))}
+}
+
+/* buttons: tactile */
+button,[role="button"],.btn,a[class*="button"],a[class*="btn"]{transition:transform .18s var(--ef-ease),box-shadow .25s var(--ef-ease),background-color .2s,border-color .2s,color .2s}
+button:not(:disabled):active,.btn:active,a[class*="btn"]:active{transform:scale(.97)}
+@media (hover:hover){
+  button[type="submit"]:not(:disabled):hover,.gl-action:hover,[class*="primary"]:not(:disabled):hover{box-shadow:0 8px 20px -8px color-mix(in srgb,var(--brand-primary,#2563eb) 70%,transparent);transform:translateY(-1px)}
+}
+
+/* inputs */
+input,select,textarea{transition:border-color .2s,box-shadow .25s var(--ef-ease),background-color .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand-primary,#2563eb);box-shadow:var(--ef-ring)}
+:focus-visible{outline:2px solid var(--brand-primary,#2563eb);outline-offset:2px;border-radius:4px}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none}
+input[type="range"]{accent-color:var(--brand-primary,#2563eb)}
+
+/* accordions */
+details{transition:background-color .25s,box-shadow .25s}
+details>summary{cursor:pointer;transition:color .2s}
+details[open]>summary~*{animation:ef-drop .35s var(--ef-ease)}
+@keyframes ef-drop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* scroll reveal (only when JS is running) */
+html.ef-js .ef-reveal{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ef-ease),transform .7s var(--ef-ease);transition-delay:var(--ef-d,0s);will-change:opacity,transform}
+html.ef-js .ef-reveal.ef-in{opacity:1;transform:none;will-change:auto}
+
+/* result updates: quiet highlight pulse */
+.ef-pulse{animation:ef-pulse .9s var(--ef-ease)}
+@keyframes ef-pulse{0%{background-color:color-mix(in srgb,var(--brand-primary,#2563eb) 14%,transparent);transform:scale(1.015)}100%{background-color:transparent;transform:none}}
+
+/* tables: calm row hover */
+tbody tr{transition:background-color .15s}
+@media (hover:hover){tbody tr:hover{background-color:var(--surface,#f8fafc)}}
+
+/* skip link */
+.ef-skip,.skip-link{position:fixed;left:1rem;top:-4rem;z-index:10000;padding:.65rem 1rem;border-radius:10px;background:#111827;color:#fff;font-weight:600;text-decoration:none;transition:top .25s var(--ef-ease)}
+.ef-skip:focus,.skip-link:focus{top:1rem;outline:2px solid #fff}
+
+/* back to top */
+.ef-top{position:fixed;right:1.1rem;bottom:1.1rem;width:44px;height:44px;border-radius:50%;border:1px solid var(--border,#e5e7eb);
+  background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:var(--text-primary,#111827);
+  box-shadow:var(--ef-shadow-2);cursor:pointer;display:grid;place-items:center;font-size:1.1rem;z-index:900;
+  opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .3s,transform .3s var(--ef-ease)}
+.ef-top.ef-show{opacity:1;transform:none;pointer-events:auto}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html.ef-js .ef-reveal{opacity:1;transform:none}
+}
+@media print{.ef-progress,.ef-top,.ef-skip,.skip-link{display:none!important}html.ef-js .ef-reveal{opacity:1!important;transform:none!important}}
+
+/* =========================================================
+   INTERLINKING — related calculators & guides
+   ========================================================= */
+.ef-related{width:min(calc(100% - 2rem),var(--container-max,1200px));margin:3.5rem auto 2.5rem}
+.ef-related>h2{font-size:clamp(1.15rem,2.4vw,1.45rem);letter-spacing:-.01em;margin:0 0 1.1rem;display:flex;align-items:center;gap:.65rem}
+.ef-related>h2::before{content:"";width:22px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--brand-primary,#2563eb),#7c3aed)}
+.ef-related-grid{display:grid;gap:.9rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.ef-rel-card{position:relative;display:flex;flex-direction:column;gap:.35rem;padding:1.1rem 1.15rem 1.25rem;border:1px solid var(--border,#e5e7eb);border-radius:16px;background:var(--background,#fff);color:inherit;text-decoration:none;box-shadow:var(--ef-shadow-1);transition:transform .35s var(--ef-ease),box-shadow .35s var(--ef-ease),border-color .25s}
+.ef-rel-card strong{font-size:1rem;line-height:1.3;color:var(--text-primary,#111827)}
+.ef-kicker{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--brand-primary,#2563eb)}
+.ef-rel-desc{font-size:.86rem;line-height:1.5;color:var(--text-secondary,#4b5563);padding-right:1.4rem}
+.ef-arrow{position:absolute;right:1.1rem;bottom:1rem;color:var(--brand-primary,#2563eb);transition:transform .3s var(--ef-ease)}
+@media (hover:hover){.ef-rel-card:hover{transform:translateY(-3px);box-shadow:var(--ef-shadow-2);border-color:color-mix(in srgb,var(--brand-primary,#2563eb) 40%,var(--border,#e5e7eb))}.ef-rel-card:hover .ef-arrow{transform:translateX(4px)}}
+
+/* =========================================================
+   SIMPLE / INFO PAGES — calm, refined entrance
+   ========================================================= */
+.info-page{max-width:880px;margin-inline:auto}
+.info-hero{position:relative;padding:clamp(2rem,6vw,3.5rem) clamp(1.25rem,4vw,2.25rem);border-radius:22px;overflow:hidden;
+  background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--brand-primary,#2563eb) 9%,#fff) 0%,var(--surface,#f8fafc) 55%,#fff 100%);
+  border:1px solid var(--border,#e5e7eb)}
+.info-hero::after{content:"";position:absolute;inset:auto -10% -55% auto;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,color-mix(in srgb,#7c3aed 14%,transparent),transparent 70%);pointer-events:none}
+html.ef-js .info-hero>*{opacity:0;animation:ef-rise .7s var(--ef-ease) forwards}
+html.ef-js .info-hero>*:nth-child(2){animation-delay:.08s}html.ef-js .info-hero>*:nth-child(3){animation-delay:.16s}html.ef-js .info-hero>*:nth-child(4){animation-delay:.24s}
+@keyframes ef-rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.info-eyebrow{letter-spacing:.12em;font-weight:700;color:var(--brand-primary,#2563eb)}
+.info-card{border-radius:16px;transition:transform .35s var(--ef-ease),box-shadow .35s var(--ef-ease),border-color .25s}
+@media (hover:hover){.info-card:hover{transform:translateY(-2px);box-shadow:var(--ef-shadow-2)}}
+.info-page p a,.info-page li a,.guide-content p a,.guide-content li a,article p a,article li a{text-decoration:none;background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;transition:background-size .3s var(--ef-ease)}
+.info-page p a:hover,.info-page li a:hover,.guide-content p a:hover,article p a:hover,article li a:hover{background-size:100% 1.5px}
+
+/* 404 */
+body.ef-404 .content-narrow{text-align:center}
+body.ef-404 .content-narrow>p:first-child{font-size:clamp(4rem,16vw,7rem);line-height:1;font-weight:800;letter-spacing:-.05em;margin:0 0 .5rem;
+  background:linear-gradient(120deg,var(--brand-primary,#2563eb),#7c3aed);-webkit-background-clip:text;background-clip:text;color:transparent;animation:ef-float 5s ease-in-out infinite}
+@keyframes ef-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ef-404-links{display:flex;flex-wrap:wrap;gap:.5rem .6rem;justify-content:center;align-items:center;font-size:.9rem;margin-top:1.5rem}
+.ef-404-links span{color:var(--text-muted,#6b7280)}
+.ef-404-links a{padding:.35rem .8rem;border:1px solid var(--border,#e5e7eb);border-radius:999px;text-decoration:none;transition:background-color .2s,border-color .2s,transform .2s var(--ef-ease)}
+.ef-404-links a:hover{background:var(--brand-primary-light,#eff6ff);border-color:var(--brand-primary,#2563eb);transform:translateY(-1px)}
+
+/* keep horizontal-overflow protection without breaking position:sticky */
+@supports (overflow:clip){html,body{overflow-x:clip}}

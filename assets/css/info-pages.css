@@ -1,0 +1,63 @@
+
+/* EMIFORMULA information pages */
+.info-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1rem 4rem;
+}
+.info-hero {
+  padding: 2.25rem;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #f7f9fc, #ffffff);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.5rem;
+  animation: infoRise .55s ease both;
+}
+.info-eyebrow {
+  margin: 0 0 .55rem;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #52616f;
+}
+.info-hero h1 { margin: 0 0 .75rem; }
+.info-hero p { margin: 0; max-width: 720px; line-height: 1.7; }
+.info-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 8px 24px rgba(15,23,42,.05);
+  animation: infoRise .55s ease both;
+}
+.info-card h2 { margin-top: 0; }
+.info-card p, .info-card li { line-height: 1.75; }
+.info-card ul { padding-left: 1.25rem; }
+.info-note {
+  border-left: 4px solid #64748b;
+  padding: .9rem 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+.info-contact-list { list-style: none; padding: 0 !important; }
+.info-contact-list li { margin: .7rem 0; }
+.info-contact-list a { font-weight: 700; }
+.info-page a:focus-visible {
+  outline: 3px solid #0f172a;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+@keyframes infoRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 700px) {
+  .info-page { padding: 1.5rem .8rem 3rem; }
+  .info-hero { padding: 1.5rem; border-radius: 16px; }
+  .info-card { padding: 1.15rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .info-hero, .info-card { animation: none; }
+}
